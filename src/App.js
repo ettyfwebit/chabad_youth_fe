@@ -1,12 +1,21 @@
-
 import React from 'react';
-import ChildrenList from './components/ChildrenList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './components/Login/Login';
+import ChildrenList from './components/ChildrenList/ChildrenList';
+import ChildrenListByBranch from './components/ChildrenListByBranch/ChildrenListByBranch';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Children List</h1>
-      <ChildrenList />
+    <div>
+      <Router>
+        <Routes>
+          {/* דף ה-login יהיה הדף הראשון */}
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/children" element={<ChildrenList/>} />
+          <Route path="/childrenListByBranch" element={<ChildrenListByBranch/>} />
+
+        </Routes>
+      </Router>
     </div>
   );
 }

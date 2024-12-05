@@ -1,0 +1,91 @@
+.children-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f1d3d3; /* צבע קרם ורדרד */
+    padding: 50px;
+  }
+  
+  .table-title {
+    text-align: left;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: xx-large;
+    font-weight: bold;
+    width: 90%; 
+    max-width: 900px;
+  }
+  
+  .children-table {
+    width: 90%;
+    max-width: 900px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .children-table th, 
+  .children-table td {
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .children-table th {
+    background-color: #ff6b6b; /* ורוד כהה */
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .children-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .children-table tr:last-child td {
+    border-bottom: none;
+  }
+  .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-gap: 10px;
+      margin-top: 12px;
+    }
+    
+    .pagination li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .pagination li a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px; /* רוחב הכפתור */
+      height: 30px; /* גובה הכפתור */
+      font-size: 18px; /* גודל הטקסט */
+      font-weight: bold; /* טקסט מודגש */
+      text-decoration: none;
+      color: #333; /* צבע הטקסט */
+      border: 2px solid #ff6b6b; /* צבע מסגרת */
+      border-radius: 50%; /* עיגול */
+      background-color: #f1d3d3; /* רקע */
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .pagination li a:hover {
+      background-color: #ff6b6b; /* רקע ורוד כהה */
+      color: #ffffff; /* טקסט לבן */
+    }
+    
+    .pagination li.active a {
+      background-color: #ff6b6b; /* רקע ורוד כהה */
+      color: #ffffff; /* טקסט לבן */
+    }
+    

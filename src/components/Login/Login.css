@@ -1,0 +1,228 @@
+/* סגנון עבור העטיפה */
+.wrapper {
+    height: 100vh;
+    background-color: #f0f0f0; /* צבע קרם ורדרד */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* מאפשר למלא את כל הרוחב של המסך */
+}
+
+  
+  /* סגנון עבור העיגול */
+  .circle {
+    width: 47vw;
+    height: 94vh;
+    background-color: rgba(255, 183, 183, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    top: -22vh;
+    left: -11vw;
+  }
+  .dialog-box {
+    background-color: white;
+    padding: 5vw;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 24vw; 
+    max-width: 90%;
+    border: 3px solid #ff6b6b;
+    display: flex;
+    padding-top: 0vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: -2vw;
+  }
+  
+  /* כותרת */
+  .dialog-box h2 {
+    margin-bottom: 5vh;
+    font-size: 5vw; /* הגודל משתנה לפי רוחב המסך */
+    color: #333;
+}
+  
+  /* קבוצת קלט */
+  .input-group {
+    margin-bottom: 2vh;
+    text-align: left;
+    width: 24vw;
+    display: flex;;
+    flex-direction: column;
+    align-items: center;
+}
+  
+  
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    text-align: left;
+
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* כפתור התחברות */
+  .login-button{
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.signup-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+  .login-button:hover {
+    background-color: #ff4b4b;
+  }
+
+  
+  .signup-button:hover {
+    background-color: #ff4b4b;
+  }
+  
+  /* קווים ו-"or" */
+  .separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1vh;
+  }
+  
+  .separator .line {
+    height: 1px;
+    background-color: #ddd;
+    flex: 1;
+  }
+  
+  .separator span {
+    font-size: 14px;
+    color: #555;
+  }
+
+
+
+  @media (max-width: 768px) {
+    .dialog-box {
+        width: 69%;
+        height: 72vh;
+        padding: 5vw;
+    }
+    .input-group input{
+        padding: 17px;
+        font-size: 25px;
+        width: 54vw;
+    }
+    .input-group label {
+        font-size: 23px;
+       
+    }
+    .dialog-box h2 {
+        font-size: 12vw;
+        margin-bottom: 10vh;
+        margin-top: -3vh    }
+
+    .login-button {
+        font-size: 1.6em;
+        padding: 2vw;
+        width: 223%;
+        margin-top: 10vh;
+        margin-left: -15vw;
+
+}
+    
+    .signup-button{
+        font-size: 1.6em;
+        padding: 2vw;
+        width: 78%;
+    }
+    .circle{
+        width: 86vw;
+        height: 56vh;
+        position: absolute;
+        top: -20vh;
+        left: -31vw;
+    }
+        .separator span {
+            font-size: 25px;
+          }
+          .separator .line {
+            height: 3px;
+          }
+          
+        
+}
+
+@media (max-width: 480px) {
+    .dialog-box {
+        margin-left: -3vw;
+        width: 67%;
+        height: 70vh;
+        padding: 10vw;
+    }
+
+    .input-group input{
+        font-size: 14px;
+        width: 54vw;
+    }
+    .input-group label {
+        font-size: 16px;
+       
+    }
+    .dialog-box h2 {
+        font-size: 12vw;
+        margin-bottom: 10vh;
+        margin-top: -3vh    }
+
+    .login-button {
+        font-size: 1.2em;
+        padding: 2vw;
+        width: 283%;
+        margin-top: 8vh;
+        margin-left: -22vw;
+    }
+    
+    .signup-button{
+            font-size: 1.2em;
+            padding: 2vw;
+            width: 100%;
+    }
+    .circle{
+        width: 84vw;
+        height: 49vh;
+        position: absolute;
+        top: -20vh;
+        left: -30vw;    
+    }
+    .separator span {
+        font-size: 15px;
+    }
+}
+  
+  
