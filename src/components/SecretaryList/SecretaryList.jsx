@@ -52,8 +52,8 @@ const SecretaryList = () => {
         </tbody>
       </table>
       <ReactPaginate
-        previousLabel='<-' // הסרת החץ הקודם
-        nextLabel='->'     // הסרת החץ הבא
+        previousLabel={null}  // הסרת החץ הקודם
+        nextLabel={null}      // הסרת החץ הבא
         pageCount={pageCount}
         onPageChange={handlePageClick}
         containerClassName="pagination"
