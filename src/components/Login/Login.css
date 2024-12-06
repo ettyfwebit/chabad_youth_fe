@@ -14,7 +14,7 @@
   .circle {
     width: 47vw;
     height: 94vh;
-    background-color: rgba(255, 183, 183, 0.5);
+    background-color: rgb(175 132 132 / 50%);
     border-radius: 50%;
     position: absolute;
     top: -22vh;
@@ -28,7 +28,7 @@
     text-align: center;
     width: 24vw; 
     max-width: 90%;
-    border: 3px solid #ff6b6b;
+    border: 3px solid#937676;
     display: flex;
     padding-top: 0vh;
     position: absolute;
@@ -45,7 +45,7 @@
   .dialog-box h2 {
     margin-bottom: 5vh;
     font-size: 5vw; /* הגודל משתנה לפי רוחב המסך */
-    color: #333;
+    color: #3f3939;
 }
   
   /* קבוצת קלט */
@@ -62,7 +62,7 @@
   .input-group label {
     display: block;
     font-size: 14px;
-    color: #555;
+    color: #3f3939;
     margin-bottom: 5px;
     text-align: left;
 
@@ -80,7 +80,7 @@
   .login-button{
     width: 100%;
     padding: 10px;
-    background-color: #ff6b6b;
+    background-color: #937676;
     color: white;
     border: none;
     border-radius: 50px;
@@ -90,7 +90,7 @@
 .signup-button {
     width: 100%;
     padding: 10px;
-    background-color: #ff6b6b;
+    background-color: #937676;
     color: white;
     border: none;
     border-radius: 50px;
@@ -99,12 +99,12 @@
 }
   
   .login-button:hover {
-    background-color: #ff4b4b;
+    background-color: #8a6f6f;
   }
 
   
   .signup-button:hover {
-    background-color: #ff4b4b;
+    background-color: #8a6f6f;
   }
   
   /* קווים ו-"or" */
@@ -133,6 +133,9 @@
         width: 69%;
         height: 72vh;
         padding: 5vw;
+        margin-top: -3vh;
+        margin-left: -3vh;
+
     }
     .input-group input{
         padding: 17px;
@@ -181,7 +184,7 @@
 
 @media (max-width: 480px) {
     .dialog-box {
-        margin-left: -3vw;
+        margin-left: -2vw;
         width: 67%;
         height: 70vh;
         padding: 10vw;

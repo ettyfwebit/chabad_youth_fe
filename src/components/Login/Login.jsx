@@ -27,12 +27,15 @@ const LoginPage = () => {
 
       const data =await response.json();
       if(data.role==="secretary")
-       navigate('/children');
+       navigate('/secretaryList');
       if(data.role==="branch_manager")
-        navigate('/childrenListByBranch')
+        navigate('/branchManagerList',  { state: { user_id: data.user_id } })
+      if(data.role==="parent")
+        navigate('/parentList',{ state: { user_id: data.user_id }})
     } catch (error) {
       console.error("Error during login:", error.message);
     }
+     
   };
 
 
