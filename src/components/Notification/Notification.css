@@ -1,0 +1,156 @@
+/* כללי */
+.notification-container {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0 auto;
+  max-width: 700px;
+  padding: 20px;
+  color: #333;
+  direction: rtl;
+}
+
+/* כותרת */
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.new-notification-button {
+  background-color: #03dac6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.new-notification-button:hover {
+  background-color: #018786;
+}
+
+/* רשימת הודעות */
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.notification-item {
+  margin-bottom: 15px;
+}
+
+.notification-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification-content {
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* כפתורים */
+.action-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.action-button.resolved {
+  background-color: #ff1744;
+  color: white;
+}
+
+.action-button.unresolved {
+  background-color: #00e676;
+  color: white;
+}
+
+.action-button.forward {
+  background-color: #2979ff;
+  color: white;
+}
+
+.action-button.reply {
+  background-color: #ffc400;
+  color: white;
+}
+
+.action-button:hover {
+  opacity: 0.9;
+}
+
+/* מודאל */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* סקרול נמענים */
+.recipients-scroll {
+  margin: 10px 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.recipient-options label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* כפתורי מודאל */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}

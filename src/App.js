@@ -5,20 +5,20 @@ import SecretaryList from './components/SecretaryList/SecretaryList';
 import BranchManagerList from './components/BranchManagerList/BranchManagerList';
 import ParentList from './components/ParentList/ParentList';
 import RegisterPage from './components/Register/Register';
-
+import NotificationPage from './components/Notification/Notification';
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
-          {/* דף ה-login יהיה הדף הראשון */}
+          {/* The login page will be the first page */}
           <Route path="/" element={<LoginPage />} />
-          <Route path="/secretaryList" element={<SecretaryList/>} />
-          <Route path="/branchManagerList" element={<BranchManagerList/>} />
-          <Route path="/parentlist" element={<ParentList/>} />
+          <Route path="/secretaryList" element={<SecretaryList />} />
+          <Route path="/branchManagerList" element={<BranchManagerList />} />
+          <Route path="/parentlist" element={<ParentList />} />
+          <Route path="/notification" element={<NotificationPage />} />
           <Route path="/register" element={<RegisterPage />} />
-
         </Routes>
       </Router>
     </div>
