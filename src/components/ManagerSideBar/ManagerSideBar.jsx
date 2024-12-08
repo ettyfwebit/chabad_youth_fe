@@ -6,7 +6,7 @@ const ManagerSideBar = () => {
     <div className="side-bar">
        <button className="side-bar-button">Home</button>
        <button className="side-bar-button">Profile</button>
-       <button className="side-bar-button">Settings</button>
+       <button className="side-bar-button">  exit </button>
        <button className="side-bar-button">Logout</button> 
     </div>
   );
