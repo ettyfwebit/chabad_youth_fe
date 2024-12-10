@@ -26,6 +26,7 @@
   .child-details-form ul {
     list-style: none;
     padding: 0;
+    
   }
   
   .child-details-form li {
@@ -52,5 +53,33 @@
     object-fit: cover;
     margin-bottom: -2vh;
 
+  }
+  .edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  
+  .edit-button,
+  .save-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .edit-button:hover {
+    background: #0056b3;
+  }
+  
+  .save-button {
+    background: #28a745;
+  }
+  
+  .save-button:hover {
+    background: #218838;
   }
   

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const ChildForm = ({ onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
+        parent_id: 0,
         first_name: '',
         last_name: '',
         nickname: '',

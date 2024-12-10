@@ -34,7 +34,9 @@ const ParentList = () => {
 
   return (
     <div className="children-list-wrapper">
-      <ManagerSideBar />
+      <ManagerSideBar 
+        user_id={state?.user_id}
+/>
       <h2 className="table-title">Children</h2>
       <table className="children-table">
         <tbody>
