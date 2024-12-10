@@ -1,0 +1,56 @@
+.child-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .child-details-form {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+
+  
+  .child-details-form ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .child-details-form li {
+    margin-bottom: 10px;
+  }
+  
+  .child-details-form .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff5e5e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .child-details-form .child-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: -2vh;
+
+  }
+  

@@ -3,7 +3,7 @@
     position: fixed;  
     top: 0;
     left: 0;
-    width: 10%;  
+    width: 8%;  
     height: 100%; 
     background-color: #937676;
     padding: 20px;
@@ -24,7 +24,52 @@
     font-size: 16px;
     transition: background-color 0.3s;
   }
-  
+  /* עיצוב הכפתור החדש */
+
+
+.side-bar-button:hover {
+  color: #755f5f;
+}
+
+/* עיצוב הטופס */
+.child-form {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.child-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.child-form input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.child-form button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #937676;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.child-form button:hover {
+  background-color: #755f5f;
+}
+
 
   @media (max-width: 768px) {
     .side-bar {
@@ -37,18 +82,19 @@
     
   }  @media (max-width: 480px) {
     .side-bar {
-      width: 100%;
-      height: 3%;
-    }
+      width: 3%;
+      height: 100%;
+  }
     .side-bar-button {
 
-      font-size: 24px;
-      width: 20%;
-      height: 100%;
-      display: inline-flex;
-      margin: -10px 0;
-      font-size: 16px;
-      margin-left: 1vw;
+              font-size: 24px;
+        width: 100%;
+        height: 4%;
+        display: flex
+;
+        margin: auto;
+        font-size: 16px;
+        margin-left: -6.5vw;
     }
     
   }

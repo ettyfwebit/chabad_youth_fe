@@ -1,37 +1,41 @@
 .children-list-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0; /* צבע קרם ורדרד */
-    padding: 50px;
-    width: 100vw; /* מאפשר למלא את כל הרוחב של המסך */
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #f0f0f0;
+  /* צבע קרם ורדרד */
+  padding: 50px;
+  width: 100%;
+  /* מאפשר למלא את כל הרוחב של המסך */
+  position: relative;
 
-  }
+}
 
-  
-  .table-title {
-    text-align: left;
-    margin-bottom: 5px;
-    color: #3f3939;
-    font-size: xx-large;
-    font-weight: bold;
-    width: 90%; 
-    max-width: 900px;
-    margin-top: -8vh;
-  }
-  
-  .children-table {
-    width: 90%;
-    max-width: 900px;
-    border-collapse: collapse;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
+
+.table-title {
+  text-align: left;
+  margin-bottom: 5px;
+  color: #755f5f;
+  font-size: xx-large;
+  font-weight: bold;
+  width: 90%;
+  max-width: 900px;
+  margin-top: 0vh;
+  margin-left: -38vh;
+}
+
+.children-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/*   
   .children-table th, 
   .children-table td {
     padding: 20px 30px;
@@ -43,52 +47,220 @@
     background-color: #937676;
     color: #ffffff;
     font-weight: bold;
+  } */
+/* עיצוב תא הטבלה */
+.children-table td.profile-td{
+  text-align: left;
+  vertical-align: middle;
+  padding: 10px;
+}
+.children-table td.city-td{
+  text-align: left;
+  vertical-align: middle;
+  padding: 20px 19px
+}
+
+/* עיצוב המעטפת של הפרופיל */
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  /* ממרכז את התוכן אנכית */
+  gap: 28px;
+  /* מרווח בין התמונה לטקסט */
+  margin-left: 22vh;
+
+}
+
+/* עיצוב התמונה */
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* מתאים את התמונה למסגרת */
+}
+
+/* עיצוב המעטפת של הטקסט */
+.name-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* שם ומספר זהות אחד מתחת לשני */
+}
+
+/* עיצוב השם */
+.name {
+  font-size: 20px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #666;
+
+}
+
+/* עיצוב מספר הזהות */
+.id-number {
+  font-size: 15px;
+  color: #666;
+  font-weight: normal;
+}
+
+/* סגנון למעטפת העיר והרחוב */
+.location-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* מציג את העיר מעל הרחוב */
+  align-items: center;
+  /* ממרכז את התוכן אופקית */
+  justify-content: center;
+  /* ממרכז את התוכן אנכית */
+  text-align: center;
+  /* ממרכז את הטקסט */
+  margin-right: 70vh;
+}
+
+/* סגנון לעיר */
+.location-wrapper .city {
+  font-size: 20px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #666;
+}
+
+/* סגנון לרחוב */
+.location-wrapper .street {
+  font-size: 15px;
+  color: #666;
+  font-weight: normal;
+}
+
+.children-table img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.children-table tr:hover {
+  background-color: #cfcbcb;
+}
+
+.children-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  margin-top: 12px;
+}
+
+.pagination li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  /* רוחב הכפתור */
+  height: 30px;
+  /* גובה הכפתור */
+  font-size: 18px;
+  /* גודל הטקסט */
+  font-weight: bold;
+  /* טקסט מודגש */
+  text-decoration: none;
+  color: #333;
+  /* צבע הטקסט */
+  border-radius: 50%;
+  /* עיגול */
+  background-color: #f1d3d3;
+  /* רקע */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.pagination li a:hover {
+  background-color: #937676;
+  /* רקע ורוד כהה */
+  color: #ffffff;
+  /* טקסט לבן */
+}
+
+.pagination li.active a {
+  background-color: #937676;
+  color: #ffffff;
+  /* טקסט לבן */
+}
+
+@media (max-width: 768px) {
+  .table-title {
+    font-size: xx-large;
+    margin-left: 7vw;
+
+  }
+
+  .children-table {
+    width: 83vw;
+    margin-left: -1vw;
+  }
+
+
+
+
+}
+
+
+
+
+@media (max-width: 480px) {
+  .table-title {
+    font-size: xx-large;
+    margin-top: 3vh;
+    margin-right: 3vh;
+
+  }
+
+  .children-table {
+    margin-right: 17vw;
+
+  }
+  .profile-wrapper {
+    margin-left: 85vh;
+    gap: 15px;
+  }
+  .name {
+    font-size: 15px;
+   
   }
   
-  .children-table tr:hover {
-    background-color: #cfcbcb;
-  }
-  
-  .children-table tr:last-child td {
-    border-bottom: none;
-  }
-  .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      grid-gap: 10px;
-      margin-top: 12px;
-    }
-    
-    .pagination li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .pagination li a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 30px; /* רוחב הכפתור */
-      height: 30px; /* גובה הכפתור */
-      font-size: 18px; /* גודל הטקסט */
-      font-weight: bold; /* טקסט מודגש */
-      text-decoration: none;
-      color: #333; /* צבע הטקסט */
-      border-radius: 50%; /* עיגול */
-      background-color: #f1d3d3; /* רקע */
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
-    
-    .pagination li a:hover {
-      background-color:#937676; /* רקע ורוד כהה */
-      color: #ffffff; /* טקסט לבן */
-    }
-    
-    .pagination li.active a {
-      background-color: #937676;
-      color: #ffffff; /* טקסט לבן */
-    }
+  /* עיצוב מספר הזהות */
+  .id-number {
+    font-size: 13px;
  
+  }
+  /* סגנון למעטפת העיר והרחוב */
+.location-wrapper {
+  margin-right: 80vh;
+  padding:10px
+}
+
+/* סגנון לעיר */
+.location-wrapper .city {
+  font-size: 15px;
+
+}
+
+/* סגנון לרחוב */
+.location-wrapper .street {
+  font-size: 13px;
+
+}
+.profile-td {
+  padding: 10px;
+}
+
+}
