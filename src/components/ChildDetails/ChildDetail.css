@@ -28,9 +28,31 @@
     padding: 0;
     
   }
+ /* כל שדות ה-input */
+.editing input  {
+  border: none; /* הסרת גבולות */
+  border-bottom: 2px solid #ccc; /* הוספת קו תחתון בגובה של 2px */
+  outline: none; /* הסרת ההבהרה כשיש פוקוס */
+  width: 10vw; /* אם ברצונך שה-input יתפוס את כל הרוחב */
+  max-width: 300px; 
+  min-width: 10vw;
+}
+
+/* כאשר השדה מקבל פוקוס */
+.child-details-form input:focus {
+  box-shadow: none; /* הסרת הצלילה */
+  border-bottom: 2px solid #755f5f; 
+
+}
+
+/* כאשר עכבר נמצא מעל השדה */
+
+
+ 
+ 
   
   .child-details-form li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   
   .child-details-form .close-button {
@@ -57,7 +79,7 @@
   .edit-buttons {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin-top: -44px;
   }
   
   .edit-button,

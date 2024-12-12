@@ -153,7 +153,7 @@
 }.new-child-form .address:focus{
     font-size: 11px;
 }
-.radio-group .radio-option input[type="radio"] {
+.new-child-form  input[type="radio"] {
     appearance: none; 
     width: 10px; 
     height: 10px;
@@ -198,5 +198,8 @@
     resize: none; 
     font-size: 14px;
 }
-
+.new-child-form .imageUpload{
+    width: 122px;
+    height: 151px;
+}
 
