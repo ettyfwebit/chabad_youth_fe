@@ -36,6 +36,8 @@
   width: 10vw; /* אם ברצונך שה-input יתפוס את כל הרוחב */
   max-width: 300px; 
   min-width: 10vw;
+  margin-right: 2vw;
+
 }
 
 /* כאשר השדה מקבל פוקוס */

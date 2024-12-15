@@ -71,6 +71,7 @@ const ParentList = () => {
       {selectedChild && (
       <ChildDetails
         child={selectedChild}
+        setChild={setSelectedChild}
         onClose={() => setSelectedChild(null)}
       />
     )}
