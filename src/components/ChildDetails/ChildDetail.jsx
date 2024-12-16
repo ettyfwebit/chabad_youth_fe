@@ -1,20 +1,52 @@
 import React, { useState } from "react";
+import { MdEdit } from 'react-icons/md';
+import { FiCheck } from 'react-icons/fi';
+import { TfiPencil } from "react-icons/tfi";
+import { RiEdit2Fill } from "react-icons/ri";
+
 import "./ChildDetail.css";
 
-const ChildDetails = ({ child, setChild, onClose }) => {
+const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) => {
   const [isEditing, setIsEditing] = useState(false); // מצב עריכה
   const [editedChild, setEditedChild] = useState({ ...child }); // עותק לעריכה
 
   if (!child) return null;
+  const getBranchNameById = (branchId) => {
+    const branch = branches.find(branch => branch.branch_id == branchId);
+    return branch ? branch.branch_name : "Unknown Branch"; // אם לא נמצא סניף, הצג "סניף לא ידוע"
+  };
+  const getClassNameById = (classId) => {
+    const grade = classes.find(grade => grade.class_id == classId);
+    return grade ? grade.class_name : "Unknown Class"; // אם לא נמצא סניף, הצג "סניף לא ידוע"
+  };
+  const getShirtSizeById = (shirtId) => {
+    console.log(shirtId)
+    const shirtSize = shirts.find(shirt => shirt.shirt_size_id == shirtId);
+    console.log(shirtSize)
+    return shirtSize ? shirtSize.shirt_size : "Unknown shirt size"; // אם לא נמצא סניף, הצג "סניף לא ידוע"
+  };
 
   const handleEditClick = () => {
     setIsEditing(true); // מעבר למצב עריכה
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditedChild({
+          ...editedChild,
+          image: reader.result.split(",")[1], // המרת ה-Base64
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSaveClick = async () => {
     setChild(editedChild)
     setIsEditing(false); // חזרה למצב תצוגה
-        try {
+    try {
       const response = await fetch("http://localhost:8000/children/updateChild", {
         method: "PUT",
         headers: {
@@ -22,21 +54,23 @@ const ChildDetails = ({ child, setChild, onClose }) => {
         },
         body: JSON.stringify(editedChild),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to update child");
       }
-  
+
       const updatedChild = await response.json();
       console.log("Child updated successfully:", updatedChild);
     } catch (error) {
       console.error("Error updating child:", error);
     }
   };
-  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log("Field updated:", name, "New value:", value); // בדיקה
+
     setEditedChild({ ...editedChild, [name]: value });
   };
   const handleFocus = (e) => {
@@ -50,10 +84,32 @@ const ChildDetails = ({ child, setChild, onClose }) => {
           X
         </button>
         <div className="child-image">
-          <img
-            src={`data:image/png;base64,${child.image}`}
-            alt={`Child ${child.first_name}`}
-          />
+          {isEditing ? (
+            <div className="image-upload-container">
+              <img
+                src={`data:image/png;base64,${editedChild.image}`}
+                alt={`Child ${editedChild.first_name}`}
+                onClick={() => document.getElementById("image-upload").click()} // לחיצה על התמונה תפתח את דיאלוג הבחירה
+
+                className="child-image"
+              />
+              <input
+                id="image-upload"
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
+            </div>
+          ) : (
+            <img
+              src={`data:image/png;base64,${editedChild.image}`}
+              alt={`Child ${editedChild.first_name}`}
+              className="child-image"
+            />
+          )}
+
         </div>
         <ul>
           <div className="editing">
@@ -167,7 +223,7 @@ const ChildDetails = ({ child, setChild, onClose }) => {
                   value={editedChild.house_number}
                   onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
                   onChange={handleInputChange}
-                />) : (editedChild.street)}
+                />) : (editedChild.house_number)}
             </li>
             <li>
               <strong>City:</strong>{" "}
@@ -202,58 +258,58 @@ const ChildDetails = ({ child, setChild, onClose }) => {
             <li>
               <strong>Mother:</strong>{" "}
               {isEditing ? (
-                     <input
-                    type="text"
-                    name="mother_name"
-                    placeholder="Mother's Name"
-                    value={editedChild.mother_name}
-                    onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
-                    onChange={handleInputChange}
-                  />
-                 
-                  ):(editedChild.mother_name)}
-                  
-                   </li>
-                   <li>
-                  <strong>Mother phoמe:</strong>{" "}
-                  {isEditing ? (
-                  <input
-                    type="text"
-                    name="mother_phone"
-                    placeholder="Mother's Phone"
-                    value={editedChild.mother_phone}
-                    onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
-                    onChange={handleInputChange}
-                  />):(editedChild.mother_phone)}
-              
-              
+                <input
+                  type="text"
+                  name="mother_name"
+                  placeholder="Mother's Name"
+                  value={editedChild.mother_name}
+                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
+                  onChange={handleInputChange}
+                />
+
+              ) : (editedChild.mother_name)}
+
+            </li>
+            <li>
+              <strong>Mother phoמe:</strong>{" "}
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="mother_phone"
+                  placeholder="Mother's Phone"
+                  value={editedChild.mother_phone}
+                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
+                  onChange={handleInputChange}
+                />) : (editedChild.mother_phone)}
+
+
             </li>
             <li>
               <strong>Father:</strong>{" "}
               {isEditing ? (
-              
-                  <input
-                    type="text"
-                    name="father_name"
-                    placeholder="Father's Name"
-                    value={editedChild.father_name}
-                    onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
-                    onChange={handleInputChange}
-                  />
-              ):(editedChild.father_name)}
-              </li>
-              <li>
+
+                <input
+                  type="text"
+                  name="father_name"
+                  placeholder="Father's Name"
+                  value={editedChild.father_name}
+                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
+                  onChange={handleInputChange}
+                />
+              ) : (editedChild.father_name)}
+            </li>
+            <li>
               <strong>Father phone:</strong>{" "}
               {isEditing ? (
-                  <input
-                    type="text"
-                    name="father_phone"
-                    placeholder="Father's Phone"
-                    value={editedChild.father_phone}
-                    onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
-                    onChange={handleInputChange}
-                  />
-              
+                <input
+                  type="text"
+                  name="father_phone"
+                  placeholder="Father's Phone"
+                  value={editedChild.father_phone}
+                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
+                  onChange={handleInputChange}
+                />
+
               ) : (
                 editedChild.father_phone
               )}
@@ -287,45 +343,60 @@ const ChildDetails = ({ child, setChild, onClose }) => {
               )}
             </li>
             <li>
-              <strong>Branch ID:</strong>{" "}
+
+              <strong>Branch:</strong>{" "}
               {isEditing ? (
-                <input
-                  type="text"
+                <select
                   name="branch_id"
                   value={editedChild.branch_id}
-                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
                   onChange={handleInputChange}
-                />
+                >
+                  {branches.map((branch) => (
+                    <option key={branch.branch_id} value={branch.branch_id}>
+                      {branch.branch_name}
+                    </option>
+                  ))}
+                </select>
               ) : (
-                editedChild.branch_id
+                getBranchNameById(editedChild.branch_id)
               )}
             </li>
+
+
             <li>
-              <strong>Class ID:</strong>{" "}
+              <strong>Class:</strong>{" "}
               {isEditing ? (
-                <input
-                  type="text"
+                <select
                   name="class_id"
                   value={editedChild.class_id}
-                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
                   onChange={handleInputChange}
-                />
+                >
+                  {classes.map((grade) => (
+                    <option key={grade.class_id} value={grade.class_id}>
+                      {grade.class_name}
+                    </option>
+                  ))}
+                </select>
               ) : (
-                editedChild.class_id
+                getClassNameById(editedChild.class_id)
               )}
             </li>
             <li>
-              <strong>Shirt ID:</strong>{" "}
+              <strong>Shirt size:</strong>{" "}
               {isEditing ? (
-                <input
-                  type="text"
-                  name="shirt_id"
+                <select
+                  name="shirt_size_id"
                   value={editedChild.shirt_size_id}
-                  onFocus={handleFocus} // תוסף ככה שהשדה ייבחר אוטומטית
                   onChange={handleInputChange}
-                />
+                >
+                  {shirts.map((shirtSize) => (
+                    <option key={shirtSize.shirt_size_id} value={shirtSize.shirt_size_id}>
+                      {shirtSize.shirt_size}
+                    </option>
+                  ))}
+                </select>
               ) : (
-                editedChild.shirt_id
+                getShirtSizeById(editedChild.shirt_size_id)
               )}
             </li>
           </div>
@@ -335,12 +406,13 @@ const ChildDetails = ({ child, setChild, onClose }) => {
         <div className="edit-buttons">
           {!isEditing ? (
             <button className="edit-button" onClick={handleEditClick}>
-              ✏️
+              <RiEdit2Fill  size={28} color="#3f3939" />
             </button>
           ) : (
             <button className="save-button" onClick={handleSaveClick}>
-              ✔️
-            </button>
+              
+           <FiCheck size={28} color="#3f3939" />
+</button>
           )}
         </div>
       </div>

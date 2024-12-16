@@ -11,27 +11,42 @@
 /* כותרת */
 .notification-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
-  color: rgb(0, 0, 0);
+  background-color: #937676;
+  color: white;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 24.2vw;
+  /* margin-left: 26vw; */
+  margin-right: -2.8vw;
+  margin-top: -5vh;
 }
 
-.new-notification-button {
-  background-color: #03dac6;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
+.new-notification-header {
+  display: flex
+;
+    justify-content: center;
+    align-items: center;
+    background-color: #937676;
+    color: white;
+    /* padding: 4px; */
+    /* border-radius: 5px; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 35.2vw;
+    /* margin-left: 26vw; */
+    margin-right: -1.3vw;
+    margin-top: -3vh;
+    height: 7vh;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
 }
 
-.new-notification-button:hover {
-  background-color: #018786;
+.notification-header h1 {
+  font-size: 24px;
+  margin: 0;
+  margin-right: -5vw;
 }
 
 /* רשימת הודעות */
@@ -69,39 +84,99 @@
   gap: 10px;
 }
 
-/* כפתורים */
+
+.empty-notification {
+  display: flex;
+  font-size: 16px;
+  top: 23vh;
+
+  position: relative;
+  text-align: center;
+  color: #6f4f1f;
+
+  align-items: center;
+
+}
+
+.empty-envelope-icon {
+  position: absolute;
+  top: -3vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.empty-notification p {
+  margin-top: 2px;
+  /* רווח בין האייקון למילים */
+  margin-right: 4vw;
+  color: #3f3939;
+}
+
+.empty-notification svg {
+  margin-left: 10px;
+  color: #6f4f1f;
+}
+
+/* כפתור הודעה חדשה */
+.new-notification-button {
+  background-color: #937676;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  /* transition: background 0.3s; */
+  /* display: flex
+; */
+  display: flex;
+  /* הופך את הכפתור לאלמנט מסוג flex */
+  justify-content: center;
+  /* מרכז את התוכן אופקית */
+  align-items: center;
+  /* מרכז את התוכן אנכית */
+  text-align: center;
+  /* grid-gap: 8px; */
+  /* grid-gap: 8px; */
+  gap: 8px;
+  /* margin-top: 48vh; */
+  /* margin-left: 16vw; */
+  /* margin-right: 6vw; */
+  position: absolute;
+  left: 7vw;
+  bottom: 3vh;
+  font-size: 16px;
+}
+
+.new-notification-button:hover {
+  background-color: #5a3e1f;
+  /* חום כהה יותר */
+}
+
+.new-notification-button svg {
+  color: white;
+}
+
 .action-button {
   padding: 8px 12px;
   font-size: 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   transition: background 0.3s;
-}
-
-.action-button.resolved {
-  background-color: #ff1744;
+  background-color: #937676;
+  width: 6vw;
   color: white;
 }
+.action-button:hover{
+  background-color: #5a3e1f;
 
-.action-button.unresolved {
-  background-color: #00e676;
-  color: white;
 }
 
-.action-button.forward {
-  background-color: #2979ff;
-  color: white;
+.action-button.send {
+  margin-right: 19vw;
+  margin-left: 1vw;
 }
 
-.action-button.reply {
-  background-color: #ffc400;
-  color: white;
-}
-
-.action-button:hover {
-  opacity: 0.9;
-}
 
 /* מודאל */
 .modal-overlay {
@@ -119,38 +194,70 @@
 .modal {
   background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 14px;
   width: 90%;
   max-width: 500px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.textarea {
-  width: 100%;
-  height: 100px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
 /* סקרול נמענים */
 .recipients-scroll {
-  margin: 10px 0;
+
   max-height: 150px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  display: flex
+;
+  border-bottom: 2px solid #3f3939;
+  position: absolute;
+  top: 14vh;
+  left: 33vw;
+  /* margin-bottom: -4vh; */
+  width: 32%;
 }
 
 .recipient-options label {
-  display: block;
   margin-bottom: 5px;
+  margin-right: 24px;
+
 }
 
-/* כפתורי מודאל */
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
+.modal h2 {
+  color: #3f3939;
+}
+.modal ::placeholder{
+  color: #3f3939;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+}
+.textarea {
+  width: 100%;
+  /* מגדיר שהתיבה תתפוס את כל הרוחב של ההורה */
+  max-width: 600px;
+  /* מגביל את הרוחב המקסימלי */
+  height: 60vh;
+  border: none;
+  padding: 10px;
+  /* רווח פנימי */
+  font-size: 16px;
+  /* גודל גופן גדול יותר */
+  resize: vertical;
+  /* אפשרות להגדיל רק את הגובה */
+  outline: none;
+  /* מסיר את המסגרת הכחולה בריכוז */
+  transition: border-color 0.3s ease;
+  /* אפקט מעבר למסגרת */
+  margin-right: -0.8vw;
+  margin-top: 9vh;
+}
+
+.modal h3 {
+  margin-top: -2vh;
+  margin-bottom: 0vh;
+}
+
+.recipient-options {
+  margin-top: -1.6vh;
 }

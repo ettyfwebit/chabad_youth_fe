@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { HiOutlineArrowLeft } from 'react-icons/hi';
+import { TfiLocationArrow } from "react-icons/tfi";
+import { IoMdSend } from "react-icons/io";
+import { MdOutlineDrafts } from "react-icons/md";
 import './Notification.css';
 
-const NotificationPage = () => {
-  const location = useLocation();
-  const { user_id } = location.state || {}; // If `user_id` is not available, handle gracefully
+const NotificationPage = ({user_id }) => {
+  //const location = useLocation();
+  //const { user_id } = location.state || {}; // If `user_id` is not available, handle gracefully
   const [notifications, setnotifications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
@@ -86,15 +90,18 @@ const NotificationPage = () => {
     <div className="notification-container">
       <header className="notification-header">
         <h1>הודעות</h1>
-        <button onClick={() => setIsModalOpen(true)} className="new-notification-button">
-          הודעה חדשה
-        </button>
       </header>
 
       <main className="notification-main">
-        {notifications.length === 0 ? (
-          <p className="empty-notification">אין הודעות להצגה.</p>
-        ) : (
+      
+
+      {notifications.length === 0 ? (
+  <div className="empty-notification">
+    <MdOutlineDrafts className="empty-envelope-icon" size={24} color='#3f3939' />
+    <p>אין הודעות להצגה</p>
+  </div>
+)
+: (
           <ul className="notification-list">
             {notifications.map((notification) => (
               <li key={notification.notification_id} className={`notification-item ${notification.is_resolved ? 'resolved' : ''}`}>
@@ -123,13 +130,19 @@ const NotificationPage = () => {
             ))}
           </ul>
         )}
+        <button onClick={() => setIsModalOpen(true)} className="new-notification-button">
+             הודעה חדשה        <  IoMdSend size={20}  style={{ transform: 'rotate(180deg)' }} />
+        </button>
       </main>
 
       {/* Modal for new notification */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
+          <header className="new-notification-header">
+
             <h2>הודעה חדשה</h2>
+            </header>
             <textarea
               className="textarea"
               value={newnotification}

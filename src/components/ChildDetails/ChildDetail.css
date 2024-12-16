@@ -47,11 +47,17 @@
 
 }
 
-/* כאשר עכבר נמצא מעל השדה */
+.child-details-form select{
+  border-bottom: 2px solid #755f5f; /* הוספת קו תחתון בגובה של 2px */
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
 
-
- 
- 
+.child-details-form select:focus{
+  box-shadow: none; /* הסרת הצלילה */
+  border-bottom: 2px solid #755f5f;
+}
   
   .child-details-form li {
     margin-bottom: 8px;
@@ -82,28 +88,30 @@
     display: flex;
     justify-content: flex-end;
     margin-top: -44px;
+    
   }
   
   .edit-button,
   .save-button {
-    background: #007bff;
+    background: none;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    border-radius: 50px;
+    padding: 10px 12px;
+    ;
     cursor: pointer;
     margin-left: 10px;
   }
   
   .edit-button:hover {
-    background: #0056b3;
+    background: #cfcbcb;
   }
   
   .save-button {
-    background: #28a745;
+    background: none;
   }
   
   .save-button:hover {
-    background: #218838;
+    background: #cfcbcb;
   }
   

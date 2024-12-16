@@ -1,7 +1,7 @@
 import './ChildForm.css';
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 
-const ChildForm = ({ onSubmit, onClose }) => {
+const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
         parent_id: 0,
         first_name: '',
@@ -25,6 +25,8 @@ const ChildForm = ({ onSubmit, onClose }) => {
         health_issue_note: '', // הערה לבעיה בריאותית
         parental_approval: '' // כן או לא
     });
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -249,12 +251,19 @@ const ChildForm = ({ onSubmit, onClose }) => {
                             <li>
                                 <label>
                                     Branch Name:
-                                    <input
-                                        type="text"
+                                    <select
                                         name="branch_name"
                                         value={formData.branch_name}
                                         onChange={handleInputChange}
-                                    />
+                                        required
+                                    >
+                                        <option value="">Select Branch</option>
+                                        {branches.map((branch) => (
+                                            <option key={branch.branch_id} value={branch.branch_name}>
+                                                {branch.branch_name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </label>
                             </li>
                             <li>
@@ -269,40 +278,38 @@ const ChildForm = ({ onSubmit, onClose }) => {
                                 </label>
                             </li>
                             <li>
-                                <label>
+                            <label>
                                     Class:
                                     <select
-                                        name="class"
+                                        name="class_name"
                                         value={formData.class}
                                         onChange={handleInputChange}
                                         required
                                     >
                                         <option value="">Select Class</option>
-                                        <option value="ז">ז</option>
-                                        <option value="ח">ח</option>
-                                        <option value="ט">ט</option>
-                                        <option value="י">י</option>
-                                        <option value="יא">יא</option>
-                                        <option value="יב">יב</option>
+                                        {classes.map((grade) => (
+                                            <option key={grade.class_id} value={grade.class_name}>
+                                                {grade.class_name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </label>
                             </li>
                             <li>
-                                <label>
-                                    Shirt Size:
+                            <label>
+                                    Shirt size:
                                     <select
                                         name="shirt_size"
                                         value={formData.shirt_size}
                                         onChange={handleInputChange}
                                         required
                                     >
-                                        <option value="">Select Size</option>
-                                        <option value="xs">XS</option>
-                                        <option value="s">S</option>
-                                        <option value="m">M</option>
-                                        <option value="l">L</option>
-                                        <option value="xl">XL</option>
-                                        <option value="xxl">XXL</option>
+                                        <option value="">Select shirt size</option>
+                                        {shirts.map((shirtSize) => (
+                                            <option key={shirtSize.shirt_size_id} value={shirtSize.shirt_size}>
+                                                {shirtSize.shirt_size}
+                                            </option>
+                                        ))}
                                     </select>
                                 </label>
                             </li>

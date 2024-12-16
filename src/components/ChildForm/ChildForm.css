@@ -132,13 +132,13 @@
 
 }
 .new-child-form button{
-    background-color: #fff;
+    background-color: #937676;
     width: 6vw;
     height: 5vh;
-    border-radius: 15%;
+    border-radius: 50px;
     font-size: 18px;
-    color: #8a6f6f;
-    border-color: #755f5f;   
+    color: #fff;  
+    border: none;
 }
 .submit{
     position: absolute;

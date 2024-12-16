@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './ManagerSideBar.css'; // קובץ ה-CSS לעיצוב ה-SideBar
 import ChildForm from '../ChildForm/ChildForm';
-
-const ManagerSideBar = ({ user_id }) => {
+import { VscHome } from "react-icons/vsc";
+const ManagerSideBar = ({ user_id,branches, classes, shirts }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const handleFormSubmit =async (formData) => {
     formData.parent_id=user_id
@@ -44,13 +44,15 @@ const ManagerSideBar = ({ user_id }) => {
 return (
 
   <div className="side-bar">
-    <button className="side-bar-button">Home</button>
+    <button className="side-bar-button">Home <VscHome /></button>
     <button className="side-bar-button">Profile</button>
     <button className="side-bar-button">exit </button>
     <button className="side-bar-button" onClick={() => setIsFormOpen(true)}>new Child</button>
     {isFormOpen && (
       <ChildForm
-
+        branches={branches}
+        classes={classes}
+        shirts={shirts}
         onSubmit={handleFormSubmit}
         onClose={() => setIsFormOpen(false)}
       />
