@@ -6,7 +6,7 @@ import { IoMdSend } from "react-icons/io";
 import { MdOutlineDrafts } from "react-icons/md";
 import './Notification.css';
 
-const NotificationPage = ({user_id }) => {
+const NotificationPage = ({ user_id }) => {
   //const location = useLocation();
   //const { user_id } = location.state || {}; // If `user_id` is not available, handle gracefully
   const [notifications, setnotifications] = useState([]);
@@ -16,7 +16,7 @@ const NotificationPage = ({user_id }) => {
   const [replyContent, setReplyContent] = useState('');
   const [currentReply, setCurrentReply] = useState(null);
   const [recipients, setRecipients] = useState([]);
-  const [recipientOptions] = useState(['הורה 1', 'הורה 2', 'הנהלה', 'מורה מקצועי']);
+  const [recipientOptions] = useState(['מזכירות' , 'מנהל סניף' , 'הורה']);
 
   useEffect(() => {
     console.log(user_id)
@@ -93,45 +93,45 @@ const NotificationPage = ({user_id }) => {
       </header>
 
       <main className="notification-main">
-      
 
-      {notifications.length === 0 ? (
-  <div className="empty-notification">
-    <MdOutlineDrafts className="empty-envelope-icon" size={24} color='#3f3939' />
-    <p>אין הודעות להצגה</p>
-  </div>
-)
-: (
-          <ul className="notification-list">
-            {notifications.map((notification) => (
-              <li key={notification.notification_id} className={`notification-item ${notification.is_resolved ? 'resolved' : ''}`}>
-                <div className="notification-card">
-                  <div className="notification-header">
-                    <strong>מאת:</strong> {notification.sent_by_name}
-                    <span className="notification-subject">{notification.subject}</span>
+
+        {notifications.length === 0 ? (
+          <div className="empty-notification">
+            <MdOutlineDrafts className="empty-envelope-icon" size={24} color='#3f3939' />
+            <p>אין הודעות להצגה</p>
+          </div>
+        )
+          : (
+            <ul className="notification-list">
+              {notifications.map((notification) => (
+                <li key={notification.notification_id} className={`notification-item ${notification.is_resolved ? 'resolved' : ''}`}>
+                  <div className="notification-card">
+                    <div className="notification-header">
+                      <strong>מאת:</strong> {notification.sent_by_name}
+                      <span className="notification-subject">{notification.subject}</span>
+                    </div>
+                    <p className="notification-content">{notification.message}</p>
+                    <div className="notification-actions">
+                      <button
+                        onClick={() => toggleResolved(notification.notification_id)}
+                        className={`action-button ${notification.is_resolved ? 'unresolved' : 'resolved'}`}
+                      >
+                        {notification.is_resolved ? 'טופל' : 'לא טופל'}
+                      </button>
+                      <button
+                        onClick={() => openReplyModal(notification)}
+                        className="action-button reply"
+                      >
+                        תשובה
+                      </button>
+                    </div>
                   </div>
-                  <p className="notification-content">{notification.message}</p>
-                  <div className="notification-actions">
-                    <button
-                      onClick={() => toggleResolved(notification.notification_id)}
-                      className={`action-button ${notification.is_resolved ? 'unresolved' : 'resolved'}`}
-                    >
-                      {notification.is_resolved ? 'טופל' : 'לא טופל'}
-                    </button>
-                    <button
-                      onClick={() => openReplyModal(notification)}
-                      className="action-button reply"
-                    >
-                      תשובה
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+                </li>
+              ))}
+            </ul>
+          )}
         <button onClick={() => setIsModalOpen(true)} className="new-notification-button">
-             הודעה חדשה        <  IoMdSend size={20}  style={{ transform: 'rotate(180deg)' }} />
+          הודעה חדשה        <  IoMdSend size={20} style={{ transform: 'rotate(180deg)' }} />
         </button>
       </main>
 
@@ -139,9 +139,9 @@ const NotificationPage = ({user_id }) => {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-          <header className="new-notification-header">
+            <header className="new-notification-header">
 
-            <h2>הודעה חדשה</h2>
+              <h2>הודעה חדשה</h2>
             </header>
             <textarea
               className="textarea"

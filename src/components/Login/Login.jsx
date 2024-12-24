@@ -31,9 +31,9 @@ const LoginPage = () => {
       console.log(data.user_id)
       // Additional navigation based on user role
       if (data.role === "secretary") {
-        navigate('/secretaryList');
+        navigate('/secretaryList',{ state: { user_id: data.user_id } });
       } else if (data.role === "branch_manager") {
-        navigate('/notification', { state: { user_id: data.user_id } });
+        navigate('/branchmanagerList', { state: { user_id: data.user_id } });
       } else if (data.role === "parent") {
         navigate('/parentList', { state: { user_id: data.user_id } });
       }

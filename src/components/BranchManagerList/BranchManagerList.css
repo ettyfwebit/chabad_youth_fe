@@ -1,94 +1,140 @@
-.children-list-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0; /* צבע קרם ורדרד */
-    padding: 50px;
-    width: 100vw; /* מאפשר למלא את כל הרוחב של המסך */
-    position: relative;
+.wrapper {
+  height: 100vh;
+  background-color: #f0f0f0; /* צבע קרם ורדרד */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw; /* מאפשר למלא את כל הרוחב של המסך */
+}
 
-  }
 
-  
-  .table-title {
-    text-align: left;
-    margin-bottom: 5px;
-    color: #3f3939;
-    font-size: xx-large;
-    font-weight: bold;
-    width: 90%; 
-    max-width: 900px;
-    margin-top: -8vh;
-  }
-  
-  .children-table {
-    width: 90%;
-    max-width: 900px;
-    border-collapse: collapse;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .children-table th, 
-  .children-table td {
-    padding: 20px 30px;
-    text-align: center;
-    border-bottom: 1px solid #dddddd;
-  }
-  
-  .children-table th {
-    background-color: #937676;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  
-  .children-table tr:hover {
-    background-color: #cfcbcb;
-  }
-  
-  .children-table tr:last-child td {
-    border-bottom: none;
-  }
-  .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      grid-gap: 10px;
-      margin-top: 12px;
-    }
-    
-    .pagination li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .pagination li a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 30px; /* רוחב הכפתור */
-      height: 30px; /* גובה הכפתור */
-      font-size: 18px; /* גודל הטקסט */
-      font-weight: bold; /* טקסט מודגש */
-      text-decoration: none;
-      color: #333; /* צבע הטקסט */
-      border-radius: 50%; /* עיגול */
-      background-color: #f1d3d3; /* רקע */
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
-    
-    .pagination li a:hover {
-      background-color:#937676; /* רקע ורוד כהה */
-      color: #ffffff; /* טקסט לבן */
-    }
-    
-    .pagination li.active a {
-      background-color: #937676;
-      color: #ffffff; /* טקסט לבן */
-    }
- 
+/* סגנון עבור העיגול */
+.circle {
+  width: 47vw;
+  height: 94vh;
+  background-color: rgb(175 132 132 / 50%);
+  border-radius: 50%;
+  position: absolute;
+  top: -22vh;
+  left: -11vw;
+}
+
+
+.create-meeting-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px #705050;
+  transition: transform 0.2s;
+}
+
+.create-meeting-button:hover {
+  transform: scale(1.1);
+}
+
+.group-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+
+
+
+.submit-meeting-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #937676;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-meeting-button:hover {
+  background-color: #8a6f6f;
+}
+/* סגנון לשדה הקלט של שם המפגש */
+.meeting-name-input {
+  width: 95%; /* שדה הקלט יתפוס את כל הרוחב של הטופס */
+  padding: 10px; /* ריפוד פנימי לשדה הקלט */
+  margin-bottom: 20px; /* רווח בין שדה הקלט לשאר האלמנטים */
+  border: 1px solid #ddd; /* גבול בהיר */
+  border-radius: 25px; /* קצוות מעוגלים */
+  font-size: 16px; /* גודל טקסט */
+  color: #3f3939; /* צבע טקסט כהה */
+  background-color: #fff; /* רקע לבן */
+  box-shadow: 0 4px 6px #705050;
+  transition: all 0.3s ease-in-out; /* אפקט מעבר כשהמשתמש ממקם את הסמן בשדה */
+  direction: rtl; /* הגדרת כיוון כתיבה מימין לשמאל */
+  text-align: right; /* מיישר את הטקסט לימין */
+}
+
+.meeting-name-input:focus {
+  outline: none; /* הסרת גבול חיצוני בעת פוקוס */
+  border-color: #937676; /* שינוי צבע הגבול לפוקוס */
+  background-color: #f9f9f9; /* שינוי צבע הרקע כשיש פוקוס */
+  box-shadow: 0 4px 6px #705050;
+}
+
+/* עיצוב הסבר לשדה הקלט */
+.meeting-name-input::placeholder {
+  color: #bbb; /* צבע טקסט כהה יותר */
+  font-style: italic; /* הדגשה בעזרת קו נטוי */
+}
+.instructions-form {
+  direction: rtl; /* הגדרת כיוון הטקסט מימין לשמאל */
+  text-align: right; /* יישור הטקסט לימין */
+  font-family: Arial, sans-serif; /* גופן לקריאות */
+  padding: 20px; /* ריווח פנימי */
+  background-color: #f9f9f9; /* צבע רקע נעים */
+  border-radius: 10px; /* עיגול פינות */
+  box-shadow: 0 4px 6px #705050; /* הוספת הצללה */
+  width: 40%;
+  z-index: 9999;
+  max-height: 90vh; /* גובה מקסימלי לטופס */
+  overflow-y: auto; /* גלילה אנכית */
+}
+
+.instructions-form label {
+  display: block; /* הצגת כל הוראה בשורה נפרדת */
+  margin-bottom: 10px; /* רווח בין הוראות */
+  font-size: 16px; /* גודל טקסט קריא */
+  color: #333; /* צבע טקסט */
+}
+
+.acknowledge-instructions-button {
+  margin-top: 20px; /* רווח מעל הכפתור */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #937676; /* צבע רקע לכפתור */
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.acknowledge-instructions-button:hover {
+  background-color: #8a6f6f; /* צבע רקע כאשר הכפתור במצב hover */
+}

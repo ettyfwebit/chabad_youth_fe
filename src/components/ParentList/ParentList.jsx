@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import ManagerSideBar from '../ManagerSideBar/ManagerSideBar';
+import { useLocation ,useNavigate} from 'react-router-dom';
 import './ParentList.css';
 import ChildDetails from '../ChildDetails/ChildDetail';
-import { FaCommentDots } from 'react-icons/fa'; // ספריית אייקונים
-import NotificationPage from '../Notification/Notification'; // ייבוא הקומפוננטה של ההודעות
+import ChildForm from '../ChildForm/ChildForm'; // ייבוא הקומפוננטה
+import { FaCommentDots,FaPlus ,FaHome} from 'react-icons/fa';
+import NotificationPage from '../Notification/Notification';
 
 const ParentList = () => {
-  const location = useLocation()
+  const location = useLocation();
   const { state } = location;
   const [children, setChildren] = useState([]);
   const [selectedChild, setSelectedChild] = useState(null);
   const [branches, setBranches] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [classes, setClasses] = useState([]);
   const [shirts, setShirts] = useState([]);
-  const [showNotifications, setShowNotifications] = useState(false); // שליטה על הצגת ההודעות
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false); // ניהול מצב הטופס
+  const navigate = useNavigate(); // יצירת הפונקציה לניווט
+  const [showTooltip, setShowTooltip] = useState(false); // ניהול מצב חלונית ההסבר
+  const [showTooltipHome, setShowTooltipHome] = useState(false); // טול-טיפ לכפתור הבית
+  const [showTooltipNotification, setShowTooltipNotification] = useState(false); // טול-טיפ לכפתור הבית
+
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -30,18 +37,33 @@ const ParentList = () => {
     fetchBranches();
   }, []);
   useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/groups/');
+        const data = await response.json();
+        setGroups(data);
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
+  useEffect(() => {
     const fetchClasses = async () => {
       try {
         const response = await fetch('http://localhost:8000/classgrades/');
         const data = await response.json();
         setClasses(data);
       } catch (error) {
-        console.error('Error fetching branches:', error);
+        console.error('Error fetching classes:', error);
       }
     };
 
     fetchClasses();
   }, []);
+
   useEffect(() => {
     const fetchShirts = async () => {
       try {
@@ -49,14 +71,17 @@ const ParentList = () => {
         const data = await response.json();
         setShirts(data);
       } catch (error) {
-        console.error('Error fetching branches:', error);
+        console.error('Error fetching shirts:', error);
       }
     };
 
     fetchShirts();
   }, []);
+
   useEffect(() => {
     const fetchChildren = async () => {
+      console.log("parent id" ,state?.user_id)
+
       const userId = state?.user_id;
       if (!userId) {
         return;
@@ -73,35 +98,89 @@ const ParentList = () => {
 
     fetchChildren();
   }, [state?.user_id]);
+
   const handleRowClick = (child) => {
     setSelectedChild(child);
   };
+
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
   };
 
+
+
+
+
+  const handleAddChild = async (formData) => {
+    console.log("parent id" ,state?.user_id)
+    formData.parent_id = state?.user_id;
+    try {
+      const response = await fetch("http://localhost:8000/children/addNewChild", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const newChild = await response.json();
+        setChildren((prevChildren) => [...prevChildren, newChild]);
+        alert('Child added successfully!');
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to add child: ${errorData.detail}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while adding the child.');
+    }
+
+    setIsFormOpen(false);
+  };
+
   return (
     <div className="children-list-wrapper">
-      <ManagerSideBar
-        user_id={state?.user_id}
-        branches={branches}
-        classes={classes}
-        shirts={shirts}
-      />
-        <h2 className="table-title">Children</h2>
-        <div className="notification-icon" onClick={toggleNotifications}>
-        <FaCommentDots  color ={'#3f3939'} size={28} />
+ 
+      <h2 className="table-title">Children</h2>
+      <div className="notification-icon" onClick={() => setShowNotifications(!showNotifications)}
+          onMouseEnter={() => setShowTooltipNotification(true)}
+          onMouseLeave={() => setShowTooltipNotification(false)}>
+        <FaCommentDots color="#3f3939" size={24} />
+        {showTooltipNotification && <div className="home-tooltip">Show Notification</div>}
+
       </div>
-      {/* קומפוננטת ההודעות */}
+
       {showNotifications && (
         <div className="notifications-container">
           <NotificationPage user_id={state?.user_id} />
         </div>
+      )}
 
-      )} <table className="children-table">
+      <div
+        className="add-child-button"
+        onClick={() => setIsFormOpen(true)}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <FaPlus size={24} color="#3f3939" />
+        {showTooltip && <div className="tooltip">Add New Child</div>}
+      </div>
+      <div
+        className="home-button"
+        onClick={() => navigate('/')} // ניווט לדף ה-Login
+        onMouseEnter={() => setShowTooltipHome(true)}
+        onMouseLeave={() => setShowTooltipHome(false)}
+      >
+        <FaHome size={24} color="#3f3939" />
+        {showTooltipHome && <div className="home-tooltip">Log Out</div>}
+
+      </div>
+
+      <table className="children-table">
         <tbody>
           {children.map((child) => (
-            <tr key={child.child_id} onClick={() => handleRowClick(child)}>
+            <tr key={child.child_id} onClick={() => setSelectedChild(child)}>
               <td className="profile-td">
                 <div className="profile-wrapper">
                   <img
@@ -114,20 +193,17 @@ const ParentList = () => {
                   </div>
                 </div>
               </td>
-
               <td className="city-td">
                 <div className="location-wrapper">
                   <div className="city">{child.city}</div>
                   <div className="street">{child.street}</div>
                 </div>
               </td>
-
-
             </tr>
           ))}
         </tbody>
       </table>
-     
+
       {selectedChild && (
         <ChildDetails
           child={selectedChild}
@@ -135,11 +211,23 @@ const ParentList = () => {
           branches={branches}
           classes={classes}
           shirts={shirts}
+          groups={groups}
           onClose={() => setSelectedChild(null)}
+        />
+      )}
+
+      {isFormOpen && (
+        <ChildForm
+          branches={branches}
+          classes={classes}
+          shirts={shirts}
+          groups={groups}
+          onSubmit={handleAddChild}
+          onClose={() => setIsFormOpen(false)}
         />
       )}
     </div>
   );
+};
 
-}
-export default ParentList
+export default ParentList;

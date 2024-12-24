@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import { MdEdit } from 'react-icons/md';
+import React, { useEffect, useState } from "react";
 import { FiCheck } from 'react-icons/fi';
-import { TfiPencil } from "react-icons/tfi";
 import { RiEdit2Fill } from "react-icons/ri";
+
 
 import "./ChildDetail.css";
 
-const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) => {
+const ChildDetails = ({ child, setChild, branches, classes, shirts, groups, onClose }) => {
   const [isEditing, setIsEditing] = useState(false); // מצב עריכה
   const [editedChild, setEditedChild] = useState({ ...child }); // עותק לעריכה
-
+  const [relevantGroups, setRelevantGroups] = useState(); // משתנה לשמירת הקבוצות הרלוונטיות
+ useEffect(() => {
+    const fetchRelevantGroups = async () => {
+    const filteredGroups = groups.filter(group => group.branch_id === editedChild.branch_id);
+    setRelevantGroups(filteredGroups);
+    };
+    fetchRelevantGroups();
+  }, []);
   if (!child) return null;
   const getBranchNameById = (branchId) => {
     const branch = branches.find(branch => branch.branch_id == branchId);
@@ -25,7 +31,14 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) =
     console.log(shirtSize)
     return shirtSize ? shirtSize.shirt_size : "Unknown shirt size"; // אם לא נמצא סניף, הצג "סניף לא ידוע"
   };
-
+  const getGroupNameById = (groupId) => {
+    const match_group = groups.find(group => group.group_id == groupId);
+    return match_group ? match_group.group_name : "Unknown Group"; // אם לא נמצא סניף, הצג "סניף לא ידוע"
+  };
+  const filterGroups = (branchId) => {    // פונקציה לסינון הקבוצות לפי branch_id
+    const filteredGroups = groups.filter(group => group.branch_id == branchId);
+    setRelevantGroups(filteredGroups);
+  }
   const handleEditClick = () => {
     setIsEditing(true); // מעבר למצב עריכה
   };
@@ -72,6 +85,11 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) =
     console.log("Field updated:", name, "New value:", value); // בדיקה
 
     setEditedChild({ ...editedChild, [name]: value });
+  };
+  const handleBranchChange = (e) => {
+    const { name, value } = e.target;
+    setEditedChild({ ...editedChild, [name]: value });
+    filterGroups(value);
   };
   const handleFocus = (e) => {
     e.target.select(); // בחר את כל התוכן בשדה ברגע שיש פוקוס
@@ -349,7 +367,7 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) =
                 <select
                   name="branch_id"
                   value={editedChild.branch_id}
-                  onChange={handleInputChange}
+                  onChange={handleBranchChange}
                 >
                   {branches.map((branch) => (
                     <option key={branch.branch_id} value={branch.branch_id}>
@@ -361,7 +379,26 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) =
                 getBranchNameById(editedChild.branch_id)
               )}
             </li>
+            <li>
 
+              <strong>Group:</strong>{" "}
+              {isEditing ? (
+                <select
+                  name="branch_group_id"
+                  value={editedChild.branch_group_id}
+                  onChange={handleInputChange}
+                >
+                  {relevantGroups.map((group) => (
+                    <option key={group.group_id} value={group.group_id}>
+                      {group.group_name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                console.log(editedChild),
+                getGroupNameById(editedChild.branch_group_id)
+              )}
+            </li>
 
             <li>
               <strong>Class:</strong>{" "}
@@ -406,13 +443,13 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, onClose }) =
         <div className="edit-buttons">
           {!isEditing ? (
             <button className="edit-button" onClick={handleEditClick}>
-              <RiEdit2Fill  size={28} color="#3f3939" />
+              <RiEdit2Fill size={28} color="#3f3939" />
             </button>
           ) : (
             <button className="save-button" onClick={handleSaveClick}>
-              
-           <FiCheck size={28} color="#3f3939" />
-</button>
+
+              <FiCheck size={28} color="#3f3939" />
+            </button>
           )}
         </div>
       </div>

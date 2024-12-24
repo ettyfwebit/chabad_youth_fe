@@ -10,6 +10,8 @@
   width: 100%;
   /* מאפשר למלא את כל הרוחב של המסך */
   position: relative;
+    justify-content: flex-start; /* מוודא שהתוכן מתחיל מהחלק העליון */
+
 
 }
 
@@ -22,8 +24,11 @@
   font-weight: bold;
   width: 90%;
   max-width: 900px;
-  margin-top: 0vh;
-  margin-left: -38vh;
+  /* margin-top: 0vh; */
+  /* margin-left: -38vh; */
+  position: absolute;
+  left: 4vw;
+  top: 11vh;
 }
 
 .children-table {
@@ -33,6 +38,8 @@
   background-color: #f0f0f0;
   border-radius: 8px;
   overflow: hidden;
+  margin-top: 20px;
+
 }
 
 /*   
@@ -60,14 +67,10 @@
   padding: 20px 19px
 }
 
-/* עיצוב המעטפת של הפרופיל */
 .profile-wrapper {
   display: flex;
   align-items: center;
-  /* ממרכז את התוכן אנכית */
   gap: 28px;
-  /* מרווח בין התמונה לטקסט */
-  margin-left: 22vh;
 
 }
 
@@ -201,7 +204,6 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1000;
   /* background-color: #f8f9fa; */
   /* border: 1px solid #ddd; */
   border-radius: 50%;
@@ -238,6 +240,82 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
+.add-child-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 49px;
+  border-radius: 50%;
+
+  display: flex
+;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px #705050;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  background: none;
+}
+
+.add-child-button:hover {
+  background-color: #d3d3d3; /* אפור בהיר */
+  transform: scale(1.1); /* אנימציה קטנה */
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 70px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  z-index: 1001; /* גבוה יותר מכל רכיב אחר */
+
+}
+.home-tooltip {
+  position: absolute;
+  top: 60px; /* מרחק למעלה */
+  right: 0; /* התמקמות קרובה לכפתור */
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  z-index: 1001;
+}
+
+/* כפתור מעבר לדף הבית */
+.home-button {
+  position: fixed;
+  right: 82px;
+  top: 20px;
+  width: 48px;
+  height: 49px;
+  border-radius: 50%;
+  /* background-color: #3f51b5; */
+  color: white;
+  display: flex
+;
+  justify-content: center;
+  align-items: center;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #d3d3d3; /* אפור בהיר */
+  transform: scale(1.1); /* אנימציה קטנה */
+}
+
+
 
 
 

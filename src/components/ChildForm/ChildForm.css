@@ -98,7 +98,12 @@
     font-size: 15px;
     padding: 1px 4px;
 }
-
+select option:hover {
+    appearance: none;
+    background-color:#755f5f ; /* צבע הרקע בריחוף */
+    color: white; /* צבע הטקסט (אופציונלי) */
+  }
+   
 .new-child-form select:focus,
 .new-child-form input:focus {
   border-color: #3f3939; 

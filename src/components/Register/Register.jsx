@@ -7,7 +7,7 @@ const RegisterPage = () => {
   const [user_name, setuser_name] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [roleId, setRoleId] = useState(1); // Default to a role ID for the user
+  const [roleId, setRoleId] = useState("default"); // Default to a role ID for the user
   const [error, setError] = useState("");
 
   const handleRegister = async (event) => {
@@ -17,7 +17,7 @@ const RegisterPage = () => {
       user_name: user_name,
       email: email,
       password: password,
-      role_id: roleId,
+      role_id: roleId-1,
     };
   
     try {
@@ -47,6 +47,8 @@ const RegisterPage = () => {
       const errorMessage = error.response?.detail || error.message || "An unknown error occurred.";
       setError("Error during registration: " + errorMessage);
     }
+    
+
   };
 
   // Similar function for "Login" redirection, if needed
@@ -90,13 +92,21 @@ const RegisterPage = () => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="role_id">Role ID</label>
-            <input
-              type="number"
+            <label htmlFor="role_id">Role</label>
+            <select
               id="role_id"
               value={roleId}
               onChange={(e) => setRoleId(Number(e.target.value))}
-            />
+              className={roleId === "default" ? "placeholder" : ""}
+
+            >
+          <option value="default" disabled hidden>
+    Select your role
+  </option>
+              <option value={2}>Parent</option>
+              <option value={3}>Branch Manager</option>
+              <option value={4}>Secretary</option>
+            </select>
           </div>
           {error && <div style={{ color: "red" }}>{error}</div>}
           <button type="submit" className="login-button">Register</button>

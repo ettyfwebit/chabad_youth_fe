@@ -34,9 +34,9 @@
     /* padding: 4px; */
     /* border-radius: 5px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 35.2vw;
+    width: 35.3vw;
     /* margin-left: 26vw; */
-    margin-right: -1.3vw;
+    margin-right: -1.4vw;
     margin-top: -3vh;
     height: 7vh;
     border-top-right-radius: 14px;
@@ -148,7 +148,7 @@
 }
 
 .new-notification-button:hover {
-  background-color: #5a3e1f;
+  background-color: #8a6f6f;
   /* חום כהה יותר */
 }
 
@@ -168,7 +168,7 @@
   color: white;
 }
 .action-button:hover{
-  background-color: #5a3e1f;
+  background-color: #8a6f6f;
 
 }
 
@@ -212,7 +212,7 @@
 ;
   border-bottom: 2px solid #3f3939;
   position: absolute;
-  top: 14vh;
+  top: 15vh;
   left: 33vw;
   /* margin-bottom: -4vh; */
   width: 32%;
@@ -220,7 +220,8 @@
 
 .recipient-options label {
   margin-bottom: 5px;
-  margin-right: 24px;
+   margin-right: 16px;
+  ;
 
 }
 
@@ -241,7 +242,7 @@
   border: none;
   padding: 10px;
   /* רווח פנימי */
-  font-size: 16px;
+  font-size: 18px;
   /* גודל גופן גדול יותר */
   resize: vertical;
   /* אפשרות להגדיל רק את הגובה */
@@ -260,4 +261,37 @@
 
 .recipient-options {
   margin-top: -1.6vh;
+}
+/* עיצוב התיבה הנבחרת */
+input[type="checkbox"]:checked {
+  appearance: none; /* מבטל את ברירת המחדל של הדפדפן */
+  background-color:  #937676; /* צבע חום */
+  border: 2px solid  #937676; /* מסגרת תואמת */
+  cursor: pointer;
+  width: 1.5vw;
+  height: 3vh;
+  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
+  margin-right: 10px; /* רווח קטן בין התיבה לטקסט */
+}
+
+/* עיצוב התיבה שלא נבחרה */
+input[type="checkbox"] {
+  appearance: none; /* מבטל את ברירת המחדל */
+  background-color: #fff; /* רקע לבן */
+  border: 2px solid #ccc; /* מסגרת אפורה */
+  cursor: pointer;
+  width: 1.5vw;
+  height: 3vh;
+  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
+  margin-right: 5px; /* רווח קטן בין התיבה לטקסט */
+}
+input[type="checkbox"]:checked::after {
+  content: '✔'; /* או השתמשי באייקון אחר */
+  color: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

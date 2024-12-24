@@ -14,11 +14,13 @@
   .child-details-form {
     background: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding: 9px;
     width: 400px;
     max-width: 90%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-bottom: 2vh;
+
   }
   
 

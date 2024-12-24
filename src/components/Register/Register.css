@@ -228,4 +228,30 @@
     }
 }
   
-  
+/* סטייל ברירת מחדל */
+.input-group select {
+  width: 106%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: white;
+  appearance: none;
+  color: gray; /* צבע אפור לברירת מחדל */
+}
+
+/* כאשר נבחר ערך שאינו ברירת מחדל */
+.input-group select:not(.placeholder) {
+  color: #000; /* צבע שחור */
+}
+
+/* עיצוב לאופציה הראשונה */
+.input-group select option{
+  color:#000;
+}
+
+/* מסגרת במצב פוקוס */
+.input-group :focus {
+  border-color: #937676;
+  outline: none;
+}

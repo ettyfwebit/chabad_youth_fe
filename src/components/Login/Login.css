@@ -125,7 +125,10 @@
     font-size: 14px;
     color: #555;
   }
-
+  .input-group :focus {
+    border-color: #937676; /* מסגרת מותאמת במצב פוקוס */
+    outline: none;
+  }
 
 
   @media (max-width: 768px) {

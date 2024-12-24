@@ -1,7 +1,7 @@
 import './ChildForm.css';
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
+const ChildForm = ({ branches, classes, shirts, groups, onSubmit, onClose }) => {
     const [formData, setFormData] = useState({
         parent_id: 0,
         first_name: '',
@@ -23,10 +23,12 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
         image: '',
         has_health_issue: '', // כן או לא
         health_issue_note: '', // הערה לבעיה בריאותית
-        parental_approval: '' // כן או לא
+        parental_approval: '', // כן או לא
+        group_name: ''
     });
 
 
+    const [filteredGroups, setFilteredGroups] = useState([]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -46,6 +48,20 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
     const handleRadioChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+    const handleBranchChange = (e) => {
+        const selectedBranchName = e.target.value;
+        setFormData({ ...formData, branch_name: selectedBranchName });
+
+        // מציאת ה-branch_id על פי שם הסניף שנבחר
+        const selectedBranch = branches.find(branch => branch.branch_name === selectedBranchName);
+        if (selectedBranch) {
+            const branchId = selectedBranch.branch_id;
+
+            // סינון ה-groups לפי branch_id
+            const filtered = groups.filter(group => group.branch_id === branchId);
+            setFilteredGroups(filtered);
+        }
     };
 
 
@@ -254,7 +270,7 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
                                     <select
                                         name="branch_name"
                                         value={formData.branch_name}
-                                        onChange={handleInputChange}
+                                        onChange={handleBranchChange}
                                         required
                                     >
                                         <option value="">Select Branch</option>
@@ -268,6 +284,26 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
                             </li>
                             <li>
                                 <label>
+                                    Group:
+                                    <select
+                                        name="group_name"
+                                        value={formData.group_name}
+                                        onChange={handleInputChange}
+                                        required
+                                    >
+                                        <option value="">Select Group</option>
+                                        {filteredGroups.map((group) => (
+                                            <option key={group.group_id} value={group.group_name}>
+                                                {group.group_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
+                            </li>
+
+
+                            <li>
+                                <label>
                                     Phone:
                                     <input
                                         type="tel"
@@ -278,10 +314,10 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
                                 </label>
                             </li>
                             <li>
-                            <label>
+                                <label>
                                     Class:
                                     <select
-                                        name="class_name"
+                                        name="class"
                                         value={formData.class}
                                         onChange={handleInputChange}
                                         required
@@ -296,7 +332,7 @@ const ChildForm = ({branches,classes,shirts, onSubmit, onClose }) => {
                                 </label>
                             </li>
                             <li>
-                            <label>
+                                <label>
                                     Shirt size:
                                     <select
                                         name="shirt_size"

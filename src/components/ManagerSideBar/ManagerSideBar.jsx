@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import './ManagerSideBar.css'; // קובץ ה-CSS לעיצוב ה-SideBar
 import ChildForm from '../ChildForm/ChildForm';
 import { VscHome } from "react-icons/vsc";
+import { useNavigate } from 'react-router-dom';
+
 const ManagerSideBar = ({ user_id,branches, classes, shirts }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const navigate = useNavigate();
+  
   const handleFormSubmit =async (formData) => {
     formData.parent_id=user_id
     const formattedData = {
@@ -44,7 +48,7 @@ const ManagerSideBar = ({ user_id,branches, classes, shirts }) => {
 return (
 
   <div className="side-bar">
-    <button className="side-bar-button">Home <VscHome /></button>
+    <button className="side-bar-button" onClick={() => navigate('/')}>Home <VscHome /></button>
     <button className="side-bar-button">Profile</button>
     <button className="side-bar-button">exit </button>
     <button className="side-bar-button" onClick={() => setIsFormOpen(true)}>new Child</button>
