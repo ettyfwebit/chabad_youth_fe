@@ -1,3 +1,4 @@
+import { FaTimes } from 'react-icons/fa';
 import './ChildForm.css';
 import React, { useState, useEffect } from 'react';
 
@@ -102,7 +103,7 @@ const ChildForm = ({ branches, classes, shirts, groups, onSubmit, onClose }) => 
             <div className="child-details-overlay">
                 <div className="child-details-form">
                     <button className="close-button" onClick={onClose}>
-                        X
+                        <FaTimes size={20} />
                     </button>
                     <h3>Add new child</h3>
                     <div className="child-image">
@@ -413,7 +414,7 @@ const ChildForm = ({ branches, classes, shirts, groups, onSubmit, onClose }) => 
 
 
                         </ul>
-                        <button type="submit" className="submit">Submit</button>
+                        <button type="submit" className="submit">אישור</button>
                     </form>
                 </div>
             </div>

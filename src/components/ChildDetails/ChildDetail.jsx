@@ -4,6 +4,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 
 
 import "./ChildDetail.css";
+import { FaCheck, FaPen, FaTimes } from "react-icons/fa";
 
 const ChildDetails = ({ child, setChild, branches, classes, shirts, groups, onClose }) => {
   const [isEditing, setIsEditing] = useState(false); // מצב עריכה
@@ -98,9 +99,9 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, groups, onCl
   return (
     <div className="child-details-overlay">
       <div className="child-details-form">
-        <button className="close-button" onClick={onClose}>
-          X
-        </button>
+        <button className="close-button-details" onClick={onClose}>
+                   <FaTimes size={20} />
+                 </button>
         <div className="child-image">
           {isEditing ? (
             <div className="image-upload-container">
@@ -129,6 +130,8 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, groups, onCl
           )}
 
         </div>
+        <div className={`child-details-grid ${isEditing ? "editing" : "viewing"}`}>
+
         <ul>
           <div className="editing">
             <li>
@@ -439,16 +442,17 @@ const ChildDetails = ({ child, setChild, branches, classes, shirts, groups, onCl
           </div>
 
         </ul>
+        </div>
 
         <div className="edit-buttons">
           {!isEditing ? (
             <button className="edit-button" onClick={handleEditClick}>
-              <RiEdit2Fill size={28} color="#3f3939" />
+              <FaPen size={20} color="#3f3939" />
             </button>
           ) : (
             <button className="save-button" onClick={handleSaveClick}>
 
-              <FiCheck size={28} color="#3f3939" />
+              <FaCheck size={20} color="#3f3939" />
             </button>
           )}
         </div>

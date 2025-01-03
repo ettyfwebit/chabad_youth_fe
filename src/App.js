@@ -6,6 +6,7 @@ import BranchManagerList from './components/BranchManagerList/BranchManagerList'
 import ParentList from './components/ParentList/ParentList';
 import RegisterPage from './components/Register/Register';
 import NotificationPage from './components/Notification/Notification';
+import BranchManagerDetails from './components/BranchManagerDetails/BranchManagerDetails';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path="/parentlist" element={<ParentList />} />
           <Route path="/notification" element={<NotificationPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/branch-managers" element={<BranchManagerDetails />} />
+
         </Routes>
       </Router>
     </div>

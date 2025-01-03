@@ -5,6 +5,7 @@ import { TfiLocationArrow } from "react-icons/tfi";
 import { IoMdSend } from "react-icons/io";
 import { MdOutlineDrafts } from "react-icons/md";
 import './Notification.css';
+import { FaCheck, FaFlag, FaReply, FaTimes } from 'react-icons/fa';
 
 const NotificationPage = ({ user_id }) => {
   //const location = useLocation();
@@ -16,7 +17,7 @@ const NotificationPage = ({ user_id }) => {
   const [replyContent, setReplyContent] = useState('');
   const [currentReply, setCurrentReply] = useState(null);
   const [recipients, setRecipients] = useState([]);
-  const [recipientOptions] = useState(['מזכירות' , 'מנהל סניף' , 'הורה']);
+  const [recipientOptions] = useState(['מזכירות']);
 
   useEffect(() => {
     console.log(user_id)
@@ -76,15 +77,42 @@ const NotificationPage = ({ user_id }) => {
   };
 
   // Send reply
-  const sendReply = () => {
+  const sendReply = async () => {
     if (replyContent.trim() !== '') {
-      alert(`תשובתך נשלחה להודעה מ-${currentReply.sent_by_name}: ${replyContent}`);
-      setReplyContent('');
-      setIsReplyModalOpen(false);
+      try {
+        const response = await fetch("http://localhost:8000/notifications/", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: replyContent,
+            sent_by: user_id,  // ה-user_id של השולח
+            user_ids: [currentReply.sent_by],  // נשלח את ה-user_id של מקבל ההודעה
+            reply_to_notification_id: currentReply.notification_id, // הוספת מזהה ההודעה שהתגובה היא לה
+
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert(`תשובתך נשלחה להודעה מ-${currentReply.sent_by}: ${replyContent}`);
+          setReplyContent('');
+          setIsReplyModalOpen(false);
+        } else {
+          const error = await response.json();
+          alert(`שגיאה בשליחת התשובה: ${error.detail}`);
+        }
+      } catch (error) {
+        console.error("Error sending reply:", error);
+        alert("שגיאה בלתי צפויה בשליחת התשובה.");
+      }
     } else {
       alert('אנא כתוב תשובה לפני שליחה.');
     }
   };
+
+
 
   return (
     <div className="notification-container">
@@ -106,28 +134,45 @@ const NotificationPage = ({ user_id }) => {
               {notifications.map((notification) => (
                 <li key={notification.notification_id} className={`notification-item ${notification.is_resolved ? 'resolved' : ''}`}>
                   <div className="notification-card">
-                    <div className="notification-header">
-                      <strong>מאת:</strong> {notification.sent_by_name}
+                    <div className="recived-notification-header">
+                      <strong>מאת:</strong>&nbsp;{notification.sent_by_name}
                       <span className="notification-subject">{notification.subject}</span>
+
                     </div>
+                    {notification.forward_reason && (
+                      <div className='forward-reason'>
+
+                        <p >
+                          סיבת העברה: {notification.forward_reason}
+                        </p>
+                      </div>
+                    )}
+
+                    {notification.reply_to && (
+                      <div className="reply-to">
+                        <p>{notification.reply_to_message}</p>
+
+                      </div>
+                    )}
                     <p className="notification-content">{notification.message}</p>
                     <div className="notification-actions">
                       <button
                         onClick={() => toggleResolved(notification.notification_id)}
-                        className={`action-button ${notification.is_resolved ? 'unresolved' : 'resolved'}`}
+                        className={`action-button-reply ${notification.is_resolved ? 'resolved' : 'unresolved'}`}
                       >
-                        {notification.is_resolved ? 'טופל' : 'לא טופל'}
+                        {notification.is_resolved ? <FaCheck size={16} color="#3f3939" /> : <FaFlag style={{ transform: 'scaleX(-1)' }} size={16} color="#3f3939" />}
                       </button>
                       <button
                         onClick={() => openReplyModal(notification)}
-                        className="action-button reply"
+                        className="action-button-reply"
                       >
-                        תשובה
+                        <FaReply size={16} color="#3f3939" />
                       </button>
                     </div>
                   </div>
                 </li>
               ))}
+
             </ul>
           )}
         <button onClick={() => setIsModalOpen(true)} className="new-notification-button">
@@ -172,20 +217,47 @@ const NotificationPage = ({ user_id }) => {
             </div>
             <div className="modal-actions">
               <button
-                onClick={() => {
+                onClick={async () => {
                   if (newnotification && recipients.length > 0) {
-                    alert('ההודעה נשלחה בהצלחה');
-                    setNewnotification('');
-                    setRecipients([]);
-                    setIsModalOpen(false);
+                    const recipientUserIds = recipients.includes("מזכירות")
+                      ? [...recipients.map((recipient) => (recipient === "מזכירות" ? 6 : recipient))]
+                      : [...recipients];
+                    try {
+                      // שליחת ההודעה לשרת
+                      const response = await fetch("http://localhost:8000/notifications/", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          message: newnotification,
+                          user_ids: recipientUserIds,
+                          sent_by: user_id,
+                        }),
+                      });
+
+                      if (response.ok) {
+                        alert("ההודעה נשלחה בהצלחה");
+                        setNewnotification("");
+                        setRecipients([]);
+                        setIsModalOpen(false);
+                      } else {
+                        const error = await response.json();
+                        alert(`שגיאה בשליחת ההודעה: ${error.detail}`);
+                      }
+                    } catch (error) {
+                      console.error("Error sending notification:", error);
+                      alert("שגיאה בלתי צפויה בשליחת ההודעה.");
+                    }
                   } else {
-                    alert('אנא כתוב הודעה ובחר נמענים לפני שליחה.');
+                    alert("אנא כתוב הודעה ובחר נמענים לפני שליחה.");
                   }
                 }}
                 className="action-button send"
               >
                 שלח
               </button>
+
               <button onClick={() => setIsModalOpen(false)} className="action-button cancel">
                 ביטול
               </button>
@@ -198,12 +270,16 @@ const NotificationPage = ({ user_id }) => {
       {isReplyModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>תשובה להודעה</h2>
+            <div className='answer-notification-header'>
+              <h2>תשובה להודעה</h2>
+            </div>
             <p>
-              <strong>נמענ/ת:</strong> {currentReply?.sent_by_name}
+              <div class="answer-recipients-scroll">
+                <strong>נמענ/ת:</strong> {currentReply?.sent_by}
+              </div>
             </p>
             <textarea
-              className="textarea"
+              className="answer-textarea"
               value={replyContent}
               onChange={(e) => setReplyContent(e.target.value)}
               placeholder="כתוב את תשובתך כאן..."

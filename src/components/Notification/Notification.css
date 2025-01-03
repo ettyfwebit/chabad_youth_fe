@@ -23,6 +23,47 @@
   margin-right: -2.8vw;
   margin-top: -5vh;
 }
+.answer-notification-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #937676;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 33.9vw;
+  /* margin-left: 26vw; */
+  margin-right: -1.3vw;
+  margin-top: -3vh;
+  height: 5vh;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+.recived-notification-header{
+  display: flex
+  ;
+      justify-content: center;
+      align-items: center;
+      /* background-color: #937676; */
+      /* color: white; */
+      padding: 3px;
+      /* border-radius: 5px; */
+      /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+      /* width: 23vw; */
+      /* margin-left: 3vw; */
+      margin-right: 0vw;
+      margin-top: -2vh;
+      width: 13vw;
+      border-bottom: 1px solid #937676;
+     
+        display: flex;
+        justify-content: flex-start; /* מיישר את התוכן לצד ימין */
+        text-align: right; /* מיישר את הטקסט */
+        direction: rtl; /* הופך את כיוון הטקסט לימין לשמאל */
+      
+      
+  }
+
 
 .new-notification-header {
   display: flex
@@ -63,7 +104,7 @@
 .notification-card {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 6px #705050;
   padding: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -82,6 +123,9 @@
 .notification-actions {
   display: flex;
   gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: -7px;
+
 }
 
 
@@ -141,9 +185,9 @@
   /* margin-top: 48vh; */
   /* margin-left: 16vw; */
   /* margin-right: 6vw; */
-  position: absolute;
-  left: 7vw;
-  bottom: 3vh;
+  position: fixed;
+  right: 7vw;
+  bottom:23vh;
   font-size: 16px;
 }
 
@@ -166,6 +210,26 @@
   background-color: #937676;
   width: 6vw;
   color: white;
+}
+.action-button-reply{
+  width: 40px;
+  height: 39px;  font-size: 14px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  background:none;
+  color: white;
+  justify-content: center;
+    align-items: center;
+    display: flex
+;
+}
+.action-button-reply:hover{
+  background-color: #d3d3d3;
+  /* אפור בהיר */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
 }
 .action-button:hover{
   background-color: #8a6f6f;
@@ -217,6 +281,22 @@
   /* margin-bottom: -4vh; */
   width: 32%;
 }
+.answer-recipients-scroll {
+
+  max-height: 150px;
+  overflow-y: auto;
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+  /* border-radius: 5px; */
+  display: flex
+;
+  border-bottom: 2px solid #3f3939;
+  position: absolute;
+  top: 14vh;
+  left: 33vw;
+  /* margin-bottom: -4vh; */
+  width: 32%;
+}
 
 .recipient-options label {
   margin-bottom: 5px;
@@ -252,6 +332,28 @@
   /* אפקט מעבר למסגרת */
   margin-right: -0.8vw;
   margin-top: 9vh;
+  resize: none;
+  -webkit-appearance: none;
+}
+.answer-textarea{
+  width: 100%;
+  /* מגדיר שהתיבה תתפוס את כל הרוחב של ההורה */
+  max-width: 600px;
+  /* מגביל את הרוחב המקסימלי */
+  height: 60vh;
+  border: none;
+  padding: 10px;
+  /* רווח פנימי */
+  font-size: 18px;
+  /* גודל גופן גדול יותר */
+  resize: vertical;
+  /* אפשרות להגדיל רק את הגובה */
+  outline: none;
+  /* מסיר את המסגרת הכחולה בריכוז */
+  transition: border-color 0.3s ease;
+  /* אפקט מעבר למסגרת */
+  margin-right: -0.8vw;
+  margin-top: 4vh;
 }
 
 .modal h3 {
@@ -294,4 +396,18 @@ input[type="checkbox"]:checked::after {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.reply-to{
+  background-color:#f0f0f0;
+  padding: 5px;
+  font-style: oblique;
+  font-size: 13px;
+  margin-top: 5px;
+}
+.forward-reason{
+  background-color:#f0f0f0;
+  padding: 5px;
+  font-style: oblique;
+  font-size: 13px;
+  margin-top: 5px;
 }

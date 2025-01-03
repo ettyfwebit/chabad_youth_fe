@@ -6,8 +6,6 @@
   height: 100%;
   background-color: #f0f0f0;
   /* צבע קרם ורדרד */
-  padding: 50px;
-  width: 100%;
   /* מאפשר למלא את כל הרוחב של המסך */
   position: relative;
     justify-content: flex-start; /* מוודא שהתוכן מתחיל מהחלק העליון */
@@ -200,20 +198,7 @@
 }
 /* פעמון בצד ימין למעלה */
 /* אייקון הודעות (בועת דיבור) */
-.notification-icon {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  /* background-color: #f8f9fa; */
-  /* border: 1px solid #ddd; */
-  border-radius: 50%;
-  padding: 12px 15px;
-    cursor: pointer;
-}
 
-.notification-icon:hover {
-  background-color: #cfcbcb;
-}
 
 
 /* מיכל קומפוננטת ההודעות */
@@ -299,7 +284,6 @@ body {
   width: 48px;
   height: 49px;
   border-radius: 50%;
-  /* background-color: #3f51b5; */
   color: white;
   display: flex
 ;
@@ -315,7 +299,27 @@ body {
   transform: scale(1.1); /* אנימציה קטנה */
 }
 
+.notification-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 49px;
+  border-radius: 50%;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 
+}
+
+.notification-icon:hover {
+  background-color: #cfcbcb;
+  transform: scale(1.1); /* אנימציה קטנה */
+
+}
 
 
 

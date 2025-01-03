@@ -1,119 +1,129 @@
 .child-details-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .child-details-form {
-    background: #fff;
-    border-radius: 8px;
-    padding: 9px;
-    width: 400px;
-    max-width: 90%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin-bottom: 2vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  }
-  
+.child-details-form {
+  background: #fff;
+  border-radius: 8px;
+  padding: 9px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-bottom: 2vh;
+  padding-top: 16px;
+  padding-bottom: 45px;
+  padding-left: 15px;
+}
 
-  
-  .child-details-form ul {
-    list-style: none;
-    padding: 0;
-    
-  }
- /* כל שדות ה-input */
-.editing input  {
-  border: none; /* הסרת גבולות */
-  border-bottom: 2px solid #ccc; /* הוספת קו תחתון בגובה של 2px */
-  outline: none; /* הסרת ההבהרה כשיש פוקוס */
-  width: 10vw; /* אם ברצונך שה-input יתפוס את כל הרוחב */
-  max-width: 300px; 
+
+
+.child-details-form ul {
+  list-style: none;
+  padding: 0;
+
+}
+
+/* כל שדות ה-input */
+.editing input {
+  border: none;
+  /* הסרת גבולות */
+  outline: none;
+  /* הסרת ההבהרה כשיש פוקוס */
+  width: 10vw;
+  /* אם ברצונך שה-input יתפוס את כל הרוחב */
+  max-width: 300px;
   min-width: 10vw;
   margin-right: 2vw;
-
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 /* כאשר השדה מקבל פוקוס */
 .child-details-form input:focus {
-  box-shadow: none; /* הסרת הצלילה */
-  border-bottom: 2px solid #755f5f; 
+  box-shadow: none;
+  /* הסרת הצלילה */
+  border-bottom: 2px solid #755f5f;
 
 }
 
-.child-details-form select{
-  border-bottom: 2px solid #755f5f; /* הוספת קו תחתון בגובה של 2px */
-  border-top: none;
-  border-right: none;
-  border-left: none;
+.child-details-form select {
+  border: none;
 }
 
-.child-details-form select:focus{
-  box-shadow: none; /* הסרת הצלילה */
+.child-details-form select:focus {
+  box-shadow: none;
+  /* הסרת הצלילה */
   border-bottom: 2px solid #755f5f;
 }
-  
-  .child-details-form li {
-    margin-bottom: 8px;
-  }
-  
-  .child-details-form .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff5e5e;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-  }
-  
-  .child-details-form .child-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: -2vh;
 
-  }
-  .edit-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -44px;
-    
-  }
-  
-  .edit-button,
-  .save-button {
-    background: none;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 12px;
-    ;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .edit-button:hover {
-    background: #cfcbcb;
-  }
-  
-  .save-button {
-    background: none;
-  }
-  
-  .save-button:hover {
-    background: #cfcbcb;
-  }
-  
+.child-details-form li {
+  margin-bottom: 5px;
+}
+
+.child-details-form .close-button-details {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.child-details-form .child-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: -2vh;
+
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -44px;
+
+}
+
+.edit-button,
+.save-button {
+  background: none;
+  color: white;
+  border: none;
+  border-radius: 50px;
+
+  ;
+  cursor: pointer;
+  margin-left: 10px;
+  position: absolute;
+  bottom: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 49px;
+}
+
+.edit-button:hover {
+  background: #cfcbcb;
+}
+
+.save-button {
+  background: none;
+}
+
+.save-button:hover {
+  background: #cfcbcb;
+}

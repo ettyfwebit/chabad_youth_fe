@@ -21,6 +21,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     height: 87vh;
+    padding-bottom: 25px;
   }
   
   .new-child-form h3 {
@@ -36,15 +37,13 @@
 
   
   .child-details-form .close-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
     position: absolute;
     top: 10px;
-    right: 10px;
-    background: #ff5e5e;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    right:-17px;
     cursor: pointer;
   }
   
@@ -81,7 +80,6 @@
 
 .new-child-form label {
     font-weight: bold;
-    margin-bottom: 5px;
     display: block;
 }
 .new-child-form select,
@@ -98,11 +96,7 @@
     font-size: 15px;
     padding: 1px 4px;
 }
-select option:hover {
-    appearance: none;
-    background-color:#755f5f ; /* צבע הרקע בריחוף */
-    color: white; /* צבע הטקסט (אופציונלי) */
-  }
+
    
 .new-child-form select:focus,
 .new-child-form input:focus {

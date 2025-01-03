@@ -1,0 +1,290 @@
+.activity-attendancde-list-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background-color: #f0f0f0;
+    /* צבע קרם ורדרד */
+    padding: 50px;
+    width: 100vw;
+    /* מאפשר למלא את כל הרוחב של המסך */
+    position: relative;
+    margin-top: -13vh;
+  }
+  .attendance-table th {
+    background-color: #937676;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  .attendance-table th,
+.attendance-table td {
+  padding: 20px 30px;
+  text-align: center;
+  border-bottom: 1px solid #dddddd;
+}
+.location-wrapper-attendance {
+    display: flex;
+    flex-direction: column;
+    /* מציג את העיר מעל הרחוב */
+    align-items: center;
+    /* ממרכז את התוכן אופקית */
+    justify-content: center;
+    /* ממרכז את התוכן אנכית */
+    text-align: center;
+    /* ממרכז את הטקסט */
+    margin-right: 13vw;
+  }
+.location-wrapper-attendance .city {
+    font-size: 20px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color:#3f3939;
+  }
+  
+  /* סגנון לרחוב */
+  .location-wrapper-attendance .street {
+    font-size: 15px;
+    color: #3f3939;
+    font-weight: normal;
+  }
+  
+  .attendance-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10vh;
+  }
+  .attendance-table td.profile-td{
+    text-align: left;
+    vertical-align: middle;
+    padding: 10px;
+  }
+  .attendance-table td.city-td{
+    text-align: left;
+    vertical-align: middle;
+    padding: 20px 19px
+  }
+  .attendance-table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .attendance-table tr:hover {
+    background-color: #cfcbcb;
+  }
+  .attendance-table tr:last-child td {
+    border-bottom: none;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+ 
+  .attendance-table-title {
+    text-align: left;
+    margin-bottom: 5px;
+    color: #755f5f;
+    font-size: xx-large;
+    font-weight: bold;
+    width: 90%;
+    max-width: 900px;
+    /* margin-top: 0vh; */
+    /* margin-left: -38vh; */
+    position: absolute;
+    left: 4vw;
+    top: 7vh;
+  }
+  
+  
+  .input-check-attendance input[type="checkbox"]:checked {
+  appearance: none; /* מבטל את ברירת המחדל של הדפדפן */
+  background-color:  #937676; /* צבע חום */
+  border: 2px solid  #937676; /* מסגרת תואמת */
+  cursor: pointer;
+  width: 2vw;
+  height: 4vh;
+  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
+  margin-right: 10px; /* רווח קטן בין התיבה לטקסט */
+  position: relative;
+  bottom: 7px;
+
+}
+
+/* עיצוב התיבה שלא נבחרה */
+.input-check-attendance input[type="checkbox"] {
+  appearance: none; /* מבטל את ברירת המחדל */
+  background-color: #fff; /* רקע לבן */
+  border: 2px solid #ccc; /* מסגרת אפורה */
+  cursor: pointer;
+  width: 2vw;
+  height: 4vh;
+  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
+  margin-right: 5px; /* רווח קטן בין התיבה לטקסט */
+  position: relative;
+  bottom: 7px;
+
+}
+.input-check-attendance input[type="checkbox"]:checked::after {
+  content: '✔'; /* או השתמשי באייקון אחר */
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+.input-check-attendance{
+margin-top: 21px;
+  }
+.submit-attendance-button {
+    position: fixed;
+    bottom: 27px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px #705050;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+
+
+
+
+  .submit-attendance-button:hover {
+    transform: scale(1.1);
+}
+  
+  .submit-attendance-button:active {
+    transform: scale(0.95); /* אפקט לחיצה */
+  }
+  .filter-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute; /* מיקום יחסי להורה הקרוב עם position: relative */
+    top:9vh; /* מרחק מהחלק העליון */
+    right: 7vw; /* מרחק מהחלק הימני */
+}
+
+.filter-input {
+    position: absolute; /* מיקום יחסי להורה הקרוב עם position: relative */
+    top:11.5vh; /* מרחק מהחלק העליון */
+    right: 7vw; /* מרחק מהחלק הימני */
+    padding: 8px; /* ריווח פנימי */
+    border-radius: 4px; /* פינות מעוגלות */
+    border: 1px solid #ddd;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #3f3939;
+    background-color: #fff;
+    box-shadow: 0 0px 6px #705050;
+    transition: all 0.3s ease-in-out;
+}
+.filter-input:focus {
+    outline: none;
+    /* הסרת גבול חיצוני בעת פוקוס */
+    border-color: #937676;
+    /* שינוי צבע הגבול לפוקוס */
+    background-color: #f9f9f9;
+    /* שינוי צבע הרקע כשיש פוקוס */
+    box-shadow: 0 4px 6px #705050;
+  }
+  .filter-input::placeholder{
+    font-size: 13px;
+  }
+  .toggle-select-button{
+    border: none;
+    position: absolute;
+    top: 10.6vh;
+    right: 19.8vw;
+    border-radius: 50%;
+    width: 48px;
+    height: 49px;
+    justify-content: center;
+    align-items: center;
+    display: flex
+;
+}  
+.toggle-select-button:hover{
+
+background-color: #cfcbcb;
+
+}
+.modal-all-parents{
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    width: 25%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.new-notification-header-all-parents {
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+    background-color: #937676;
+    color: #3f3939;
+    /* padding: 4px; */
+    /* border-radius: 5px; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 27.4vw;
+    margin-left: -1.3vw;
+    /* margin-right: 50vw; */
+    margin-top: -3vh;
+    height: 7vh;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
+}
+.textarea-all-parents {
+    direction: rtl;
+    width: 100%;
+    max-width: 600px;
+    height: 60vh;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-right: -0.8vw;
+    margin-top: 2vh;
+    resize: none;
+    -webkit-appearance: none;}
+.action-button-all-parents.send {
+        margin-right: 1vw;
+        margin-left: 0vw;
+    }
+    .action-button-all-parents {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background 0.3s;
+        background-color: #937676;
+        width: 6vw;
+        color: white;}
