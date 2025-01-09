@@ -7,6 +7,7 @@ import NotificationPage from '../Notification/Notification';
 import './SecretaryList.css';
 import ActivityAttendance from '../ActivityAttendance/ActivityAttendance';
 import SecretaryNotification from '../SecretaryNotification/SecretaryNotification';
+import BranchDetails from '../BranchDetails/BranchDetails';
 
 const SecretaryList = () => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const SecretaryList = () => {
   const [childToDelete, setChildToDelete] = useState(null);
   const [showActivityModal, setShowActivityModal] = useState(false); // מצב המודל ליצירת פעילות
   const [selectedGroups, setSelectedGroups] = useState([]); // קבוצות שנבחרו
+  const [selectedBranches, setSelectedBranches] = useState([]); // קבוצות שנבחרו
   const [childrenByGroup, setChildrenByGroup] = useState([]); // קבוצות שנבחרו
   const [showAttendance, setShowAttendance] = useState(false);
   const [activityId, setActivityId] = useState(null);
@@ -96,6 +98,67 @@ const SecretaryList = () => {
       setSelectedGroups([...selectedGroups, groupId]);
     }
   };
+  const handleBranchSelection = async (branchId) => {
+    const isSelected = selectedBranches.includes(branchId);
+    const branch = branches.find((b) => b.branch_id === branchId);
+  
+    if (isSelected) {
+      // אם הסניף כבר מסומן, נסיר אותו ואת הקבוצות שלו
+      setSelectedBranches(selectedBranches.filter((id) => id !== branchId));
+  
+      // הסרת הקבוצות של הסניף מהבחירות
+      if (branch && branch.groups) {
+        const groupIdsToRemove = branch.groups.map((group) => group.group_id);
+        setSelectedGroups((prevGroups) =>
+          prevGroups.filter((groupId) => !groupIdsToRemove.includes(groupId))
+        );
+      }
+    } else {
+      // אם הסניף לא מסומן, נוסיף אותו ואת הקבוצות שלו
+      setSelectedBranches([...selectedBranches, branchId]);
+  
+      // טעינת הקבוצות אם לא קיימות עדיין
+      if (branch && branch.groups) {
+        const groupIdsToAdd = branch.groups.map((group) => group.group_id);
+        setSelectedGroups((prevGroups) => [
+          ...prevGroups,
+          ...groupIdsToAdd.filter((id) => !prevGroups.includes(id)),
+        ]);
+      } else {
+        // אם קבוצות הסניף לא נטענו, נטען אותן כעת
+        try {
+          const response = await fetch(`http://localhost:8000/branches/${branchId}/groups`);
+          const data = await response.json();
+  
+          // עדכון הקבוצות בתוך הסניף
+          setBranches((prevBranches) =>
+            prevBranches.map((branch) => {
+              if (branch.branch_id === branchId) {
+                return {
+                  ...branch,
+                  groups: data, // נניח ש-data הוא מערך הקבוצות
+                };
+              }
+              return branch;
+            })
+          );
+  
+          // הוספת מזהי הקבוצות ל-selectedGroups
+          const groupIdsToAdd = data.map((group) => group.group_id);
+          setSelectedGroups((prevGroups) => [
+            ...prevGroups,
+            ...groupIdsToAdd.filter((id) => !prevGroups.includes(id)),
+          ]);
+        } catch (error) {
+          console.error('Error fetching groups for branch:', error);
+        }
+      }
+    }
+  };
+  
+  
+  
+ 
   const handleSaveActivity = async () => {
     console.log('Selected Groups:', selectedGroups);
     const childrenResponse = await fetch(`http://localhost:8000/children/getChildrenByGroups?group_ids=${selectedGroups}`);
@@ -154,34 +217,9 @@ const SecretaryList = () => {
     }
   };
 
-  const handleDeleteIconClick = (e, branch) => {
-    e.stopPropagation(); // למנוע את קריאת ה-click על הפריט כולו
-    setBranchToDelete(branch);
-    setShowDeleteModal(true);
-  };
 
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
-    setBranchToDelete(null);
-  };
 
-  const handleConfirmDelete = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/branches/deleteBranch/${branchToDelete.branch_id}`, {
-        method: 'DELETE',
-      });
 
-      if (response.ok) {
-        setBranches(branches.filter(branch => branch.branch_id !== branchToDelete.branch_id)); // עדכון הרשימה
-        setShowDeleteModal(false);
-        setBranchToDelete(null);
-      } else {
-        console.error('Failed to delete branch');
-      }
-    } catch (error) {
-      console.error('Error deleting branch:', error);
-    }
-  };
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -260,7 +298,9 @@ const SecretaryList = () => {
       fetchBranchManagers();
     }
   }, [showBranchManagers]);
-
+  
+  
+    
   const handleBranchManagersClick = () => {
     navigate('/branch-managers');
   };
@@ -269,79 +309,18 @@ const SecretaryList = () => {
     setShowBranchesModal(!showBranchesModal);
   };
 
-  const handleBranchClick = (branch) => {
-    setSelectedBranch(branch); // שמירת הסניף שנבחר
-  };
+ 
 
-  const closeBranchDetails = () => {
-    setSelectedBranch(null); // סגירת תיבת פרטי הסניף
-  };
 
-  const toggleAddBranchForm = () => {
-    setShowAddBranchForm(!showAddBranchForm);
-  };
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBranch({ ...newBranch, [name]: value });
   };
 
-  const handleSaveBranch = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/branches/addNewBranch', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newBranch),
-      });
-
-      if (response.ok) {
-        const savedBranch = await response.json();
-        setBranches([...branches, savedBranch]); // עדכון הרשימה
-        setShowAddBranchForm(false); // סגירת הטופס
-      } else {
-        console.error('Failed to save branch');
-      }
-    } catch (error) {
-      console.error('Error saving branch:', error);
-    }
-  };
-
-  const handleEditBranch = () => {
-    setIsEditing(true); // מעבר למצב עריכה
-    setEditedBranch(selectedBranch); // שמירת הנתונים לעריכה
-  };
-
-  const handleEditInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedBranch({ ...editedBranch, [name]: value });
-  };
-
-  const handleSaveEditBranch = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/branches/updateBranch', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedBranch),
-      });
-
-      if (response.ok) {
-        const updatedBranch = await response.json();
-        setBranches(branches.map(branch =>
-          branch.branch_id === updatedBranch.branch_id ? updatedBranch : branch
-        )); // עדכון הרשימה
-        setSelectedBranch(updatedBranch); // עדכון הסניף שנבחר
-        setIsEditing(false); // יציאה ממצב עריכה
-      } else {
-        console.error('Failed to update branch');
-      }
-    } catch (error) {
-      console.error('Error updating branch:', error);
-    }
-  };
+  
 
   return (
     <div className="children-list-wrapper">
@@ -399,7 +378,7 @@ const SecretaryList = () => {
                 onChange={handleActivityInputChange}
               />
             </div>
-            <button className="save-activity" onClick={handleSaveNewActivity}>
+            <button className="save-activity-datails" onClick={handleSaveNewActivity}>
               Save Activity
             </button>
           </div>
@@ -416,16 +395,38 @@ const SecretaryList = () => {
             </button>
             <h3>Create New Activity</h3>
             <ul className="group-list">
-              {groups.map((group) => (
-                <li key={group.group_id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedGroups.includes(group.group_id)}
-                      onChange={() => handleGroupSelection(group.group_id)}
-                    />
-                    {group.group_name}
-                  </label>
+            {branches.map((branch) => (
+  <li key={branch.branch_id} >
+    <label>
+      <input
+        type="checkbox"
+        checked={selectedBranches.includes(branch.branch_id)}
+        onChange={() => handleBranchSelection(branch.branch_id)}
+      />
+      {branch.branch_name}
+    </label>
+
+    {/* נוודא ש-group קיימת לפני השימוש ב-map */}
+    {selectedBranches.includes(branch.branch_id) && branch.groups && (
+      <div className='group-container'>
+      <ul>
+        {branch.groups.map((group) => (
+          <li key={group.group_id} className="group-container">
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedGroups.includes(group.group_id)}
+                onChange={() => handleGroupSelection(group.group_id)}
+              />
+              {group.group_name}
+            </label>
+          </li>
+        ))}
+     
+  </ul>
+  </div>
+)}
+
                 </li>
               ))}
             </ul>
@@ -448,80 +449,10 @@ const SecretaryList = () => {
 
       {/* טופס הסניפים */}
       {showBranchesModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={toggleBranchesModal}>
-              <FaTimes size={20} />
-            </button>
-            <h3>Branches</h3>
-            <div className="add-branch-button" onClick={toggleAddBranchForm}>
-              <FaPlus size={20} />
-            </div>
-            <ul>
-              {branches.map((branch) => (
-                <li
-                  key={branch.branch_id}
-                  className="branch-item"
-                  onClick={() => handleBranchClick(branch)}
-                >
-                  {branch.branch_name}, {branch.location}
-                  <FaTrashAlt
-                    className="delete-icon"
-                    onClick={(e) => handleDeleteIconClick(e, branch)}
-                    size={12}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {/* טופס פרטי הסניף */}
-      {selectedBranch && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={closeBranchDetails}>
-              <FaTimes size={20} />
-            </button>
-            <h3>{isEditing ? 'Edit Branch Details' : 'Branch Details'}</h3>
-            {/* אם אנחנו במצב עריכה, מציגים שדות קלט */}
-            {isEditing ? (
-              <div>
-                <div>
-                  <label>Name:</label>
-                  <input
-                    type="text"
-                    name="branch_name"
-                    value={editedBranch.branch_name}
-                    onChange={handleEditInputChange}
-                  />
-                </div>
-                <div>
-                  <label>Location:</label>
-                  <input
-                    type="text"
-                    name="location"
-                    value={editedBranch.location}
-                    onChange={handleEditInputChange}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div>
-                <p><strong>Name:</strong> {selectedBranch.branch_name}</p>
-                <p><strong>Location:</strong> {selectedBranch.location}</p>
-              </div>
-            )}
-
-            {/* כפתור עריכה או אישור */}
-            <div
-              className="edit-button"
-              onClick={isEditing ? handleSaveEditBranch : handleEditBranch}
-            >
-              {isEditing ? <FaCheck color="#3f3939" size={20} /> : <FaPen color="#3f3939" size={20} />}
-            </div>
-          </div>
+        <div>
+          <BranchDetails
+       toggleBranchesModal= {toggleBranchesModal}
+       />
         </div>
       )}
       <div
@@ -610,48 +541,8 @@ const SecretaryList = () => {
           onClose={() => setSelectedChild(null)}
         />
       )}
-      {showAddBranchForm && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={toggleAddBranchForm}>
-              <FaTimes size={20} />
-            </button>
-            <h3>Add New Branch</h3>
-            <div>
-              <label>Branch Name:</label>
-              <input
-                type="text"
-                name="branch_name"
-                value={newBranch.branch_name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Location:</label>
-              <input
-                type="text"
-                name="location"
-                value={newBranch.location}
-                onChange={handleInputChange}
-              />
-            </div>
-            <button className='save-botton' onClick={handleSaveBranch}>Save</button>
-          </div>
-        </div>
-      )}
-      {showDeleteModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={handleCancelDelete}>
-              <FaTimes size={20} />
-            </button>
-            <h4>Are you sure you want to delete
-              {branchToDelete?.branch_name}?</h4>
-            <button className='save-botton' onClick={handleConfirmDelete}>Yes</button>
-            <button className='no-botton' onClick={handleCancelDelete}>No</button>
-          </div>
-        </div>
-      )}
+      
+      
       {showDeleteChildModal && (
         <div className="modal-overlay">
           <div className="modal-content">

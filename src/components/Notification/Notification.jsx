@@ -132,6 +132,7 @@ const NotificationPage = ({ user_id }) => {
           : (
             <ul className="notification-list">
               {notifications.map((notification) => (
+
                 <li key={notification.notification_id} className={`notification-item ${notification.is_resolved ? 'resolved' : ''}`}>
                   <div className="notification-card">
                     <div className="recived-notification-header">
@@ -142,8 +143,8 @@ const NotificationPage = ({ user_id }) => {
                     {notification.forward_reason && (
                       <div className='forward-reason'>
 
-                        <p >
-                          סיבת העברה: {notification.forward_reason}
+                        <p style={{ whiteSpace: 'pre-line' }}>
+                          {notification.forward_reason}
                         </p>
                       </div>
                     )}
@@ -154,7 +155,36 @@ const NotificationPage = ({ user_id }) => {
 
                       </div>
                     )}
-                    <p className="notification-content">{notification.message}</p>
+                    <div className="notification-content">
+                      {notification.message && (() => {
+                        // פיצול לפי שורות
+                        const messageLines = notification.message.split("\n");
+
+                        // זיהוי אם יש כותרת, שמות ילדים ותוכן
+                        const header = messageLines[0]?.includes("הודעה עבור הורי התלמידים:") ? messageLines[0] : null;
+                        const childrenNames = header ? messageLines[1] : null;
+                        const messageContent = header ? messageLines.slice(2).join("\n") : notification.message;
+
+                        return (
+                          <>
+                            {header && (
+                              <p >
+                                <strong>{header}</strong>
+                              </p>
+                            )}
+                            {childrenNames && (
+                              <p>
+                                <strong>{childrenNames}</strong>
+                              </p>
+                            )}
+                            <p>
+                              {messageContent}
+                            </p>
+                          </>
+                        );
+                      })()}
+                    </div>
+
                     <div className="notification-actions">
                       <button
                         onClick={() => toggleResolved(notification.notification_id)}
@@ -275,7 +305,7 @@ const NotificationPage = ({ user_id }) => {
             </div>
             <p>
               <div class="answer-recipients-scroll">
-                <strong>נמענ/ת:</strong> {currentReply?.sent_by}
+                <strong>נמענ/ת:</strong> &nbsp;&nbsp;{currentReply?.sent_by_name}
               </div>
             </p>
             <textarea

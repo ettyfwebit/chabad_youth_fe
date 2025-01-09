@@ -41,59 +41,87 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
         const selectedChildren = filteredChildren.filter(
             (child) => attendance[child.child_id]?.is_present
         );
-        const parentIds = await updateParentIds(selectedChildren);
-
-        try {
-            const response = await fetch("http://localhost:8000/notifications/", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: messageContent,
-                    user_ids: parentIds,
-                    sent_by: userId,
-                  }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setIsModalOpen(false)
-                onClose()
-            } else {
-                const error = await response.json();
-                alert(`שגיאה בשליחת התשובה: ${error.detail}`);
+    
+        // מיפוי הורים לשמות הילדים שלהם
+        const parentsChildrenMap = selectedChildren.reduce((acc, child) => {
+            // אם כבר יש לו את הילד, נוסיף אותו לרשימה
+            if (!acc[child.parent_id]) {
+                acc[child.parent_id] = [];
             }
+            acc[child.parent_id].push(child);
+            return acc;
+        }, {});
+    
+        try {
+            // עבור כל הורה
+            for (const parentId in parentsChildrenMap) {
+                const childrenForParent = parentsChildrenMap[parentId];
+    
+                // יצירת כותרת הודעה עם שמות הילדים של ההורה הנוכחי
+                const childrenNames = childrenForParent.map((child) => `${child.first_name} ${child.last_name}`).join(", ");
+                const messageWithChildrenNames = `הודעה עבור הורי התלמידים:\n${childrenNames}\n\n${messageContent}`;
+    
+                // שליחת ההודעה להורה
+                console.log("parent" ,parentId)
+                const parentIds = await updateParentIds(parentId);
+                const value = Object.values(parentIds)[0];
+
+                const response = await fetch("http://localhost:8000/notifications/sendNlotifications", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: messageWithChildrenNames, // השתמש בהודעה עם השמות
+                        user_ids: value,
+                        sent_by: userId,
+                    }),
+                });
+    
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`שגיאה בשליחת התשובה: ${error.detail}`);
+                }
+            }
+    
+            // אם הכל בסדר
+            setIsModalOpen(false);
+            onClose();
         } catch (error) {
             console.error("Error sending reply:", error);
             alert("שגיאה בלתי צפויה בשליחת התשובה.");
         }
-    }
+    };
+    
 
     const updateParentIds = async (filteredChildren) => {
         try {
             // יצירת רשימה של parent_ids מתוך הילדים המסוננים
-            const parentIdsToFetch = filteredChildren.map(child => child.parent_id);
-    
+            console.log ( "filtered children",filteredChildren)
+            console.log("filteredChildren type:", typeof filteredChildren); // יראה אם זה אובייקט או לא
+            const parentIdInt = parseInt(filteredChildren, 10); // המרה למספר
+            console.log("parentIdInt children",parentIdInt)
+            console.log("parentIdInt type:", typeof parentIdInt); // יראה אם זה אובייקט או לא
+
             // קריאה לשרת לקבלת מיפוי ה-parent_id ל-login_user_id
             const response = await fetch("http://localhost:8000/notifications/login_ids", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(parentIdsToFetch),
+                
+                body: JSON.stringify({parent_id: parentIdInt}),
             });
     
             if (response.ok) {
                 const parentIdMap = await response.json(); // מקבל את המיפוי { parent_id: login_user_id }
     
                 // עדכון רשימת parentIds בהתאם לנתונים שהתקבלו
-                const updatedParentIds = filteredChildren
-                    .filter(child => parentIdMap[child.parent_id]) // מסנן רק את הילדים שהתקבל עבורם מיפוי
-                    .map(child => parentIdMap[child.parent_id]); // ממפה את ה-login_user_id
-                    const uniqueParentIds = Array.from(new Set(updatedParentIds));
+                const updatedParentIds = parentIdMap
+                    // .filter(child => parentIdMap[child.parent_id]) // מסנן רק את הילדים שהתקבל עבורם מיפוי
+                    // .map(child => parentIdMap[child.parent_id]); // ממפה את ה-login_user_id
 
-                return uniqueParentIds; // מחזיר את רשימת ה-login_user_id המעודכנת
+                return updatedParentIds; // מחזיר את רשימת ה-login_user_id המעודכנת
             } else {
                 const error = await response.json();
                 console.error("Failed to fetch parent IDs:", error.detail);

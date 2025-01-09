@@ -49,13 +49,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 430px;
     background-color: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding: 21px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-  }
+    padding-bottom: 67px;
+}
+  
   
   .modal-close {
     background: none;
@@ -75,5 +77,197 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
+  }
+
+  
+  .modal-form h2 {
+    margin-bottom: 16px;
+  }
+  
+  .modal-form label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .modal-form input {
+    width: 96%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .edit-button {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px #705050;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: none;
+  
+  
+  }
+  
+  .edit-button:hover {
+    background-color: #d3d3d3;
+    /* אפור בהיר */
+    transform: scale(1.1);
+    /* אנימציה קטנה */
+  }
+  
+  
+  
+  .modal-form .close-button {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+  }
+  
+  .modal-form .form-row {
+    display: flex;
+    flex-direction: column;
+  }
+  .add-button:hover {
+    background-color: #d3d3d3;
+    /* אפור בהיר */
+    transform: scale(1.1);
+    /* אנימציה קטנה */
+  }
+  
+  .add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 49px;
+    border-radius: 50%;
+  
+    display: flex
+  ;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px #705050;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: none;
+  border: none;
+  }
+  
+
+.modal-content {
+  position: relative;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  margin: 0 auto;
+  text-align: center;
+  /* position: relative; */
+  box-shadow: 0 4px 6px #705050;
+  max-width: 90%;
+  padding-bottom: 60px;
+  background: white;
+  border-radius: 8px;
+  width: 370px;
+  text-align: center;
+ 
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content h3 {
+  margin-bottom: 14px;
+  color: #755f5f;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 28px;
+
+}
+.modal-content p {
+
+  color: #3f3939;
+}
+.save-new-branch-manager-button{
+  background-color: #937676;
+  width: 6vw;
+  height: 5vh;
+  border-radius: 50px;
+  font-size: 18px;
+  color: #fff;
+  border: none;
+
+  position: absolute;
+  bottom: 16px;
+  right: 16px;}
+  .table-title-branch-manager{
+    text-align: left;
+    margin-bottom: 5px;
+    color: #755f5f;
+    font-size: xx-large;
+    font-weight: bold;
+    width: 90%;
+    max-width: 900px;
+    /* margin-top: 0vh; */
+    /* margin-left: -38vh; */
+    position: absolute;
+    left: 1vw;
+    top: 0vh;
+  }
+  .modal-content label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+    color: #755f5f;
+  }
+  
+  .modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #3f3939;
+    background-color: #fff;
+    box-shadow: 0 0px 6px #705050;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 15px;
+    appearance: none; /* מסיר את הסגנון הדיפולטיבי של הדפדפן */
+  }
+  
+  .modal-content select:focus {
+    outline: none;
+    border-color: #937676;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px #705050;
+  }
+  
+  /* הוספת סגנון לאייקון חץ ברירת המחדל */
+  .modal-content select::-ms-expand {
+    display: none;
+  }
+  
+  /* להוספת רווח בין ה-label לשדה */
+  .modal-content .form-row {
+    margin-bottom: 20px;
   }
   

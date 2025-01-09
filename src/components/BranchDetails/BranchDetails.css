@@ -1,0 +1,38 @@
+.add-group-button{
+    position: absolute;
+    bottom: 15px;
+    right: 84px;
+    /* padding: 10px; */
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px #705050;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: none;
+    width: 48px;
+    height: 49px;
+}
+.add-group-button:hover {
+    background-color: #d3d3d3;
+    /* אפור בהיר */
+    transform: scale(1.1);
+    /* אנימציה קטנה */
+  }
+  .save-new-group{
+    margin-top: 0px;
+    position: absolute;
+    padding: 10px;
+    bottom: 17px;
+    left: 10.5vw;
+    /* right: 50vw; */
+    background-color: #755f5f;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 6vw;
+  }

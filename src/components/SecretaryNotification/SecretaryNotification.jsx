@@ -18,6 +18,154 @@ const SecretaryNotification = ({ user_id }) => {
     const [isForwardModalOpen, setIsForwardModalOpen] = useState(false);
     const [forwardReason, setForwardReason] = useState('');
     const [currentForward, setCurrentForward] = useState(null);
+    const [branchManagers, setBranchManagers] = useState([]);
+    const [parents, setParents] = useState([]);
+    const [selectedBranchManagers, setSelectedBranchManagers] = useState([]);
+    const [selectedParents, setSelectedParents] = useState([]);
+    const [isParentListOpen, setIsParentListOpen] = useState(false);
+    const [isBranchManagerListOpen, setIsBranchManagerListOpen] = useState(false);
+
+
+    useEffect(() => {
+        // Fetch branch managers from API
+        const fetchBranchManagers = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/branch_managers/');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch branch managers');
+                }
+                const data = await response.json();
+                setBranchManagers(data);
+            } catch (error) {
+                console.error('Error fetching branch managers:', error);
+            }
+        };
+
+        fetchBranchManagers();
+    }, []);
+
+    useEffect(() => {
+        // Fetch branch managers from API
+        const fetchParents = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/parents/');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch branch managers');
+                }
+                const data = await response.json();
+                setParents(data);
+            } catch (error) {
+                console.error('Error fetching branch managers:', error);
+            }
+        };
+
+        fetchParents();
+    }, []);
+    const handleBranchManagerSelection = (manager) => {
+        if (selectedBranchManagers.includes(manager)) {
+            setSelectedBranchManagers(selectedBranchManagers.filter((m) => m !== manager));
+        } else {
+            setSelectedBranchManagers([...selectedBranchManagers, manager]);
+        }
+    };
+    const handleParentSelection = (parent) => {
+        if (selectedParents.includes(parent)) {
+            setSelectedParents(selectedParents.filter((m) => m !== parent));
+        } else {
+            setSelectedParents([...selectedParents, parent]);
+        }
+    };
+    const handleRecipientChange = (recipient) => {
+        if (recipient === 'מנהל סניף') {
+            if (recipients.includes(recipient)) {
+                // הסרה של כל מנהלי הסניפים שנבחרו
+                setSelectedBranchManagers([]);
+                setRecipients((prev) => prev.filter((r) => r !== recipient));
+            } else {
+                setIsBranchManagerListOpen(true);
+
+                setRecipients((prev) => [...prev, recipient]);
+            }
+        } else if (recipient === 'הורה') {
+            if (recipients.includes(recipient)) {
+                // הסרה של כל ההורים שנבחרו
+                setSelectedParents([]);
+                setRecipients((prev) => prev.filter((r) => r !== recipient));
+            } else {
+                setIsParentListOpen(true);
+
+                setRecipients((prev) => [...prev, recipient]);
+            }
+        } else {
+            setRecipients((prev) =>
+                prev.includes(recipient)
+                    ? prev.filter((r) => r !== recipient)
+                    : [...prev, recipient]
+            );
+        }
+    };
+
+
+
+    const sendNotification = async () => {
+        if (
+            newnotification &&
+            (recipients.length > 0 || selectedBranchManagers.length > 0 || selectedParents.length > 0)
+        ) {
+            const recipientUserIds = [];
+
+            // בדיקה אם selectedBranchManagers לא ריק
+            if (selectedBranchManagers.length > 0) {
+                recipientUserIds.push(
+                    ...selectedBranchManagers.map((manager) => manager.branch_manager.login_user_id)
+                );
+            }
+
+            // בדיקה אם recipients כוללים 'מזכירות'
+            if (recipients.includes('מזכירות')) {
+                recipientUserIds.push(6); // לדוגמה, הוספת מזהה עבור "מזכירות"
+            }
+
+            // בדיקה אם selectedParents לא ריק
+            if (selectedParents.length > 0) {
+                recipientUserIds.push(
+                    ...selectedParents.map((parent) => parent.parent.login_user_id)
+                );
+            }
+
+            try {
+                const response = await fetch("http://localhost:8000/notifications/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        message: newnotification,
+                        user_ids: recipientUserIds,
+                        sent_by: user_id,
+                    }),
+                });
+
+                if (response.ok) {
+                    alert("ההודעה נשלחה בהצלחה");
+                    setNewnotification("");
+                    setRecipients([]);
+                    setSelectedBranchManagers([]);
+                    setSelectedParents([]);
+
+                    setIsModalOpen(false);
+                } else {
+                    const error = await response.json();
+                    alert(`שגיאה בשליחת ההודעה: ${error.detail}`);
+                }
+            } catch (error) {
+                console.error("Error sending notification:", error);
+                alert("שגיאה בלתי צפויה בשליחת ההודעה.");
+            }
+        } else {
+            alert("אנא כתוב הודעה ובחר נמענים לפני שליחה.");
+        }
+    };
 
     // פונקציה לפתיחת מודל העברה
     const openForwardModal = (notification) => {
@@ -49,6 +197,7 @@ const SecretaryNotification = ({ user_id }) => {
             fetchNotifications();
         }
     }, [user_id]); // Include user_id in the dependency array
+
 
     // Toggle notification resolved state
     const toggleResolved = async (id) => {
@@ -146,6 +295,8 @@ const SecretaryNotification = ({ user_id }) => {
                 alert("לא נמצא login_user_id עבור מנהל הסניף.");
                 return;
             }
+            const reasonWithSender = `שולח מקורי: ${currentForward.sent_by_name || 'לא ידוע'}\nסיבת העברה: ${forwardReason}`;
+
 
             // שליחת ההודעה למנהל הסניף
             const notificationResponse = await fetch("http://localhost:8000/notifications/", {
@@ -155,7 +306,7 @@ const SecretaryNotification = ({ user_id }) => {
                 },
                 body: JSON.stringify({
                     message: currentForward.message,
-                    forward_reason: forwardReason,  // סיבת ההעברה
+                    forward_reason: reasonWithSender,  // סיבת ההעברה
                     sent_by: user_id,
                     user_ids: [branchManagerLoginId],
                 }),
@@ -221,8 +372,8 @@ const SecretaryNotification = ({ user_id }) => {
                                                 <FaReply size={16} color="#3f3939" />
                                             </button>
                                             <button onClick={() => openForwardModal(notification)}
-                                                    className="action-button-forward"
-                                                 >
+                                                className="action-button-forward"
+                                            >
                                                 <FaShare size={16} color="#3f3939" />
                                             </button>
                                         </div>
@@ -236,21 +387,21 @@ const SecretaryNotification = ({ user_id }) => {
                     <div className="modal-overlay">
                         <div className="modal">
                             <div class="notification-header-share">
-                            <h2>העברת הודעה</h2>
+                                <h2>העברת הודעה</h2>
                             </div>
                             <div className='previous-message'>
-                            <p>{currentForward?.message}</p>
+                                <p>{currentForward?.message}</p>
                             </div>
                             <textarea className='share-textarea'
                                 value={forwardReason}
                                 onChange={(e) => setForwardReason(e.target.value)}
                                 placeholder="הוסף סיבה להעברה..."
                             ></textarea>
-                                <button onClick={() => forwardToBranchManager(currentForward.sent_by) }
+                            <button onClick={() => forwardToBranchManager(currentForward.sent_by)}
                                 className="action-button send"
-                                >העבר</button>
+                            >העבר</button>
 
-                                <button onClick={() => setIsForwardModalOpen(false)}className="action-button cancel">ביטול</button>
+                            <button onClick={() => setIsForwardModalOpen(false)} className="action-button cancel">ביטול</button>
                         </div>
                     </div>
                 )}
@@ -283,59 +434,79 @@ const SecretaryNotification = ({ user_id }) => {
                                         <input
                                             type="checkbox"
                                             value={recipient}
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setRecipients([...recipients, recipient]);
-                                                } else {
-                                                    setRecipients(recipients.filter((r) => r !== recipient));
-                                                }
-                                            }}
+                                            onChange={() => handleRecipientChange(recipient)}
                                         />
                                         {recipient}
                                     </label>
                                 ))}
                             </div>
-                        </div>
-                        <div className="modal-actions">
-                            <button
-                                onClick={async () => {
-                                    if (newnotification && recipients.length > 0) {
-                                        const recipientUserIds = recipients.includes("מזכירות")
-                                            ? [...recipients.map((recipient) => (recipient === "מזכירות" ? 6 : recipient))]
-                                            : [...recipients];
-                                        try {
-                                            // שליחת ההודעה לשרת
-                                            const response = await fetch("http://localhost:8000/notifications/", {
-                                                method: "POST",
-                                                headers: {
-                                                    "Content-Type": "application/json",
-                                                },
-                                                body: JSON.stringify({
-                                                    message: newnotification,
-                                                    user_ids: recipientUserIds,
-                                                    sent_by: user_id,
-                                                }),
-                                            });
 
-                                            if (response.ok) {
-                                                alert("ההודעה נשלחה בהצלחה");
-                                                setNewnotification("");
-                                                setRecipients([]);
-                                                setIsModalOpen(false);
-                                            } else {
-                                                const error = await response.json();
-                                                alert(`שגיאה בשליחת ההודעה: ${error.detail}`);
-                                            }
-                                        } catch (error) {
-                                            console.error("Error sending notification:", error);
-                                            alert("שגיאה בלתי צפויה בשליחת ההודעה.");
-                                        }
-                                    } else {
-                                        alert("אנא כתוב הודעה ובחר נמענים לפני שליחה.");
-                                    }
-                                }}
-                                className="action-button send"
-                            >
+                        </div>
+                        {recipients.includes('מנהל סניף') && isBranchManagerListOpen && (
+                            <>
+                                <div className="branch-manager-options">
+                                    {branchManagers.length > 0 ? (
+                                        <div className="branch-manager-dropdown">
+                                            <h4>בחר מנהל</h4>
+                                            <button
+                                                className="close-list-button"
+                                                onClick={() => setIsBranchManagerListOpen(false)}
+                                            >
+                                                <FaCheck size={12} color="#3f3939" />
+                                            </button>
+                                            {branchManagers.map((manager) => (
+                                                <label key={manager.branch_manager.branch_manager_id} className="manager-item">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedBranchManagers.includes(manager)}
+                                                        onChange={() => handleBranchManagerSelection(manager)}
+                                                    />
+                                                    {manager.login_user.user_name}
+                                                </label>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p>אין מנהלי סניפים זמינים.</p>
+                                    )}
+                                </div>
+                            </>
+                        )}
+
+
+                        {recipients.includes('הורה') && isParentListOpen && (
+                            <>
+                                <div className="parent-options">
+                                    <div className="parent-header">
+                                        <h4>בחר הורה</h4>
+                                        <button
+                                            className="close-list-button"
+                                            onClick={() => setIsParentListOpen(false)}
+                                        >
+                                            <FaCheck size={14} color="#3f3939" />
+                                        </button>
+                                    </div>
+                                    {parents.length > 0 ? (
+                                        <div className="parent-dropdown">
+                                            {parents.map((parent) => (
+                                                <label key={parent.parent.branch_manager_id} className="manager-item">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedParents.includes(parent)}
+                                                        onChange={() => handleParentSelection(parent)}
+                                                    />
+                                                    {parent.login_user.user_name}
+                                                </label>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p>אין הורים זמינים.</p>
+                                    )}
+                                </div>
+                            </>
+                        )}
+
+                        <div className="modal-actions">
+                            <button onClick={sendNotification} className="action-button send">
                                 שלח
                             </button>
 
@@ -351,12 +522,12 @@ const SecretaryNotification = ({ user_id }) => {
             {isReplyModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <div className='answer-notification-header'>
+                        <div className='secretary-answer-notification-header'>
                             <h2>תשובה להודעה</h2>
                         </div>
                         <p>
-                            <div class="answer-recipients-scroll">
-                                <strong>נמענ/ת:</strong>&nbsp; {currentReply?.sent_by_name}
+                            <div class="secretary-answer-recipients-scroll">
+                                <strong>נמענ/ת:</strong>&nbsp;&nbsp; {currentReply?.sent_by_name}
                             </div>
                         </p>
                         <textarea
@@ -366,7 +537,7 @@ const SecretaryNotification = ({ user_id }) => {
                             placeholder="כתוב את תשובתך כאן..."
                         ></textarea>
                         <div className="modal-actions">
-                            
+
                             <button onClick={sendReply} className="action-button send">
                                 שלח
                             </button>
