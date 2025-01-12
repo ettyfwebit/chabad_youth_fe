@@ -1,4 +1,4 @@
-
+/* Default styles for larger screens (desktop) */
 .child-details-overlay {
     position: fixed;
     top: 0;
@@ -10,44 +10,41 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .new-child-form .child-details-form {
+}
+
+.new-child-form .child-details-form {
     background: #fff;
     border-radius: 8px;
     padding: 20px;
-     width: 55vw;
+    width: 55vw;
     max-width: 90%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     height: 87vh;
     padding-bottom: 25px;
-  }
-  
-  .new-child-form h3 {
+}
+
+.new-child-form h3 {
     margin-bottom: -89px;
     margin-left: 42vh;
     padding-top: 0vh;
     font-size: xx-large;
     color: #3f3939;
     margin-top: 1vh;
+}
 
-      }
-  
-
-  
-  .child-details-form .close-button {
+.child-details-form .close-button {
     background: none;
     border: none;
     color: #333;
     font-size: 16px;
     position: absolute;
     top: 10px;
-    right:-17px;
+    right: -17px;
     cursor: pointer;
-  }
-  
-  .new-child-form .child-image img {
+}
+
+.new-child-form .child-image img {
     width: 7vw;
     height: 15vh;
     border-radius: 50%;
@@ -57,19 +54,17 @@
     margin-bottom: -2vh;
     margin-top: 7vh;
     margin-left: 1vw;
+}
 
-  }
-  .new-child-form ul {
-    display: grid
-    ;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-        gap: 4px;
-        list-style: none;
-        padding: 0;
-        margin-left: 10vw;
-        margin-top: -5vh;
-
+.new-child-form ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin-left: 10vw;
+    margin-top: -5vh;
 }
 
 .new-child-form li {
@@ -82,14 +77,15 @@
     font-weight: bold;
     display: block;
 }
+
 .new-child-form select,
 .new-child-form input {
-  border: none; 
-  border-bottom: 2px solid #3f3939; 
-  background: transparent; 
-  font-size: 16px; 
-  width: 60%; 
-  display: block;
+    border: none;
+    border-bottom: 2px solid #3f3939;
+    background: transparent;
+    font-size: 16px;
+    width: 60%;
+    display: block;
 }
 
 .new-child-form select {
@@ -97,81 +93,84 @@
     padding: 1px 4px;
 }
 
-   
 .new-child-form select:focus,
 .new-child-form input:focus {
-  border-color: #3f3939; 
-  outline: none; 
+    border-color: #3f3939;
+    outline: none;
 }
-
 
 .new-child-form select option:focus {
-  background-color: #3f3939;
-  color: white;
+    background-color: #3f3939;
+    color: white;
 }
-
 
 .new-child-form input {
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom-color: #755f5f;
-    text-align: center; 
-    font-size: 18px;  
-    color: #333; 
-
+    text-align: center;
+    font-size: 18px;
+    color: #333;
 }
+
 .new-child-form input:focus {
-    border: none;                   
-    border-bottom: 2px solid #755f5f; 
-    outline: none;                  
-    font-size: 18px;  
-    color: #333;  
-    text-align: center; 
-
+    border: none;
+    border-bottom: 2px solid #755f5f;
+    outline: none;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
 }
-.new-child-form button{
+
+.new-child-form button {
     background-color: #937676;
     width: 6vw;
     height: 5vh;
     border-radius: 50px;
     font-size: 18px;
-    color: #fff;  
+    color: #fff;
     border: none;
 }
-.submit{
+
+.submit {
     position: absolute;
     bottom: 16px;
     right: 16px;
 }
-.submit:focus{
+
+.submit:focus {
     background-color: whitesmoke;
 }
-.new-child-form .address{
-    font-size: 11px;
-}.new-child-form .address:focus{
+
+.new-child-form .address {
     font-size: 11px;
 }
-.new-child-form  input[type="radio"] {
-    appearance: none; 
-    width: 10px; 
+
+.new-child-form .address:focus {
+    font-size: 11px;
+}
+
+.new-child-form input[type="radio"] {
+    appearance: none;
+    width: 10px;
     height: 10px;
-    border: 2px solid #3f3939; 
-    border-radius: 50%; 
+    border: 2px solid #3f3939;
+    border-radius: 50%;
     outline: none;
     cursor: pointer;
-    margin-right: 5px; 
+    margin-right: 5px;
 }
 
 .radio-group .radio-option input[type="radio"]:checked {
-    background-color: #755f5f; 
+    background-color: #755f5f;
     border-color: #755f5f;
 }
 
 .radio-group .radio-option {
     display: inline-flex;
     align-items: center;
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
 /* התאמת הטקסט */
@@ -181,11 +180,10 @@
     color: #333;
 }
 
-
 /* עיצוב בועת הדיבור */
 .health-issue-note {
     position: absolute;
-    right:98vh;
+    right: 98vh;
     bottom: 2vh;
     background: #f5f5f5;
     border: 1px solid #ddd;
@@ -194,11 +192,127 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     width: 200px;
     height: 80px;
-    resize: none; 
+    resize: none;
     font-size: 14px;
 }
-.new-child-form .imageUpload{
-    width: 122px;
-    height: 151px;
+
+/* Media Query for Tablet Screens */
+@media (max-width: 768px) {
+    .new-child-form .child-details-form {
+        width: 80vw;
+        height: 90vh;
+    }
+
+    .new-child-form h3 {
+        margin-left: 20vw;
+        font-size: xx-large;
+    }
+
+    .child-details-form .close-button {
+        right: -10px;
+    }
+
+    .new-child-form .child-image img {
+        width: 20vw;
+        height: 20vw;
+        margin-top: 5vh;
+    }
+
+    .new-child-form ul {
+        margin-left: 5vw;
+        margin-top: 0;
+        grid-template-columns: 1fr;
+    }
+
+    .new-child-form li {
+        margin-bottom: 15px;
+    }
+
+    .new-child-form select,
+    .new-child-form input {
+        width: 80%;
+    }
+
+    .submit {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        width: 80%;
+    }
+
+    .health-issue-note {
+        width: 160px;
+        bottom: 1vh;
+        right: 3vh;
+    }
+
+    .new-child-form .address {
+        font-size: 12px;
+    }
 }
 
+/* Media Query for Mobile (iPhone) Screens */
+@media (max-width: 480px) {
+    .new-child-form .child-details-form {
+        width: 85%;
+        height: 80%;
+        overflow: auto;
+        /* margin-top: -43px; */
+        margin-bottom: 49px;
+
+    }
+    .child-details-overlay {
+ 
+        height: 100%;}
+
+    .new-child-form h3 {
+        font-size: xx-large;
+        margin-left: 14vw;
+        margin-top: -5px;
+    }
+
+    .child-details-form .close-button {
+        right: -26px;
+        /* left: 10px; */
+        top: 6px;
+    }
+
+    .new-child-form .child-image img {
+        width: 23vw;
+        height: 24vw;
+        margin-top: 11vh;    }
+
+    .new-child-form ul {
+        margin-left: 3vw;
+        grid-template-columns: 1fr;
+        margin-top: 0;
+    }
+
+    .new-child-form select,
+    .new-child-form input {
+        width: 90%;
+    }
+
+    .submit {
+        position: fixed;
+        bottom: 45px;
+        right: 7vw;
+    }
+    .new-child-form button {
+        width: 25vw;
+        bottom: 12vh;
+
+    }
+    .health-issue-note {
+        width: 130px;
+        bottom: 1vh;
+        right: 5vh;
+    }
+
+    .new-child-form .address {
+        font-size: 12px;
+    }
+    .children-list-wrapper {
+        width: 95%;}
+
+}

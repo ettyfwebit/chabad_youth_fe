@@ -8,7 +8,8 @@
   /* צבע קרם ורדרד */
   /* מאפשר למלא את כל הרוחב של המסך */
   position: relative;
-    justify-content: flex-start; /* מוודא שהתוכן מתחיל מהחלק העליון */
+  justify-content: flex-start;
+  /* מוודא שהתוכן מתחיל מהחלק העליון */
 
 
 }
@@ -54,12 +55,13 @@
     font-weight: bold;
   } */
 /* עיצוב תא הטבלה */
-.children-table td.profile-td{
+.children-table td.profile-td {
   text-align: left;
   vertical-align: middle;
   padding: 10px;
 }
-.children-table td.city-td{
+
+.children-table td.city-td {
   text-align: left;
   vertical-align: middle;
   padding: 20px 19px
@@ -123,7 +125,7 @@
   font-size: 20px;
   margin-bottom: 4px;
   font-weight: bold;
-  color:#3f3939;
+  color: #3f3939;
 }
 
 /* סגנון לרחוב */
@@ -196,6 +198,7 @@
   color: #ffffff;
   /* טקסט לבן */
 }
+
 /* פעמון בצד ימין למעלה */
 /* אייקון הודעות (בועת דיבור) */
 
@@ -206,12 +209,14 @@
   position: fixed;
   top: 50px;
   right: 10px;
-  width: 300px; /* רוחב הטופס */
-  height: 500px; /* גובה הטופס */
+  width: 300px;
+  /* רוחב הטופס */
+  height: 500px;
+  /* גובה הטופס */
   overflow-y: auto;
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 24px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   padding: 15px;
@@ -225,6 +230,7 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
+
 .add-child-button {
   position: fixed;
   bottom: 20px;
@@ -233,8 +239,7 @@ body {
   height: 49px;
   border-radius: 50%;
 
-  display: flex
-;
+  display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 6px #705050;
@@ -244,8 +249,10 @@ body {
 }
 
 .add-child-button:hover {
-  background-color: #d3d3d3; /* אפור בהיר */
-  transform: scale(1.1); /* אנימציה קטנה */
+  background-color: #d3d3d3;
+  /* אפור בהיר */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
 }
 
 .tooltip {
@@ -259,13 +266,17 @@ body {
   font-size: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
-  z-index: 1001; /* גבוה יותר מכל רכיב אחר */
+  z-index: 1001;
+  /* גבוה יותר מכל רכיב אחר */
 
 }
+
 .home-tooltip {
   position: absolute;
-  top: 60px; /* מרחק למעלה */
-  right: 0; /* התמקמות קרובה לכפתור */
+  top: 60px;
+  /* מרחק למעלה */
+  right: 0;
+  /* התמקמות קרובה לכפתור */
   background-color: #333;
   color: white;
   padding: 5px 10px;
@@ -285,8 +296,7 @@ body {
   height: 49px;
   border-radius: 50%;
   color: white;
-  display: flex
-;
+  display: flex;
   justify-content: center;
   align-items: center;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
@@ -295,8 +305,10 @@ body {
 }
 
 .home-button:hover {
-  background-color: #d3d3d3; /* אפור בהיר */
-  transform: scale(1.1); /* אנימציה קטנה */
+  background-color: #d3d3d3;
+  /* אפור בהיר */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
 }
 
 .notification-icon {
@@ -310,14 +322,15 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
 }
 
 .notification-icon:hover {
   background-color: #cfcbcb;
-  transform: scale(1.1); /* אנימציה קטנה */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
 
 }
 
@@ -327,14 +340,77 @@ body {
 @media (max-width: 768px) {
   .table-title {
     font-size: xx-large;
-    margin-left: 7vw;
+    margin-top: -7vh;
+    margin-right: 3vh;
+  }
 
+  .notification-icon {
+    right: 10px;
+  }
+
+  .home-button {
+    right: 64px;
   }
 
   .children-table {
-    width: 83vw;
-    margin-left: -1vw;
+    margin-right: 17vw;
+
   }
+
+  .profile-wrapper {
+    margin-left: 0vh;
+    grid-gap: 15px;
+    gap: 45px;
+  }
+
+  .name {
+    font-size: 20px;
+
+  }
+
+  /* עיצוב מספר הזהות */
+  .id-number {
+    font-size: 18px;
+
+  }
+
+  /* סגנון למעטפת העיר והרחוב */
+  .location-wrapper {
+    margin-right: 0vh;
+    padding: 10px
+  }
+
+  /* סגנון לעיר */
+  .location-wrapper .city {
+    font-size: 20px;
+
+  }
+
+  /* סגנון לרחוב */
+  .location-wrapper .street {
+    font-size: 18px;
+
+  }
+
+  .profile-td {
+    padding: 10px;
+  }
+
+  .children-table img {
+    width: 57px;
+    height: 57px;
+    margin-left: 25px;
+  }
+
+  .add-child-button {
+    bottom: 60px;
+    right: 22px;
+    width: 54px;
+    height: 55px;
+  }
+ .notifications-container {
+  right: 34px;}
+
 
 
 
@@ -346,47 +422,76 @@ body {
 
 @media (max-width: 480px) {
   .table-title {
-    font-size: x-large;
-    margin-top: -3vh;
-    margin-right: 3vh;}
+    font-size: xx-large;
+    margin-top: -7vh;
+    margin-right: 3vh;
+  }
+
+  .notification-icon {
+    right: 10px;
+  }
+
+  .home-button {
+    right: 64px;
+  }
 
   .children-table {
     margin-right: 17vw;
 
   }
+
   .profile-wrapper {
-    margin-left: 85vh;
-    gap: 15px;
+    margin-left: 0vh;
+    grid-gap: 15px;
+    gap: 45px;
   }
+
   .name {
-    font-size: 15px;
-   
+    font-size: 20px;
+
   }
-  
+
   /* עיצוב מספר הזהות */
   .id-number {
-    font-size: 13px;
- 
+    font-size: 18px;
+
   }
+
   /* סגנון למעטפת העיר והרחוב */
-.location-wrapper {
-  margin-right: 80vh;
-  padding:10px
-}
+  .location-wrapper {
+    margin-right: 0vh;
+    padding: 10px
+  }
 
-/* סגנון לעיר */
-.location-wrapper .city {
-  font-size: 15px;
+  /* סגנון לעיר */
+  .location-wrapper .city {
+    font-size: 20px;
 
-}
+  }
 
-/* סגנון לרחוב */
-.location-wrapper .street {
-  font-size: 13px;
+  /* סגנון לרחוב */
+  .location-wrapper .street {
+    font-size: 18px;
 
-}
-.profile-td {
-  padding: 10px;
-}
+  }
+
+  .profile-td {
+    padding: 10px;
+  }
+
+  .children-table img {
+    width: 57px;
+    height: 57px;
+    margin-left: 25px;
+  }
+
+  .add-child-button {
+    bottom: 60px;
+    right: 22px;
+    width: 54px;
+    height: 55px;
+  }
+ .notifications-container {
+  right: 34px;}
 
 }

@@ -112,7 +112,7 @@ const ChildForm = ({ branches, classes, shirts, groups, onSubmit, onClose }) => 
                                 src={
                                     formData.image
                                         ? formData.image
-                                        : 'https://via.placeholder.com/100'
+                                        : 'https://media.istockphoto.com/id/1173931166/vector/people-icon-person-vector-icon-isolated-on-white-background.jpg?s=170x170&k=20&c=WD8l65ELlfWQq6Yfxcjpyd21GxayWQdoOE0EbjxlLmo='
                                 }
                                 alt="Child Profile"
                             />

@@ -183,8 +183,9 @@
 }
 
 @media (max-width: 480px) {
-    .dialog-box {
-        margin-left: -2vw;
+
+  .dialog-box {
+        margin-left: 0vw;
         width: 67%;
         height: 70vh;
         padding: 10vw;

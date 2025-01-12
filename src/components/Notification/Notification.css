@@ -411,3 +411,79 @@ input[type="checkbox"]:checked::after {
   font-size: 13px;
   margin-top: 5px;
 }
+@media (max-width: 768px) {
+  .notification-header, .answer-notification-header, .new-notification-header {
+    width: 70vw;
+    margin-right: -2vw;
+  }
+
+  .notification-header h1 {
+    font-size: 20px;
+    margin-right: -4vw;
+  }
+
+  .new-notification-button {
+    font-size: 14px;
+    right: 5vw;
+    bottom: 15vh;
+  }
+
+  .modal {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .textarea, .answer-textarea {
+    font-size: 16px;
+    margin-top: 5vh;
+  }
+
+  .action-button {
+    width: 7vw;
+    font-size: 14px;
+  }
+
+  .recipients-scroll, .answer-recipients-scroll {
+    width: 40%;
+    left: 20vw;
+  }
+}
+
+/* התאמות למסכים קטנים מאוד - אייפון */
+@media (max-width: 480px) {
+  .notification-header, .answer-notification-header, .new-notification-header {
+    width: 80vw;
+    margin-right: -1vw;
+  }
+
+  .notification-header h1 {
+    font-size: 18px;
+    margin-right: -3vw;
+  }
+
+  .new-notification-button {
+    font-size: 12px;
+    right: 4vw;
+    bottom: 10vh;
+  }
+
+  .modal {
+    width: 90%;
+    max-width: 350px;
+  }
+
+  .textarea, .answer-textarea {
+    font-size: 14px;
+    margin-top: 3vh;
+  }
+
+  .action-button {
+    width: 9vw;
+    font-size: 12px;
+  }
+
+  .recipients-scroll, .answer-recipients-scroll {
+    width: 50%;
+    left: 15vw;
+  }
+}
