@@ -19,7 +19,12 @@
   top: -22vh;
   left: -11vw;
 }
-
+.city{
+  font-size: 20px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #3f3939;
+}
 
 .create-meeting-button {
   width: 150px;
@@ -49,6 +54,8 @@
   padding: 20px;
   width: 80%;
   max-width: 600px;
+  max-height: 76vh;
+    overflow: auto;
 }
 
 .form-title {
@@ -70,6 +77,7 @@
   border-radius: 50px;
   cursor: pointer;
   font-size: 16px;
+  margin-top: 25px;
 }
 
 .submit-meeting-button:hover {
@@ -138,3 +146,58 @@
 .acknowledge-instructions-button:hover {
   background-color: #8a6f6f; /* צבע רקע כאשר הכפתור במצב hover */
 }
+@media (max-width: 480px) {
+.create-meeting-button {
+  width: 185px;
+  height: 185px;
+}
+
+.instructions-form {
+  margin-top: 5px;
+
+  width: 80%;
+  max-height: 80vh;
+}
+h3{
+  margin-top: 5px;
+}
+}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+.create-meeting-button {
+  width: 220px;
+  height: 220px;}
+  .branch-notification-icon-style {
+    height: 35px;
+    width: 35px; /* גודל מותאם לטאבלטים */
+}
+.group-form {
+  width: 88%;
+  max-width: 88%;}
+  .submit-meeting-button {
+    width: 95%;
+    font-size: 23px;
+    margin-left: 2vw;
+    height: 5vh;
+}
+.meeting-name-input {
+
+  font-size: 21px;
+
+}
+.form-title {
+
+  font-size: 28px;}
+  .instructions-form label {
+   
+    font-size: 20px;
+}
+.instructions-form {
+  width: 88%;
+  font-size: 20px;
+}
+.acknowledge-instructions-button {
+  margin-top: 14px;
+  font-size: 20px;
+
+}}

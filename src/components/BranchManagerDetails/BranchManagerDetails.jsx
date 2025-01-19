@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTimes, FaPlus, FaCheck, FaPen } from "react-icons/fa";
 import "./BranchManagerDetails.css";
 
-const BranchManagerDetails = () => {
+const BranchManagerDetails = ({ onClose }) => {
   const [branchManagers, setBranchManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -70,7 +70,7 @@ const BranchManagerDetails = () => {
 
       // קבלת המנהל המעודכן מהשרת
       const updatedManager = await response.json();
-  
+
       // עדכון הרשימה המקומית של branchManagers
       setBranchManagers((prevManagers) =>
         prevManagers.map((manager) =>
@@ -79,18 +79,18 @@ const BranchManagerDetails = () => {
             : manager
         )
       );
-  
+
       // עדכון selectedManager
       setSelectedManager(updatedManager);
-  
+
       // יציאה ממצב עריכה
       setIsEditing(false);
     } catch (err) {
       setError(err.message);
     }
   };
-  
-  
+
+
 
   const handleAddManager = async () => {
     try {
@@ -109,189 +109,196 @@ const BranchManagerDetails = () => {
   };
 
   return (
-    <div className="children-list-wrapper">
-      <h2 className="table-title-branch-manager">Branch Managers</h2>
-      {error && <p className="error-message">Error: {error}</p>}
-      {!branchManagers.length && <p className="loading">Loading...</p>}
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <button className="close-button" onClick={onClose}>
+          <FaTimes size={20} />
+        </button>
+        <h2 className="table-title-branch-manager">Branch Managers</h2>
+        {error && <p className="error-message">Error: {error}</p>}
+        {!branchManagers.length && <p className="loading">Loading...</p>}
 
-      <div className="table-container">
-        <table className="children-table">
-          <tbody>
-            {branchManagers.map((manager) => (
-              <tr key={manager.branch_manager_id} onClick={() => setSelectedManager(manager)}>
-                <td className="profile-td">
-                  <div className="profile-wrapper">
-                    <div className="name-wrapper">
-                      <div className="name">{manager.login_user.user_name}</div>
-                      <div className="id-number">{getBranchName(manager.branch_manager.branch_id)}</div>
+        <div className="table">
+
+          <table >
+            <tbody>
+              {branchManagers.map((manager) => (
+                <tr key={manager.branch_manager_id} onClick={() => setSelectedManager(manager)}>
+                  <td className="branch-manager-profile-td">
+                    <div className="branch-manager-profile-wrapper">
+                      <div className="branch-manager-name-wrapper">
+                        <div className="branch-manager-name">{manager.login_user.user_name}</div>
+                        <div className="branch-manager-id-number">{getBranchName(manager.branch_manager.branch_id)}</div>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="city-td">
-                  <div className="location-wrapper">
+
+                  </td>
+                  <td className="branch-manager-location-wrapper">
                     <div className="city">{manager.login_user.email}</div>
                     <div className="street">{manager.login_user.phone || "N/A"}</div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <button className="add-button" onClick={() => setNewManager({ login_user: {}, branch_manager: {} })}>
           <FaPlus size={24} color="#3f3939" />
         </button>
-      </div>
 
-      {/* טופס עריכה */}
-      {selectedManager && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={() => setSelectedManager(null)}>
-              <FaTimes size={20} />
-            </button>
-            {isEditing ? (
-              <>
-                <h3>Editing {selectedManager.login_user.user_name}</h3>
+
+        {/* טופס עריכה */}
+        {selectedManager && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button className="close-button" onClick={() => setSelectedManager(null)}>
+                <FaTimes size={20} />
+              </button>
+              {isEditing ? (
+                <>
+                  <h3>Editing {selectedManager.login_user.user_name}</h3>
+                  <label>Username:</label>
+                  <input
+                    type="text"
+                    value={selectedManager.login_user.user_name}
+                    onChange={(e) =>
+                      setSelectedManager({
+                        ...selectedManager,
+                        login_user: { ...selectedManager.login_user, user_name: e.target.value },
+                      })
+                    }
+                  />
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    value={selectedManager.login_user.email}
+                    onChange={(e) =>
+                      setSelectedManager({
+                        ...selectedManager,
+                        login_user: { ...selectedManager.login_user, email: e.target.value },
+                      })
+                    }
+                  />
+                  <label>Phone:</label>
+                  <input
+                    type="text"
+                    value={selectedManager.login_user.phone || ""}
+                    onChange={(e) =>
+                      setSelectedManager({
+                        ...selectedManager,
+                        login_user: { ...selectedManager.login_user, phone: e.target.value },
+                      })
+                    }
+                  />
+                  <div className="form-row">
+                    <label htmlFor="branch">Branch:</label>
+                    <select
+                      value={selectedManager.branch_manager.branch_id}
+                      onChange={(e) =>
+                        setSelectedManager({
+                          ...selectedManager,
+                          branch_manager: { ...selectedManager.branch_manager, branch_id: e.target.value },
+                        })
+                      }
+                    >
+                      {branches.map((branch) => (
+                        <option key={branch.branch_id} value={branch.branch_id}>
+                          {branch.branch_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                </>
+              ) : (
+                <>
+                  <h3>Details for {selectedManager.login_user.user_name}</h3>
+                  <p><strong>Email:</strong> {selectedManager.login_user.email}</p>
+                  <p><strong>Phone:</strong> {selectedManager.login_user.phone}</p>
+                  <p><strong>Branch:</strong> {getBranchName(selectedManager.branch_manager.branch_id)}</p>
+                </>
+              )}
+
+              <div className="edit-button" onClick={isEditing ? handleSaveEdit : handleEditManager}>
+                {isEditing ? <FaCheck color="#3f3939" size={20} /> : <FaPen color="#3f3939" size={20} />}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* טופס הוספה */}
+        {newManager && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <button className="close-button" onClick={() => setNewManager(null)}>
+                <FaTimes size={20} />
+              </button>
+              <h2>Add New Manager</h2>
+              <div className="form-row">
                 <label>Username:</label>
                 <input
                   type="text"
-                  value={selectedManager.login_user.user_name}
                   onChange={(e) =>
-                    setSelectedManager({
-                      ...selectedManager,
-                      login_user: { ...selectedManager.login_user, user_name: e.target.value },
-                    })
+                    setNewManager({ ...newManager, login_user: { ...newManager.login_user, user_name: e.target.value } })
                   }
                 />
+              </div>
+              <div className="form-row">
                 <label>Email:</label>
                 <input
                   type="email"
-                  value={selectedManager.login_user.email}
                   onChange={(e) =>
-                    setSelectedManager({
-                      ...selectedManager,
-                      login_user: { ...selectedManager.login_user, email: e.target.value },
-                    })
+                    setNewManager({ ...newManager, login_user: { ...newManager.login_user, email: e.target.value } })
                   }
                 />
+              </div>
+              <div className="form-row">
                 <label>Phone:</label>
                 <input
                   type="text"
-                  value={selectedManager.login_user.phone || ""}
                   onChange={(e) =>
-                    setSelectedManager({
-                      ...selectedManager,
-                      login_user: { ...selectedManager.login_user, phone: e.target.value },
-                    })
+                    setNewManager({ ...newManager, login_user: { ...newManager.login_user, phone: e.target.value } })
                   }
                 />
-                 <div className="form-row">
-                 <label htmlFor="branch">Branch:</label>
-                <select
-                  value={selectedManager.branch_manager.branch_id}
+              </div>
+              <div className="form-row">
+                <label>Password:</label>
+                <input
+                  type="password"
                   onChange={(e) =>
-                    setSelectedManager({
-                      ...selectedManager,
-                      branch_manager: { ...selectedManager.branch_manager, branch_id: e.target.value },
+                    setNewManager({ ...newManager, login_user: { ...newManager.login_user, password: e.target.value } })
+                  }
+                />
+              </div>
+              <div className="form-row">
+                <label>Branch:</label>
+                <select
+                  value={newManager.branch_manager.branch_id || ""}
+                  onChange={(e) =>
+                    setNewManager({
+                      ...newManager,
+                      branch_manager: { ...newManager.branch_manager, branch_id: e.target.value },
                     })
                   }
                 >
+                  <option value="" disabled>
+                    Select a branch
+                  </option>
                   {branches.map((branch) => (
                     <option key={branch.branch_id} value={branch.branch_id}>
                       {branch.branch_name}
                     </option>
                   ))}
                 </select>
-                </div>
-
-              </>
-            ) : (
-              <>
-                <h3>Details for {selectedManager.login_user.user_name}</h3>
-                <p><strong>Email:</strong> {selectedManager.login_user.email}</p>
-                <p><strong>Phone:</strong> {selectedManager.login_user.phone}</p>
-                <p><strong>Branch:</strong> {getBranchName(selectedManager.branch_manager.branch_id)}</p>
-              </>
-            )}
-
-            <div className="edit-button" onClick={isEditing ? handleSaveEdit : handleEditManager}>
-              {isEditing ? <FaCheck color="#3f3939" size={20} /> : <FaPen color="#3f3939" size={20} />}
+              </div>
+              <button className="save-new-branch-manager-button" onClick={handleAddManager}>
+                Save
+              </button>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* טופס הוספה */}
-      {newManager && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={() => setNewManager(null)}>
-              <FaTimes size={20} />
-            </button>
-            <h2>Add New Manager</h2>
-            <div className="form-row">
-              <label>Username:</label>
-              <input
-                type="text"
-                onChange={(e) =>
-                  setNewManager({ ...newManager, login_user: { ...newManager.login_user, user_name: e.target.value } })
-                }
-              />
-            </div>
-            <div className="form-row">
-              <label>Email:</label>
-              <input
-                type="email"
-                onChange={(e) =>
-                  setNewManager({ ...newManager, login_user: { ...newManager.login_user, email: e.target.value } })
-                }
-              />
-            </div>
-            <div className="form-row">
-              <label>Phone:</label>
-              <input
-                type="text"
-                onChange={(e) =>
-                  setNewManager({ ...newManager, login_user: { ...newManager.login_user, phone: e.target.value } })
-                }
-              />
-            </div>
-            <div className="form-row">
-              <label>Password:</label>
-              <input
-                type="password"
-                onChange={(e) =>
-                  setNewManager({ ...newManager, login_user: { ...newManager.login_user, password: e.target.value } })
-                }
-              />
-            </div>
-            <div className="form-row">
-              <label>Branch:</label>
-              <select
-                value={newManager.branch_manager.branch_id || ""}
-                onChange={(e) =>
-                  setNewManager({
-                    ...newManager,
-                    branch_manager: { ...newManager.branch_manager, branch_id: e.target.value },
-                  })
-                }
-              >
-                 <option value="" disabled>
-    Select a branch
-  </option>
-                {branches.map((branch) => (
-                  <option key={branch.branch_id} value={branch.branch_id}>
-                    {branch.branch_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button className="save-new-branch-manager-button" onClick={handleAddManager}>
-              Save
-            </button>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

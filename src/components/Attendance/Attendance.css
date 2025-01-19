@@ -1,80 +1,92 @@
-.attendancde-list-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    background-color: #f0f0f0;
-    /* צבע קרם ורדרד */
-    padding: 50px;
-    width: 100%;
-    /* מאפשר למלא את כל הרוחב של המסך */
-    position: relative;
-  
-  }
-  
-  .attendance-table {
-    width: 100%;
-    max-width: 100%;
-    border-collapse: collapse;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 10vh;
-  }
-  .attendance-table td.profile-td{
-    text-align: left;
-    vertical-align: middle;
-    padding: 10px;
-  }
-  .attendance-table td.city-td{
-    text-align: left;
-    vertical-align: middle;
-    padding: 20px 19px
-  }
-  .attendance-table img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  .attendance-table tr:hover {
-    background-color: #cfcbcb;
-  }
-  .attendance-table tr:last-child td {
-    border-bottom: none;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
+.attendancde-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f0f0f0;
+  /* צבע קרם ורדרד */
+  width: 100%;
+  /* מאפשר למלא את כל הרוחב של המסך */
+  position: relative;
+  overflow-x: hidden;
+}
 
- 
-  .attendance-table-title {
-    text-align: left;
-    margin-bottom: 5px;
-    color: #755f5f;
-    font-size: xx-large;
-    font-weight: bold;
-    width: 90%;
-    max-width: 900px;
-    /* margin-top: 0vh; */
-    /* margin-left: -38vh; */
-    position: absolute;
-    left: 4vw;
-    top: 7vh;
-  }
-  
-  
+.attendance-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 10vh;
+}
+
+.attendance-table td.profile-td {
+  text-align: left;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.attendance-table td.city-td {
+  text-align: left;
+  vertical-align: middle;
+  padding: 20px 19px
+}
+
+.attendance-table img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 20px;
+}
+
+.attendance-table tr:hover {
+  background-color: #cfcbcb;
+}
+
+.attendance-table tr:last-child td {
+  border-bottom: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+.attendance-table-title {
+  text-align: left;
+  margin-bottom: 5px;
+  color: #755f5f;
+  font-size: xx-large;
+  font-weight: bold;
+  width: 90%;
+  max-width: 900px;
+  /* margin-top: 0vh; */
+  /* margin-left: -38vh; */
+  position: absolute;
+  left: 2vw;
+  top: 1vh;
+}
+
+
 .input-check input[type="checkbox"]:checked {
-  appearance: none; /* מבטל את ברירת המחדל של הדפדפן */
-  background-color:  #937676; /* צבע חום */
-  border: 2px solid  #937676; /* מסגרת תואמת */
+  appearance: none;
+  /* מבטל את ברירת המחדל של הדפדפן */
+  background-color: #937676;
+  /* צבע חום */
+  border: 2px solid #937676;
+  /* מסגרת תואמת */
   cursor: pointer;
   width: 2vw;
   height: 4vh;
-  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
-  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
-  margin-right: 18px; /* רווח קטן בין התיבה לטקסט */
+  border-radius: 50%;
+  /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle;
+  /* יישור התיבה למרכז הטקסט */
+  margin-right: 18px;
+  /* רווח קטן בין התיבה לטקסט */
   position: relative;
   bottom: -5px;
   transition: all 0.3s ease-in-out;
@@ -83,22 +95,30 @@
 
 /* עיצוב התיבה שלא נבחרה */
 .input-check input[type="checkbox"] {
-  appearance: none; /* מבטל את ברירת המחדל */
-  background-color: #fff; /* רקע לבן */
-  border: 2px solid #ccc; /* מסגרת אפורה */
+  appearance: none;
+  /* מבטל את ברירת המחדל */
+  background-color: #fff;
+  /* רקע לבן */
+  border: 2px solid #ccc;
+  /* מסגרת אפורה */
   cursor: pointer;
   width: 2vw;
   height: 4vh;
-  border-radius: 50%; /* מסגרת עם פינות מעוגלות (אופציונלי) */
-  vertical-align: middle; /* יישור התיבה למרכז הטקסט */
-  margin-right:18px; /* רווח קטן בין התיבה לטקסט */
+  border-radius: 50%;
+  /* מסגרת עם פינות מעוגלות (אופציונלי) */
+  vertical-align: middle;
+  /* יישור התיבה למרכז הטקסט */
+  margin-right: 18px;
+  /* רווח קטן בין התיבה לטקסט */
   position: relative;
   bottom: 8px;
   transition: all 0.3s ease-in-out;
 
 }
+
 .input-check input[type="checkbox"]:checked::after {
-  content: '✔'; /* או השתמשי באייקון אחר */
+  content: '✔';
+  /* או השתמשי באייקון אחר */
   color: white;
   font-size: 20px;
   display: flex;
@@ -108,35 +128,112 @@
 
 
 }
-  .input-check{
-margin-top: 21px;
-  }
-.submit-attendance-button {
-    position: fixed;
-    bottom: 27px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 6px #705050;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
 
-
-
-
-
-  .submit-attendance-button:hover {
-    transform: scale(1.1);
+.input-check {
+  margin-top: 21px;
 }
-  
-  .submit-attendance-button:active {
-    transform: scale(0.95); /* אפקט לחיצה */
+
+.submit-attendance-button {
+  position: fixed;
+  bottom: 27px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px #705050;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+
+
+
+.submit-attendance-button:hover {
+  transform: scale(1.1);
+}
+
+.submit-attendance-button:active {
+  transform: scale(0.95);
+  /* אפקט לחיצה */
+}
+
+@media (max-width: 480px) {
+
+  .attendance-table td.city-td {
+    display: none;}
+
+  .input-check input[type="checkbox"] {
+
+    width: 6vw;
+    height: 3vh;
+    bottom: 8px;
+    right: 30px;
+  }
+
+
+    .attendance-table img {
+      margin-left: 1px;
+    }
+
+  .input-check input[type="checkbox"]:checked {
+    width: 6vw;
+    height: 3vh;
+    bottom: 8px;
+    right: 26px;
+
+  }
+
+  .input-check input[type="checkbox"]:checked::after {
+
+    font-size: 18px;
+
+
+  }
+
+  .submit-attendance-button {
+    bottom: 22px;
+    right: 18px;
+  }
+
+  .attendance-table-title {
+
+    left: 6vw
   }
   
+.attendance-table td.profile-td {
+  
+  padding: 17px;
+}
+.attendance-table {
+
+  margin-top: 9vh;
+}}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+.input-check input[type="checkbox"] {
+  width: 5vw;
+  height: 3.5vh;
+  bottom: -13px;
+}
+.input-check input[type="checkbox"]:checked {
+
+  width: 5vw;
+  height: 3.5vh;
+  bottom: -13px;}
+  .attendance-table-title {
+    left: 5vw;
+    top: -1vh;
+    font-size: xxx-large;}
+    .attendance-table img {
+      width: 80px;
+      height: 80px;}
+      .submit-attendance-button {
+     
+        width: 80px;
+        height: 80px;}}

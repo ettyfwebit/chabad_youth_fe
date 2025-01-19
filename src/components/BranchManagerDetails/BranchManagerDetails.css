@@ -1,170 +1,225 @@
 .container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .table-container {
-    overflow-x: auto;
-    width: 100vw;
-    height: 100vh;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    margin-top: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .table th, .table td {
-    padding: 10px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .table th {
-    background-color: #6c757d;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .table tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  
-  .modal-form {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 430px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 21px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    padding-bottom: 67px;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
 }
-  
-  
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-  }
 
-  
-  .modal-form h2 {
-    margin-bottom: 16px;
-  }
-  
-  .modal-form label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
-  }
-  
-  .modal-form input {
-    width: 96%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 8px;
-  }
-  
-  .edit-button {
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 6px #705050;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    background: none;
-  
-  
-  }
-  
-  .edit-button:hover {
-    background-color: #d3d3d3;
-    /* אפור בהיר */
-    transform: scale(1.1);
-    /* אנימציה קטנה */
-  }
-  
-  
-  
-  .modal-form .close-button {
-    background: none;
-    border: none;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    cursor: pointer;
-  }
-  
-  .modal-form .form-row {
-    display: flex;
-    flex-direction: column;
-  }
-  .add-button:hover {
-    background-color: #d3d3d3;
-    /* אפור בהיר */
-    transform: scale(1.1);
-    /* אנימציה קטנה */
-  }
-  
-  .add-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 49px;
-    border-radius: 50%;
-  
-    display: flex
-  ;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 6px #705050;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    background: none;
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  margin-top: 8vh;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+
+.table th,
+.table td {
+  padding: 10px 0px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  width: 78%;
+}
+
+.table th {
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+  width: 100%;
+}
+
+.branch-manager-profile-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+}
+
+.branch-manager-location-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* מציג את העיר מעל הרחוב */
+  align-items: center;
+  /* ממרכז את התוכן אופקית */
+  justify-content: center;
+  /* ממרכז את התוכן אנכית */
+  text-align: center;
+  margin-right: 7vw;}
+
+/* סגנון לעיר */
+.branch-manager-location-wrapper .city {
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #3f3939;
+  margin-left: -2vw;
+}
+
+/* סגנון לרחוב */
+.branch-manager-location-wrapper .street {
+  font-size: 15px;
+  color: #3f3939;
+  font-weight: normal;
+  margin-left: -5vw;
+}
+
+.branch-manager-name {
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #3f3939;
+  width: 14vw;
+
+
+}
+
+/* עיצוב מספר הזהות */
+.branch-manager-id-number {
+  font-size: 15px;
+  color: #3f3939;
+  font-weight: normal;
+  width: 6vw;
+}
+
+.modal-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 430px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 21px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding-bottom: 67px;
+}
+
+
+.modal-close {
+  background: none;
   border: none;
-  }
-  
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+
+.modal-form h2 {
+  margin-bottom: 16px;
+}
+
+.modal-form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-form input {
+  width: 96%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px #705050;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  background: none;
+
+
+}
+
+.edit-button:hover {
+  background-color: #d3d3d3;
+  /* אפור בהיר */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
+}
+
+
+
+.modal-form .close-button {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+.modal-form .form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-button:hover {
+  background-color: #d3d3d3;
+  /* אפור בהיר */
+  transform: scale(1.1);
+  /* אנימציה קטנה */
+}
+
+.add-button {
+  position: fixed;
+  bottom: 26vh;
+  right: 32vw;
+  width: 48px;
+  height: 49px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px #705050;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  background: none;
+  border: none;
+}
+
 
 .modal-content {
+  overflow-x: hidden;
   position: relative;
   padding: 20px;
   background-color: white;
@@ -177,10 +232,11 @@
   padding-bottom: 60px;
   background: white;
   border-radius: 8px;
-  width: 370px;
+  width: 34vw;
   text-align: center;
- 
+  min-height: 25vh;
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -192,6 +248,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .modal-content h3 {
   margin-bottom: 14px;
   color: #755f5f;
@@ -200,11 +257,13 @@
   font-size: 28px;
 
 }
+
 .modal-content p {
 
   color: #3f3939;
 }
-.save-new-branch-manager-button{
+
+.save-new-branch-manager-button {
   background-color: #937676;
   width: 6vw;
   height: 5vh;
@@ -212,62 +271,176 @@
   font-size: 18px;
   color: #fff;
   border: none;
-
   position: absolute;
-  bottom: 16px;
-  right: 16px;}
-  .table-title-branch-manager{
-    text-align: left;
-    margin-bottom: 5px;
-    color: #755f5f;
-    font-size: xx-large;
-    font-weight: bold;
-    width: 90%;
-    max-width: 900px;
-    /* margin-top: 0vh; */
-    /* margin-left: -38vh; */
-    position: absolute;
-    left: 1vw;
-    top: 0vh;
+  bottom: 18px;
+  right: 204px;
+}
+.table-title-branch-manager {
+  text-align: left;
+  margin-bottom: 5px;
+  color: #755f5f;
+  font-size: xx-large;
+  font-weight: bold;
+  width: 90%;
+  max-width: 900px;
+  /* margin-top: 0vh; */
+  /* margin-left: -38vh; */
+  position: absolute;
+  left: 1vw;
+  top: 0vh;
+}
+
+.modal-content label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  text-align: left;
+  color: #755f5f;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 14px;
+  color: #3f3939;
+  background-color: #fff;
+  box-shadow: 0 0px 6px #705050;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 15px;
+  appearance: none;
+  /* מסיר את הסגנון הדיפולטיבי של הדפדפן */
+}
+
+.modal-content select:focus {
+  outline: none;
+  border-color: #937676;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px #705050;
+}
+
+/* הוספת סגנון לאייקון חץ ברירת המחדל */
+.modal-content select::-ms-expand {
+  display: none;
+}
+
+/* להוספת רווח בין ה-label לשדה */
+
+
+@media (max-width: 480px) {
+  .table-title-branch-manager {
+    left: 4vw;
+    top: 2vh;
+}
+.table th, .table td {
+  padding: 18px 0px;
+  width: 78%;
+  /* margin-top: 2vh; */
+}
+.branch-manager-id-number {
+  width: 15vw;
+}
+.branch-manager-location-wrapper {
+  margin-right: -2vw;
+}
+  .modal-content {
+
+    width: 360px;
   }
+
+  .add-button {
+    position: fixed;
+    bottom: 28vh;
+    right: 8vw;
+  }
+
+  .save-new-branch-manager-button {
+    width: 23vw;
+    right: 142px;
+  }
+
+  .branch-manager-name {
+   
+    width: 35vw;
+}
+}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .branch-manager-name {
+    font-size: 24px;
+    width: 32vw;
+}
+.branch-manager-id-number {
+  font-size: 20px;
+}
+.branch-manager-location-wrapper .city {
+  font-size: 24px;
+}
+.branch-manager-location-wrapper .street {
+  font-size: 20px;
+}
+.branch-manager-id-number {
+  width: 15vw;
+}
+.table th, .table td {
+  padding: 22px 0px;
+  width: 78%;
+}
+.branch-manager-location-wrapper {
+  margin-right: -10vw;
+}
+.add-button {
+  position: fixed;
+  bottom: 25vh;
+  right: 11vw;
+  width: 63px;
+  height: 64px;}
+  .table-title-branch-manager {
+    font-size: xxx-large;
+    left: 2vw;
+    top: -1vh;
+}
+.modal-content select {
+  width: 98%;
+  font-size: 24px;
+}
   .modal-content label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
-    text-align: left;
-    color: #755f5f;
-  }
   
-  .modal-content select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 14px;
-    color: #3f3939;
-    background-color: #fff;
-    box-shadow: 0 0px 6px #705050;
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 15px;
-    appearance: none; /* מסיר את הסגנון הדיפולטיבי של הדפדפן */
-  }
-  
-  .modal-content select:focus {
-    outline: none;
-    border-color: #937676;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px #705050;
-  }
-  
-  /* הוספת סגנון לאייקון חץ ברירת המחדל */
-  .modal-content select::-ms-expand {
-    display: none;
-  }
-  
-  /* להוספת רווח בין ה-label לשדה */
-  .modal-content .form-row {
-    margin-bottom: 20px;
-  }
-  
+  font-size: 24px;
+}
+.modal-content input {
+  margin-bottom: 22px;
+  font-size: 24px;}
+  .save-new-branch-manager-button {
+    width: 18vw;
+    font-size: 20px;
+    bottom: 26px;
+    right: 244px;
+}
+
+
+  .modal-content p {
+    font-size: 24px;
+}
+.modal-content h3 {
+
+  font-size: 32px;
+}
+.modal-content {
+  min-height: 23vh;
+  width: 80vw;
+  padding-bottom: 72px;
+  align-content: center;
+}
+.edit-button {
+  bottom: 22px;}
+
+.save-new-group {
+ 
+  left: 35.5vw;
+
+  width: 14vw;
+  font-size: 20px;
+}}

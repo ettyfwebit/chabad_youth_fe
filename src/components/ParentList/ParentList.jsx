@@ -146,7 +146,7 @@ const ParentList = () => {
       <div className="notification-icon" onClick={() => setShowNotifications(!showNotifications)}
           onMouseEnter={() => setShowTooltipNotification(true)}
           onMouseLeave={() => setShowTooltipNotification(false)}>
-        <FaCommentDots color="#3f3939" size={24} />
+        <FaCommentDots className="notification-icon-style" color="#3f3939" size={24} />
         {showTooltipNotification && <div className="home-tooltip">Show Notification</div>}
 
       </div>
@@ -172,7 +172,7 @@ const ParentList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome size={24} color="#3f3939" />
+        <FaHome className="notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
 
       </div>
@@ -206,6 +206,8 @@ const ParentList = () => {
 
       {selectedChild && (
         <ChildDetails
+        children={children}
+        setChildren={setChildren}
           child={selectedChild}
           setChild={setSelectedChild}
           branches={branches}

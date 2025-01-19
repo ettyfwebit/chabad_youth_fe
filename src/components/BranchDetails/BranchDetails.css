@@ -36,3 +36,13 @@
     cursor: pointer;
     width: 6vw;
   }
+  
+
+    @media (max-width: 480px) {
+      .save-new-group {
+      left: 39.5vw;
+      width: 18vw;}
+      .notification-icon-style {
+        height: 30px;
+        width: 30px; /* גודל מותאם לטאבלטים */
+    }}

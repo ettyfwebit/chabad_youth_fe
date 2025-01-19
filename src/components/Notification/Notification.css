@@ -411,7 +411,7 @@ input[type="checkbox"]:checked::after {
   font-size: 13px;
   margin-top: 5px;
 }
-@media (max-width: 768px) {
+@media only screen and (min-width: 481px) and (max-width: 768px) {
   .notification-header, .answer-notification-header, .new-notification-header {
     width: 70vw;
     margin-right: -2vw;

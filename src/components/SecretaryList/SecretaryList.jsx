@@ -8,6 +8,7 @@ import './SecretaryList.css';
 import ActivityAttendance from '../ActivityAttendance/ActivityAttendance';
 import SecretaryNotification from '../SecretaryNotification/SecretaryNotification';
 import BranchDetails from '../BranchDetails/BranchDetails';
+import BranchManagerDetails from '../BranchManagerDetails/BranchManagerDetails';
 
 const SecretaryList = () => {
   const location = useLocation();
@@ -35,14 +36,14 @@ const SecretaryList = () => {
   const [editedBranch, setEditedBranch] = useState(null); // ניהול פרטי הסניף בעריכה
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [branchToDelete, setBranchToDelete] = useState(null);
-  const [showDeleteChildModal, setShowDeleteChildModal] = useState(false);
-  const [childToDelete, setChildToDelete] = useState(null);
   const [showActivityModal, setShowActivityModal] = useState(false); // מצב המודל ליצירת פעילות
   const [selectedGroups, setSelectedGroups] = useState([]); // קבוצות שנבחרו
   const [selectedBranches, setSelectedBranches] = useState([]); // קבוצות שנבחרו
   const [childrenByGroup, setChildrenByGroup] = useState([]); // קבוצות שנבחרו
   const [showAttendance, setShowAttendance] = useState(false);
   const [activityId, setActivityId] = useState(null);
+  const [showBranchManagersComponent, setShowBranchManagersComponent] = useState(false);
+
   const [activityDetails, setActivityDetails] = useState({
     name: '',
     description: '',
@@ -188,34 +189,9 @@ const SecretaryList = () => {
     setShowActivityModal(!showActivityModal);
   };
 
-  const handleDeleteChildClick = (e, child) => {
-    e.stopPropagation(); // למנוע קריאה לא מכוונת
-    setChildToDelete(child);
-    setShowDeleteChildModal(true);
-  };
 
-  const handleCancelDeleteChild = () => {
-    setShowDeleteChildModal(false);
-    setChildToDelete(null);
-  };
 
-  const handleConfirmDeleteChild = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/children/deleteChild/${childToDelete.child_id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        setChildren(children.filter(child => child.child_id !== childToDelete.child_id)); // עדכון הרשימה
-        setShowDeleteChildModal(false);
-        setChildToDelete(null);
-      } else {
-        console.error('Failed to delete child');
-      }
-    } catch (error) {
-      console.error('Error deleting child:', error);
-    }
-  };
+ 
 
 
 
@@ -302,8 +278,9 @@ const SecretaryList = () => {
   
     
   const handleBranchManagersClick = () => {
-    navigate('/branch-managers');
-  };
+      setShowBranchManagersComponent(!showBranchManagersComponent);
+   
+      };
 
   const toggleBranchesModal = () => {
     setShowBranchesModal(!showBranchesModal);
@@ -325,7 +302,7 @@ const SecretaryList = () => {
   return (
     <div className="children-list-wrapper">
       <div className="activity-button" onClick={handleCreateActivity}>
-        <FaCalendarPlus color="#3f3939" size={24} />
+        <FaCalendarPlus className="notification-icon-style" color="#3f3939" size={24} />
       </div>
       {showActivityForm && (
         <div className="modal-overlay">
@@ -443,7 +420,7 @@ const SecretaryList = () => {
         onMouseEnter={() => setShowTooltipBranch(true)}
         onMouseLeave={() => setShowTooltipBranch(false)}
       >
-        <FaMapMarkerAlt color="#3f3939" size={24} />
+        <FaMapMarkerAlt className="notification-icon-style" color="#3f3939" size={24} />
         {showTooltipBranch && <div className="home-tooltip">Branches</div>}
       </div>
 
@@ -461,14 +438,14 @@ const SecretaryList = () => {
         onMouseEnter={() => setShowTooltipManager(true)}
         onMouseLeave={() => setShowTooltipManager(false)}
       >
-        <FaUserTie color="#3f3939" size={24} />
+        <FaUserTie className="notification-icon-style" color="#3f3939" size={24} />
         {showTooltipManager && <div className="home-tooltip">Branch Managers</div>}
       </div>
 
       <div className="notification-icon" onClick={() => setShowNotifications(!showNotifications)}
         onMouseEnter={() => setShowTooltipNotification(true)}
         onMouseLeave={() => setShowTooltipNotification(false)}>
-        <FaCommentDots color="#3f3939" size={24} />
+        <FaCommentDots className="notification-icon-style" color="#3f3939" size={24} />
         {showTooltipNotification && <div className="home-tooltip">Show Notification</div>}
       </div>
 
@@ -484,7 +461,7 @@ const SecretaryList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome size={24} color="#3f3939" />
+        <FaHome className="notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
       </div>
       {showAttendance ? (
@@ -495,7 +472,7 @@ const SecretaryList = () => {
           userId={state?.user_id}
         />
       ) : (
-        <table className="children-table">
+        <table className="secretary-children-table">
           <tbody>
             {children.map((child) => (
               <tr key={child.child_id} onClick={() => setSelectedChild(child)}>
@@ -517,14 +494,7 @@ const SecretaryList = () => {
                     <div className="street">{child.street}</div>
                   </div>
                 </td>
-                <td className="branch-item"
-                >
-                  <FaTrashAlt
-                    className="delete-child-icon"
-                    onClick={(e) => handleDeleteChildClick(e, child)}
-                    size={18}
-                  />
-                </td>
+             
               </tr>
             ))}
           </tbody>
@@ -532,6 +502,8 @@ const SecretaryList = () => {
       )}
       {selectedChild && (
         <ChildDetails
+        children={children}
+        setChildren={setChildren}
           child={selectedChild}
           setChild={setSelectedChild}
           branches={branches}
@@ -541,21 +513,15 @@ const SecretaryList = () => {
           onClose={() => setSelectedChild(null)}
         />
       )}
-      
-      
-      {showDeleteChildModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-button" onClick={handleCancelDeleteChild}>
-              <FaTimes size={20} />
-            </button>
-            <h4>Are you sure you want to delete {childToDelete?.first_name} {childToDelete?.last_name}?</h4>
-            <button className='save-botton' onClick={handleConfirmDeleteChild}>Yes</button>
-            <button className='no-botton' onClick={handleCancelDeleteChild}>No</button>
-          </div>
-        </div>
-      )}
+      {showBranchManagersComponent && (
+  <div className="branch-managers-container">
+    <BranchManagerDetails onClose={() => setShowBranchManagersComponent(false)} />
+  </div>
+)}
 
+      
+      
+      
     </div>
   );
 };

@@ -26,7 +26,7 @@
   /* margin-top: 0vh; */
   /* margin-left: -38vh; */
   position: absolute;
-  left: 4vw;
+  left: 1vw;
   top: 11vh;
 }
 
@@ -221,6 +221,7 @@
   z-index: 1000;
   padding: 15px;
   transition: transform 0.3s ease-in-out;
+  overflow-x: hidden;
 }
 
 
@@ -337,40 +338,45 @@ body {
 
 
 
-@media (max-width: 768px) {
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  
+  .notification-icon-style {
+    height: 30px;
+    width: 30px; /* גודל מותאם לטאבלטים */
+}
   .table-title {
-    font-size: xx-large;
-    margin-top: -7vh;
-    margin-right: 3vh;
-  }
+    font-size: xxx-large;
+    margin-top: -9vh;
+    /* margin-right: 25vh; */
+    margin-left: 1vh;
+}
+  
 
-  .notification-icon {
-    right: 10px;
-  }
+
 
   .home-button {
-    right: 64px;
+    right: 85px;
   }
 
   .children-table {
-    margin-right: 17vw;
-
+margin-top: 3vh;
   }
 
   .profile-wrapper {
     margin-left: 0vh;
     grid-gap: 15px;
     gap: 45px;
+    margin-right: -27vw;
   }
 
   .name {
-    font-size: 20px;
+    font-size: 26px;
 
   }
 
   /* עיצוב מספר הזהות */
   .id-number {
-    font-size: 18px;
+    font-size: 20px;
 
   }
 
@@ -382,13 +388,13 @@ body {
 
   /* סגנון לעיר */
   .location-wrapper .city {
-    font-size: 20px;
+    font-size: 26px;
 
   }
 
   /* סגנון לרחוב */
   .location-wrapper .street {
-    font-size: 18px;
+    font-size: 20px;
 
   }
 
@@ -396,20 +402,27 @@ body {
     padding: 10px;
   }
 
-  .children-table img {
-    width: 57px;
-    height: 57px;
-    margin-left: 25px;
+    .children-table img {
+      width: 80px;
+      height: 80px;
+      margin-left: 28px;
   }
+  
 
-  .add-child-button {
-    bottom: 60px;
-    right: 22px;
-    width: 54px;
-    height: 55px;
+    .add-child-button {
+      bottom: 32px;
+      right: 28px;
+      width: 66px;
+      height: 67px;
   }
+  
  .notifications-container {
-  right: 34px;}
+  position: fixed;
+  overflow-x: hidden;
+    width: 363px;
+    height: 564px; 
+  right: 34px;
+}
 
 
 
@@ -421,18 +434,23 @@ body {
 
 
 @media (max-width: 480px) {
-  .table-title {
-    font-size: xx-large;
-    margin-top: -7vh;
-    margin-right: 3vh;
-  }
+  .notification-icon-style {
+    height: 24px;
+    width: 24px; /* גודל מותאם לטאבלטים */
+}
+.table-title {
+  margin-left: 2vh;
+  font-size: xx-large;
+  margin-top: -8vh;
+  margin-right: 3vh;
+}
 
   .notification-icon {
     right: 10px;
   }
 
   .home-button {
-    right: 64px;
+    right: 60px;
   }
 
   .children-table {
@@ -441,9 +459,11 @@ body {
   }
 
   .profile-wrapper {
-    margin-left: 0vh;
-    grid-gap: 15px;
-    gap: 45px;
+      margin-left: 1vh;
+      grid-gap: 15px;
+      grid-gap: 45px;
+      gap: 45px;
+      margin-right: 45px;  
   }
 
   .name {
@@ -482,7 +502,7 @@ body {
   .children-table img {
     width: 57px;
     height: 57px;
-    margin-left: 25px;
+    margin-left: 65px;
   }
 
   .add-child-button {

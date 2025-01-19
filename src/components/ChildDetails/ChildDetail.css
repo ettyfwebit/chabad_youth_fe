@@ -127,3 +127,60 @@
 .save-button:hover {
   background: #cfcbcb;
 }
+.trash-icon{
+  position: absolute;
+  bottom: 15px;
+  right:85px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px #705050;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  background: none;
+width: 48px;
+height: 49px;
+}
+.trash-icon:hover {
+  background: #cfcbcb;
+}
+ .close-button-delete {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  cursor: pointer}
+
+
+@media (max-width: 480px) {
+.child-details-form li {
+  font-size: 20px;
+}
+.editing input {
+  font-size: 18px;
+}
+.child-details-form select{
+  font-size: 19px;
+}}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .child-details-form li {
+    margin-bottom: 8px;
+    font-size: 22px;  }
+    .child-details-form .child-image img {
+      margin-bottom: 0vh;
+  }
+  .editing input {
+    font-size: 20px;
+  }
+  .child-details-form select{
+    font-size: 20px;
+  }
+  .child-details-form {
+    width: 446px;
+    height: 74vh;
+}}

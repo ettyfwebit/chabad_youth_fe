@@ -181,7 +181,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
 
     return (
         <div className="activity-attendancde-list-wrapper">
-            <h2 className=" attendance-table-title">Attendance List</h2>
+            <h2 className=" activity-attendance-table-title">Attendance List</h2>
             <div className="filter-wrapper">
 
                 <input
@@ -199,7 +199,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
                 </div>
 
             </div>
-            <table className="attendance-table">
+            <table className="activity-attendance-table">
 
                 <tbody>
                     {filteredChildren.map((child) => (
@@ -216,7 +216,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td className='city-td'>
                                 <div className="location-wrapper-attendance">
                                     <div className="city">{child.city}</div>
                                     <div className="street">{child.street}</div>

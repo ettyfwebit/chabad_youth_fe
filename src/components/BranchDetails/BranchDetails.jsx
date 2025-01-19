@@ -102,10 +102,12 @@ const BranchDetails = ({ toggleBranchesModal }) => {
 
     const closeBranchDetails = () => {
         setSelectedBranch(null); // סגירת תיבת פרטי הסניף
+        setIsEditing(false)
     };
 
     const toggleAddBranchForm = () => {
         setShowAddBranchForm(!showAddBranchForm);
+        setNewBranch({ branch_name: '', location: '' })
     };
 
     const handleInputChange = (e) => {

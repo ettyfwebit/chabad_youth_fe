@@ -123,7 +123,7 @@ const BranchManagerList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome size={24} color="#3f3939" />
+        <FaHome className="branch-notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
       </div>
 
@@ -134,7 +134,7 @@ const BranchManagerList = () => {
         onMouseEnter={() => setShowTooltipNotification(true)}
         onMouseLeave={() => setShowTooltipNotification(false)}
       >
-        <FaCommentDots color="#3f3939" size={24} />
+        <FaCommentDots className=" branch-notification-icon-style" color="#3f3939" size={24} />
         {showTooltipNotification && <div className="home-tooltip">Show Notification</div>}
       </div>
 
@@ -182,8 +182,16 @@ const BranchManagerList = () => {
                 <tbody>
                   {groups.map((group) => (
                     <tr key={group.group_id}>
-                      <td>{group.group_name}</td>
-                      <td>{group.group_id}</td>
+                      <td className='profile-td'>
+                      <div className="profile-wrapper">
+                      <div className="name"> {group.group_name}</div>
+                        </div>
+                        </td>
+                        
+                      <td className='location-td'>
+                      <div className="city">{group.group_id}
+                      </div>
+                      </td>
                       <td>
                         <input
                           type="checkbox"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/Login/Login';
 import SecretaryList from './components/SecretaryList/SecretaryList';
@@ -9,6 +9,33 @@ import NotificationPage from './components/Notification/Notification';
 import BranchManagerDetails from './components/BranchManagerDetails/BranchManagerDetails';
 
 function App() {
+  useEffect(() => {
+    const idleTime = 30* 60 * 1000; // חצי שעה
+
+    const redirectToHome = () => {
+        window.location.href = '/'; // מחזיר לדף הבית
+    };
+
+    const resetTimer = () => {
+        clearTimeout(timer);
+        timer = setTimeout(redirectToHome, idleTime);
+    };
+
+    // התחלת טיימר
+    let timer = setTimeout(redirectToHome, idleTime);
+
+    // איפוס הטיימר בעת פעילות המשתמש
+    document.addEventListener('mousemove', resetTimer);
+    document.addEventListener('keydown', resetTimer);
+
+    // ניקוי מאזינים בעת יציאת הקומפוננטה
+    return () => {
+        clearTimeout(timer);
+        document.removeEventListener('mousemove', resetTimer);
+        document.removeEventListener('keydown', resetTimer);
+    };
+}, []);
+
   return (
     <div>
       <Router>
