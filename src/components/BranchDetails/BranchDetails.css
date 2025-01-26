@@ -1,7 +1,7 @@
 .add-group-button{
     position: absolute;
-    bottom: 15px;
-    right: 84px;
+    bottom: 2vh;
+    right: 5vw;
     /* padding: 10px; */
     border-radius: 50%;
     cursor: pointer;
@@ -13,8 +13,8 @@
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     background: none;
-    width: 48px;
-    height: 49px;
+    width: 5.8vh;
+    height: 5.9vh;
 }
 .add-group-button:hover {
     background-color: #d3d3d3;
@@ -27,7 +27,7 @@
     position: absolute;
     padding: 10px;
     bottom: 17px;
-    left: 10.5vw;
+    left: 15.5vw;
     /* right: 50vw; */
     background-color: #755f5f;
     color: white;
@@ -42,7 +42,4 @@
       .save-new-group {
       left: 39.5vw;
       width: 18vw;}
-      .notification-icon-style {
-        height: 30px;
-        width: 30px; /* גודל מותאם לטאבלטים */
-    }}
+    }

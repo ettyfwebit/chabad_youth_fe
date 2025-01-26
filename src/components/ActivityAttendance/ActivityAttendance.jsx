@@ -194,7 +194,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
                 />
                 <div className="select-all-wrapper">
                     <button onClick={handleToggleSelectAll} className="toggle-select-button">
-                        {selectAll ? <FaCheckCircle size={24} color='#755f5f' /> : <FaRegCircle size={24} color='#755f5f' />}
+                        {selectAll ? <FaCheckCircle size={24} color='#ccc' /> : <FaRegCircle size={24} color='#ccc' />}
                     </button>
                 </div>
 

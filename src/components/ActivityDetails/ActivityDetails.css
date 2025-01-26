@@ -1,0 +1,231 @@
+.activity-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .activity-details-form {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px #0000001a;
+    margin-bottom: 2vh;
+    max-width: 90%;
+    padding: 6vh 9px 17vh 15px;
+    position: relative;
+    width: 19vw;
+}
+  
+.activity-title {
+    color: #755f5f;
+    font-size: x-large;
+    font-weight: 700;
+    left: 1vw;
+    max-width: 900px;
+    position: absolute;
+    text-align: left;
+    top: 2vh;
+}  
+  
+  .activity-details-form ul {
+    list-style: none;
+    padding: 0;
+  
+  }
+  .editing-activity{
+    margin-top: 5vh;
+  }
+  /* כל שדות ה-input */
+  .editing-activity input {
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin-right: 0vw;
+    max-width: 300px;
+    min-width: 0vw;
+    outline: none;
+    width: 8vw;
+}
+  
+  /* כאשר השדה מקבל פוקוס */
+  .activity-details-form input:focus {
+    box-shadow: none;
+    /* הסרת הצלילה */
+    border-bottom: 2px solid #755f5f;
+  
+  }
+  
+  .activity-details-form select {
+    border: none;
+  }
+  
+  .activity-details-form select:focus {
+    box-shadow: none;
+    /* הסרת הצלילה */
+    border-bottom: 2px solid #755f5f;
+  }
+  
+  .activity-details-form li {
+    margin-bottom: 2vh;
+  }
+  
+  .activity-details-form .close-button-details {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    cursor: pointer;
+  }
+  
+  .activity-details-form .activity-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: -2vh;
+  
+  }
+  
+  .edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -44px;
+  
+  }
+  
+
+    .activity-edit-button, .activity-save-button {
+        align-items: center;
+        background: none;
+        border: none;
+        border-radius: 50px;
+        bottom: 2vh;
+        color: #fff;
+        cursor: pointer;
+        display: flex
+    ;
+        height: 5.9vh;
+        justify-content: center;
+        margin-left: 1vh;
+        position: absolute;
+        width: 5.8vh;
+    }
+  
+  
+  .edit-button:hover {
+    background: #cfcbcb;
+  }
+  
+  .activity-save-button {
+    align-items: center;
+    background: none;
+    border-radius: 50%;
+    bottom: 2vh;
+    box-shadow: 0 4px 6px #705050;
+    cursor: pointer;
+    display: flex
+;
+    justify-content: center;
+    position: absolute;
+    right: 1vw;
+    transition: background-color .3s ease, transform .3s ease;
+}
+  
+  .activity-save-button:hover {
+    background: #cfcbcb;
+  }
+  .activity-trash-icon {
+    align-items: center;
+    border-radius: 50%;
+    bottom: 2vh;
+    box-shadow: 0 4px 6px #705050;
+    cursor: pointer;
+    display: flex
+;
+    height: 5.9vh;
+    justify-content: center;
+    position: absolute;
+    right: 5vw;
+    transition: background-color .3s ease, transform .3s ease;
+    width: 5.8vh;
+}
+  .activity-trash-icon:hover {
+    background: #cfcbcb;
+  }
+   .close-button-delete {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    cursor: pointer}
+  .edit-branches-button{
+    align-items: center;
+    border-radius: 50px;
+    bottom: 36vh;
+    color: #fff;
+    display: flex
+;
+    height: 3.9vh;
+    justify-content: center;
+    right: 2vh;
+    width: 3.8vh;
+    position: absolute;
+    border: none;
+    background: none;
+    /* box-shadow: 0 4px 6px #705050;*/
+}
+  .edit-branches-button:hover {
+    background: #cfcbcb;
+  }
+  
+  .close-branches-button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    right: 32.5vw;
+    top: 8vh;
+  }
+  
+  @media (max-width: 480px) {
+  .activity-details-form li {
+    font-size: 20px;
+  }
+  .editing .editing-activity input {
+    font-size: 18px;
+  }
+  .activity-details-form select{
+    font-size: 19px;
+  }}
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    .activity-details-form li {
+      margin-bottom: 8px;
+      font-size: 22px;  }
+      .activity-details-form .activity-image img {
+        margin-bottom: 0vh;
+    }
+    .editing-activity input {
+      font-size: 20px;
+    }
+    .activity-details-form select{
+      font-size: 20px;
+    }
+    .activity-details-form {
+      width: 446px;
+      height: 74vh;
+  }}
+  

@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ChildDetails from '../ChildDetails/ChildDetail';
 import ChildForm from '../ChildForm/ChildForm'; // ייבוא הקומפוננטה
-import { FaCommentDots, FaPlus, FaHome, FaTree, FaUserTie, FaBuilding, FaTimes, FaMapMarkerAlt, FaPen, FaCheck, FaTrash, FaClipboardList, FaCalendarPlus, FaTrashAlt } from 'react-icons/fa';
+import { FaCommentDots, FaPlus, FaHome, FaTree, FaUserTie, FaBuilding, FaTimes, FaMapMarkerAlt, FaPen, FaCheck, FaTrash, FaClipboardList, FaCalendarPlus, FaTrashAlt, FaUsers } from 'react-icons/fa';
 import NotificationPage from '../Notification/Notification';
 import './SecretaryList.css';
 import ActivityAttendance from '../ActivityAttendance/ActivityAttendance';
 import SecretaryNotification from '../SecretaryNotification/SecretaryNotification';
 import BranchDetails from '../BranchDetails/BranchDetails';
 import BranchManagerDetails from '../BranchManagerDetails/BranchManagerDetails';
+import ActivityDetails from '../ActivityDetails/ActivityDetails';
+import ChildrenList from '../ChildrenList/ChildrenList';
 
 const SecretaryList = () => {
   const location = useLocation();
   const { state } = location;
   const [children, setChildren] = useState([]);
   const [selectedChild, setSelectedChild] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const [branches, setBranches] = useState([]);
   const [groups, setGroups] = useState([]);
   const [branchManagers, setBranchManagers] = useState([]); // רשימת מנהלי הסניפים
@@ -43,7 +46,8 @@ const SecretaryList = () => {
   const [showAttendance, setShowAttendance] = useState(false);
   const [activityId, setActivityId] = useState(null);
   const [showBranchManagersComponent, setShowBranchManagersComponent] = useState(false);
-
+  const [activities, setActivities]= useState([]);
+  const [showChildrenList, setShowChildrenList] = useState(false);
   const [activityDetails, setActivityDetails] = useState({
     name: '',
     description: '',
@@ -253,10 +257,11 @@ const SecretaryList = () => {
     fetchShirts();
   }, []);
 
+
   useEffect(() => {
-    fetch('http://localhost:8000/children/')
+    fetch('http://localhost:8000/activities/')
       .then(response => response.json())
-      .then(data => setChildren(data)).then(console.log("children",children));
+      .then(data => setActivities(data)).then(console.log("activities",activities));
   }, []);
 
   useEffect(() => {
@@ -300,7 +305,14 @@ const SecretaryList = () => {
   
 
   return (
-    <div className="children-list-wrapper">
+    <div className="activities-list-wrapper">
+ <div >
+      <button className='children-button' onClick={() => setShowChildrenList(!showChildrenList)}>
+        <FaUsers className="notification-icon-style" color="#3f3939" size={24}/>       </button>
+
+      {showChildrenList && navigate('/childrenList', { state: { user_id: state?.user_id } })}
+    </div>
+      
       <div className="activity-button" onClick={handleCreateActivity}>
         <FaCalendarPlus className="notification-icon-style" color="#3f3939" size={24} />
       </div>
@@ -413,7 +425,7 @@ const SecretaryList = () => {
           </div>
         </div>
       )}
-      <h2 className="secretary-table-title">Children</h2>
+      <h2 className="activities-table-title">Activities List</h2>
       <div
         className="branches-button"
         onClick={toggleBranchesModal}
@@ -472,26 +484,22 @@ const SecretaryList = () => {
           userId={state?.user_id}
         />
       ) : (
-        <table className="secretary-children-table">
+        <table className="secretary-activity-table">
           <tbody>
-            {children.map((child) => (
-              <tr key={child.child_id} onClick={() => setSelectedChild(child)}>
+            {activities.map((activity) => (
+            //  <tr key={activity.activity_id} onClick={() => setSelectedChild(child)}>
+              <tr key={activity.activity_id} onClick={() => setSelectedActivity(activity)}>
                 <td className="profile-td">
                   <div className="profile-wrapper">
-                    <img
-                      src={`data:image/png;base64,${child.image}`}
-                      alt={`Child ${child.first_name}`}
-                    />
                     <div className="name-wrapper">
-                      <div className="name">{child.first_name} {child.last_name}</div>
-                      <div className="id-number">{child.id_number}</div>
+                      <div className="name">{activity.name}</div>
+                      <div className="id-number"> {activity.description}</div>
                     </div>
                   </div>
                 </td>
                 <td className="city-td">
                   <div className="location-wrapper">
-                    <div className="city">{child.city}</div>
-                    <div className="street">{child.street}</div>
+                    <div className="city">{activity.location}</div>
                   </div>
                 </td>
              
@@ -500,18 +508,17 @@ const SecretaryList = () => {
           </tbody>
         </table>
       )}
-      {selectedChild && (
-        <ChildDetails
-        children={children}
-        setChildren={setChildren}
-          child={selectedChild}
-          setChild={setSelectedChild}
-          branches={branches}
-          classes={classes}
-          shirts={shirts}
-          groups={groups}
-          onClose={() => setSelectedChild(null)}
-        />
+      {selectedActivity && (
+        <ActivityDetails
+        activities={activities}
+        setActivities={setActivities}
+          activity={selectedActivity}
+          setActivity={setSelectedActivity}
+          onClose={() => setSelectedActivity(null)}
+        branches={branches}
+        setBranches={setBranches}
+          
+      />
       )}
       {showBranchManagersComponent && (
   <div className="branch-managers-container">

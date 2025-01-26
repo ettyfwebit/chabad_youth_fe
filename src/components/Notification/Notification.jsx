@@ -7,7 +7,7 @@ import { MdOutlineDrafts } from "react-icons/md";
 import './Notification.css';
 import { FaCheck, FaFlag, FaReply, FaTimes } from 'react-icons/fa';
 
-const NotificationPage = ({ user_id }) => {
+const NotificationPage = ({ user_id , setShowNotifications}) => {
   //const location = useLocation();
   //const { user_id } = location.state || {}; // If `user_id` is not available, handle gracefully
   const [notifications, setnotifications] = useState([]);
@@ -119,7 +119,9 @@ const NotificationPage = ({ user_id }) => {
       <header className="notification-header">
         <h1>הודעות</h1>
       </header>
-
+      <button className="close-button" onClick={() => setShowNotifications(false)}>
+          <FaTimes size={18} />
+        </button>
       <main className="notification-main">
 
 

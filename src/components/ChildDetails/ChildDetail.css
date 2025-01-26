@@ -129,8 +129,8 @@
 }
 .trash-icon{
   position: absolute;
-  bottom: 15px;
-  right:85px;
+  bottom: 2vh;
+  right:5vw;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -140,8 +140,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   background: none;
-width: 48px;
-height: 49px;
+width: 5.8vh;
+height: 5.9vh;
 }
 .trash-icon:hover {
   background: #cfcbcb;

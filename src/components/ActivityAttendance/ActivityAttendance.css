@@ -30,7 +30,7 @@
   /* margin-left: -38vh; */
   position: absolute;
   left: 1vw;
-  top: 5vh;
+  top: 12vh;
 }
 
 .activity-attendance-table th,
@@ -74,7 +74,8 @@
   background-color: #f0f0f0;
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 10vh;
+  margin-top: 18vh;
+  
 }
 
 .activity-attendance-table td.profile-td {
@@ -236,7 +237,7 @@ body {
 .filter-input {
   position: absolute;
   /* מיקום יחסי להורה הקרוב עם position: relative */
-  top: 9vh;
+  top: 16vh;
   right: 3vw;
   /* מרחק מהחלק הימני */
   padding: 8px;
@@ -268,18 +269,20 @@ body {
   font-size: 13px;
 }
 
-.toggle-select-button {
-  border: none;
-  position: absolute;
-  top: 8vh;
-  right: 16vw;
-  border-radius: 50%;
-  width: 48px;
-  height: 49px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+  .toggle-select-button {
+    align-items: center;
+    border: none;
+    border-radius: 50vh;
+    display: flex
+;
+    height: 5.1vh;
+    justify-content: center;
+    position: absolute;
+    right: 16vw;
+    top: 15.5vh;
+    width: 5vh;
 }
+
 
 .toggle-select-button:hover {
 
@@ -289,10 +292,10 @@ body {
 
 .modal-all-parents {
   background: white;
-  padding: 20px;
+  padding: 10px 0vh;
   border-radius: 14px;
-  width: 25%;
-  max-width: 500px;
+  width: 32.2vw;
+  max-width: 32.2vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -305,8 +308,7 @@ body {
   /* padding: 4px; */
   /* border-radius: 5px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 27.4vw;
-  margin-left: -1.3vw;
+  width: 32.2vw;
   /* margin-right: 50vw; */
   margin-top: -3vh;
   height: 7vh;
@@ -316,7 +318,7 @@ body {
 
 .textarea-all-parents {
   direction: rtl;
-  width: 100%;
+  width: 29vw;
   max-width: 600px;
   height: 60vh;
   border: none;
@@ -325,15 +327,16 @@ body {
   resize: vertical;
   outline: none;
   transition: border-color 0.3s ease;
-  margin-right: -0.8vw;
   margin-top: 2vh;
   resize: none;
   -webkit-appearance: none;
+  margin-left: 1vh;
 }
 
 .action-button-all-parents.send {
+  margin-left: 10vw;
   margin-right: 1vw;
-  margin-left: 0vw;
+  margin-bottom: 1vh;
 }
 
 .action-button-all-parents {

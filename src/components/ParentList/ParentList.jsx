@@ -153,7 +153,8 @@ const ParentList = () => {
 
       {showNotifications && (
         <div className="notifications-container">
-          <NotificationPage user_id={state?.user_id} />
+          <NotificationPage user_id={state?.user_id}
+          setShowNotifications={setShowNotifications} />
         </div>
       )}
 

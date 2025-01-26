@@ -26,10 +26,7 @@ const LoginPage = () => {
       }
 
       const data = await response.json();
-      // Navigate to the NotificationPage with the user_id
-      navigate('/notification', { state: { user_id: data.user_id } });
-      console.log(data.user_id)
-      // Additional navigation based on user role
+      
       if (data.role === "secretary") {
         navigate('/secretaryList',{ state: { user_id: data.user_id } });
       } else if (data.role === "branch_manager") {

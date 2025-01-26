@@ -7,6 +7,7 @@ import ParentList from './components/ParentList/ParentList';
 import RegisterPage from './components/Register/Register';
 import NotificationPage from './components/Notification/Notification';
 import BranchManagerDetails from './components/BranchManagerDetails/BranchManagerDetails';
+import ChildrenList from './components/ChildrenList/ChildrenList';
 
 function App() {
   useEffect(() => {
@@ -48,7 +49,8 @@ function App() {
           <Route path="/notification" element={<NotificationPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/branch-managers" element={<BranchManagerDetails />} />
-
+          <Route path="/childrenList" element={<ChildrenList/>} />
+          
         </Routes>
       </Router>
     </div>

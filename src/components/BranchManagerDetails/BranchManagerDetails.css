@@ -30,7 +30,7 @@
   padding: 10px 0px;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  width: 78%;
+  width: 18vw;
 }
 
 .table th {
@@ -154,8 +154,8 @@
 
 .edit-button {
   position: absolute;
-  bottom: 15px;
-  right: 20px;
+  bottom: 2vh;
+  right: 1vw;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -165,9 +165,28 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   background: none;
-
-
+  width: 5.8vh;
+  height: 5.9vh;
+  color: #fff;
+  
 }
+.edit-button, .save-button {
+    align-items: center;
+    background: none;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    display: flex
+;
+    height: 5.9vh;
+    justify-content: center;
+    margin-left: 10px;
+    position: absolute;
+    width: 5.8vh;
+}
+
+
 
 .edit-button:hover {
   background-color: #d3d3d3;
@@ -200,21 +219,20 @@
 }
 
 .add-button {
-  position: fixed;
-  bottom: 26vh;
-  right: 32vw;
-  width: 48px;
-  height: 49px;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 6px #705050;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
   background: none;
   border: none;
+  border-radius: 50%;
+  bottom: 26vh;
+  cursor: pointer;
+  display: flex
+;
+  height: 6.9vh;
+  justify-content: center;
+  position: fixed;
+  right: 32vw;
+  transition: background-color .3s ease, transform .3s ease;
+  width: 6.8vh;
 }
 
 
@@ -234,7 +252,7 @@
   border-radius: 8px;
   width: 34vw;
   text-align: center;
-  min-height: 25vh;
+  /* min-height: 25vh; */
 }
 
 .modal-overlay {
@@ -272,22 +290,20 @@
   color: #fff;
   border: none;
   position: absolute;
-  bottom: 18px;
-  right: 204px;
+  bottom: 2vh;
+  right: 15.5vw;
 }
 .table-title-branch-manager {
-  text-align: left;
-  margin-bottom: 5px;
   color: #755f5f;
   font-size: xx-large;
-  font-weight: bold;
-  width: 90%;
-  max-width: 900px;
-  /* margin-top: 0vh; */
-  /* margin-left: -38vh; */
-  position: absolute;
+  font-weight: 700;
   left: 1vw;
+  /* margin-bottom: 1vh; */
+  max-width: 900px;
+  position: absolute;
+  text-align: left;
   top: 0vh;
+  /* width: 90%; */
 }
 
 .modal-content label {
