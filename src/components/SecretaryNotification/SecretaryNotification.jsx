@@ -3,8 +3,9 @@ import { IoMdSend } from "react-icons/io";
 import { MdOutlineDrafts } from "react-icons/md";
 import './SecretaryNotification.css';
 import { FaCheck, FaFlag, FaReply, FaShare, FaTimes } from 'react-icons/fa';
+import { fetchWithAuth } from '../../App';
 
-const SecretaryNotification = ({ user_id }) => {
+const SecretaryNotification = ({ user_id, setShowNotifications }) => {
     //const location = useLocation();
     //const { user_id } = location.state || {}; // If `user_id` is not available, handle gracefully
     const [notifications, setnotifications] = useState([]);
@@ -30,7 +31,7 @@ const SecretaryNotification = ({ user_id }) => {
         // Fetch branch managers from API
         const fetchBranchManagers = async () => {
             try {
-                const response = await fetch('http://localhost:8000/branch_managers/');
+                const response = await fetchWithAuth('http://localhost:8000/branch_managers/');
                 if (!response.ok) {
                     throw new Error('Failed to fetch branch managers');
                 }
@@ -48,7 +49,7 @@ const SecretaryNotification = ({ user_id }) => {
         // Fetch branch managers from API
         const fetchParents = async () => {
             try {
-                const response = await fetch('http://localhost:8000/parents/');
+                const response = await fetchWithAuth('http://localhost:8000/parents/');
                 if (!response.ok) {
                     throw new Error('Failed to fetch branch managers');
                 }
@@ -134,7 +135,7 @@ const SecretaryNotification = ({ user_id }) => {
             }
 
             try {
-                const response = await fetch("http://localhost:8000/notifications/", {
+                const response = await fetchWithAuth("http://localhost:8000/notifications/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -180,7 +181,7 @@ const SecretaryNotification = ({ user_id }) => {
             // Fetch notifications from an API
             const fetchNotifications = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8000/notifications/${user_id}`);
+                    const response = await fetchWithAuth(`http://localhost:8000/notifications/${user_id}`);
                     if (!response.ok) {
                         throw new Error('Failed to fetch notifications');
                     }
@@ -202,7 +203,7 @@ const SecretaryNotification = ({ user_id }) => {
     // Toggle notification resolved state
     const toggleResolved = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8000/notifications/${id}/mark_resolved`, {
+            const response = await fetchWithAuth(`http://localhost:8000/notifications/${id}/mark_resolved`, {
                 method: 'PATCH',
             });
 
@@ -211,7 +212,7 @@ const SecretaryNotification = ({ user_id }) => {
             }
 
             // After marking the notification as resolved, refetch the notifications to update the state
-            const updatednotifications = await fetch(`http://localhost:8000/notifications/${user_id}`);
+            const updatednotifications = await fetchWithAuth(`http://localhost:8000/notifications/${user_id}`);
             if (!updatednotifications.ok) {
                 throw new Error('Failed to fetch updated notifications');
             }
@@ -236,7 +237,7 @@ const SecretaryNotification = ({ user_id }) => {
     const sendReply = async () => {
         if (replyContent.trim() !== '') {
             try {
-                const response = await fetch("http://localhost:8000/notifications/", {
+                const response = await fetchWithAuth("http://localhost:8000/notifications/", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -271,7 +272,7 @@ const SecretaryNotification = ({ user_id }) => {
 
         try {
             // שליפת הילד הראשון של ההורה
-            const childResponse = await fetch(`http://localhost:8000/children/${parentId}/first`);
+            const childResponse = await fetchWithAuth(`http://localhost:8000/children/${parentId}/first`);
             if (!childResponse.ok) {
                 throw new Error("Failed to fetch the first child for the parent.");
             }
@@ -284,7 +285,7 @@ const SecretaryNotification = ({ user_id }) => {
             }
 
             // שליפת ה-login_user_id של מנהל הסניף
-            const managerResponse = await fetch(`http://localhost:8000/branch_managers/${branchManagerId}`);
+            const managerResponse = await fetchWithAuth(`http://localhost:8000/branch_managers/${branchManagerId}`);
             if (!managerResponse.ok) {
                 throw new Error("Failed to fetch branch manager details.");
             }
@@ -299,7 +300,7 @@ const SecretaryNotification = ({ user_id }) => {
 
 
             // שליחת ההודעה למנהל הסניף
-            const notificationResponse = await fetch("http://localhost:8000/notifications/", {
+            const notificationResponse = await fetchWithAuth("http://localhost:8000/notifications/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -335,7 +336,9 @@ const SecretaryNotification = ({ user_id }) => {
 
             <main className="notification-main">
 
-
+                <button className="close-notification-button" onClick={() => setShowNotifications(false)}>
+                    <FaTimes size={18} />
+                </button>
                 {notifications.length === 0 ? (
                     <div className="empty-notification">
                         <MdOutlineDrafts className="empty-envelope-icon" size={24} color='#3f3939' />
@@ -389,6 +392,9 @@ const SecretaryNotification = ({ user_id }) => {
                             <div class="notification-header-share">
                                 <h2>העברת הודעה</h2>
                             </div>
+                            <button className="close-secretary-forward-notification" onClick={() => setIsForwardModalOpen(false)}>
+                                <FaTimes size={18} />
+                            </button>
                             <div className='previous-message'>
                                 <p>{currentForward?.message}</p>
                             </div>
@@ -420,6 +426,9 @@ const SecretaryNotification = ({ user_id }) => {
 
                             <h2>הודעה חדשה</h2>
                         </header>
+                        <button className="close-new-notification" onClick={() => setIsModalOpen(false)}>
+                            <FaTimes size={18} />
+                        </button>
                         <textarea
                             className="textarea"
                             value={newnotification}
@@ -525,6 +534,9 @@ const SecretaryNotification = ({ user_id }) => {
                         <div className='secretary-answer-notification-header'>
                             <h2>תשובה להודעה</h2>
                         </div>
+                        <button className="secretary-answer-notification" onClick={() => setIsReplyModalOpen(false)}>
+                            <FaTimes size={18} />
+                        </button>
                         <p>
                             <div class="secretary-answer-recipients-scroll">
                                 <strong>נמענ/ת:</strong>&nbsp;&nbsp; {currentReply?.sent_by_name}

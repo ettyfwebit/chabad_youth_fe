@@ -108,12 +108,13 @@
   cursor: pointer;
   margin-left: 10px;
   position: absolute;
-  bottom: 9px;
+  bottom: 2vh;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 49px;
+  right: 1vw;
 }
 
 .edit-button:hover {

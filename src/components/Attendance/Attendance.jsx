@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FiSend } from 'react-icons/fi'; // איקון של שליחה מ-React Icons
+import { fetchWithAuth } from '../../App';
 
 import './Attendance.css';
+import { FaTimes } from 'react-icons/fa';
 
 
 const Attendance = ({ children, meetingName, meetingId, onSubmitAttendance, onClose }) => {
@@ -37,6 +39,9 @@ const Attendance = ({ children, meetingName, meetingId, onSubmitAttendance, onCl
 
     return (
         <div className="attendancde-list-wrapper">
+            <button className="close-attendance-list" onClick={() => onClose()}>
+                <FaTimes size={18} />
+            </button>
             <h2 className=" attendance-table-title"> {meetingName}  Attendance List</h2>
             <table className="attendance-table">
 

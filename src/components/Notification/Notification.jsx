@@ -6,6 +6,7 @@ import { IoMdSend } from "react-icons/io";
 import { MdOutlineDrafts } from "react-icons/md";
 import './Notification.css';
 import { FaCheck, FaFlag, FaReply, FaTimes } from 'react-icons/fa';
+import { fetchWithAuth } from '../../App';
 
 const NotificationPage = ({ user_id , setShowNotifications}) => {
   //const location = useLocation();
@@ -25,7 +26,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
       // Fetch notifications from an API
       const fetchNotifications = async () => {
         try {
-          const response = await fetch(`http://localhost:8000/notifications/${user_id}`);
+          const response = await fetchWithAuth(`http://localhost:8000/notifications/${user_id}`);
           if (!response.ok) {
             throw new Error('Failed to fetch notifications');
           }
@@ -46,7 +47,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
   // Toggle notification resolved state
   const toggleResolved = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/notifications/${id}/mark_resolved`, {
+      const response = await fetchWithAuth(`http://localhost:8000/notifications/${id}/mark_resolved`, {
         method: 'PATCH',
       });
 
@@ -55,7 +56,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
       }
 
       // After marking the notification as resolved, refetch the notifications to update the state
-      const updatednotifications = await fetch(`http://localhost:8000/notifications/${user_id}`);
+      const updatednotifications = await fetchWithAuth(`http://localhost:8000/notifications/${user_id}`);
       if (!updatednotifications.ok) {
         throw new Error('Failed to fetch updated notifications');
       }
@@ -80,7 +81,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
   const sendReply = async () => {
     if (replyContent.trim() !== '') {
       try {
-        const response = await fetch("http://localhost:8000/notifications/", {
+        const response = await fetchWithAuth("http://localhost:8000/notifications/", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -119,7 +120,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
       <header className="notification-header">
         <h1>הודעות</h1>
       </header>
-      <button className="close-button" onClick={() => setShowNotifications(false)}>
+      <button className="close-notification-button" onClick={() => setShowNotifications(false)}>
           <FaTimes size={18} />
         </button>
       <main className="notification-main">
@@ -220,6 +221,9 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
 
               <h2>הודעה חדשה</h2>
             </header>
+            <button className="close-answer-notification-button" onClick={() => setIsModalOpen(false)}>
+          <FaTimes size={18} />
+        </button>
             <textarea
               className="textarea"
               value={newnotification}
@@ -256,7 +260,7 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
                       : [...recipients];
                     try {
                       // שליחת ההודעה לשרת
-                      const response = await fetch("http://localhost:8000/notifications/", {
+                      const response = await fetchWithAuth("http://localhost:8000/notifications/", {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
@@ -305,6 +309,9 @@ const NotificationPage = ({ user_id , setShowNotifications}) => {
             <div className='answer-notification-header'>
               <h2>תשובה להודעה</h2>
             </div>
+            <button className="close-reply-notification-button" onClick={() => setIsReplyModalOpen(false)}>
+          <FaTimes size={18} />
+        </button>
             <p>
               <div class="answer-recipients-scroll">
                 <strong>נמענ/ת:</strong> &nbsp;&nbsp;{currentReply?.sent_by_name}

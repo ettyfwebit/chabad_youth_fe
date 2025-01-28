@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';  // Reusing the same CSS file for consistent styling
 import { useNavigate } from 'react-router-dom';
+import { fetchWithAuth } from '../../App';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const RegisterPage = () => {
     };
   
     try {
-      const response = await fetch("http://localhost:8000/auth/register", {
+      const response = await fetchWithAuth("http://localhost:8000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

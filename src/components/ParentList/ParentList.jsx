@@ -3,8 +3,9 @@ import { useLocation ,useNavigate} from 'react-router-dom';
 import './ParentList.css';
 import ChildDetails from '../ChildDetails/ChildDetail';
 import ChildForm from '../ChildForm/ChildForm'; // ייבוא הקומפוננטה
-import { FaCommentDots,FaPlus ,FaHome} from 'react-icons/fa';
+import { FaCommentDots,FaPlus ,FaHome, FaSignOutAlt} from 'react-icons/fa';
 import NotificationPage from '../Notification/Notification';
+import { fetchWithAuth } from '../../App';
 
 const ParentList = () => {
   const location = useLocation();
@@ -21,12 +22,15 @@ const ParentList = () => {
   const [showTooltip, setShowTooltip] = useState(false); // ניהול מצב חלונית ההסבר
   const [showTooltipHome, setShowTooltipHome] = useState(false); // טול-טיפ לכפתור הבית
   const [showTooltipNotification, setShowTooltipNotification] = useState(false); // טול-טיפ לכפתור הבית
+  useEffect(async () => {
+    const response = await fetchWithAuth(`http://localhost:8000/activities/checkParentPermission`);
 
+  }, []);
 
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await fetch('http://localhost:8000/branches/');
+        const response = await  fetchWithAuth('http://localhost:8000/branches/');
         const data = await response.json();
         setBranches(data);
       } catch (error) {
@@ -39,7 +43,7 @@ const ParentList = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await fetch('http://localhost:8000/groups/');
+        const response = await fetchWithAuth('http://localhost:8000/groups/');
         const data = await response.json();
         setGroups(data);
       } catch (error) {
@@ -53,7 +57,7 @@ const ParentList = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:8000/classgrades/');
+        const response = await fetchWithAuth('http://localhost:8000/classgrades/');
         const data = await response.json();
         setClasses(data);
       } catch (error) {
@@ -67,7 +71,7 @@ const ParentList = () => {
   useEffect(() => {
     const fetchShirts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/shirts/');
+        const response = await fetchWithAuth('http://localhost:8000/shirts/');
         const data = await response.json();
         setShirts(data);
       } catch (error) {
@@ -88,7 +92,7 @@ const ParentList = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:8000/children/getChildrenByParent?user_id=${userId}`);
+        const response = await fetchWithAuth(`http://localhost:8000/children/getChildrenByParent?user_id=${userId}`);
         const data = await response.json();
         setChildren(data);
       } catch (error) {
@@ -115,7 +119,7 @@ const ParentList = () => {
     console.log("parent id" ,state?.user_id)
     formData.parent_id = state?.user_id;
     try {
-      const response = await fetch("http://localhost:8000/children/addNewChild", {
+      const response = await fetchWithAuth("http://localhost:8000/children/addNewChild", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +177,7 @@ const ParentList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome className="notification-icon-style" size={24} color="#3f3939" />
+        <FaSignOutAlt className="notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
 
       </div>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaUsers } from 'react-icons/fa'; // אייקון קבוצת אנשים
+import { FaSignOutAlt, FaTimes, FaUsers } from 'react-icons/fa'; // אייקון קבוצת אנשים
 import { FaHome, FaCommentDots } from 'react-icons/fa'; // אייקונים לבית והודעות
 import './BranchManagerList.css'; // קובץ ה-CSS לעיצוב
 import NotificationPage from '../Notification/Notification';
 import Attendance from '../Attendance/Attendance';
+import { fetchWithAuth } from '../../App';
 
 const BranchManagerList = () => {
   const location = useLocation(); // קבלת הנתונים מ-useNavigate
@@ -23,7 +24,10 @@ const BranchManagerList = () => {
   const [meetingId, setMeetingId] = useState(); 
   const [instructionsAcknowledged, setInstructionsAcknowledged] = useState(false); // מצב חדש עבור ההוראות
   const [showInstructions, setShowInstructions] = useState(false); // מצב להצגת ההוראות
+  useEffect(async () => {
+    const response = await fetchWithAuth(`http://localhost:8000/activities/checkPermission`);
 
+  }, []);
   const fetchGroups = async () => {
     const userId = state?.user_id;
     if (!userId) {
@@ -32,7 +36,7 @@ const BranchManagerList = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/groups/getGroupsByBranchManager?user_id=${userId}`);
+      const response = await fetchWithAuth(`http://localhost:8000/groups/getGroupsByBranchManager?user_id=${userId}`);
       const data = await response.json();
       setGroups(data);
     } catch (error) {
@@ -56,7 +60,7 @@ const BranchManagerList = () => {
   const handleAttendanceSubmit = async (attendance) => {
     console.log("Submitting attendance:", attendance);
     try {
-      await fetch('http://localhost:8000/attendance/updateAttendance', {
+      await fetchWithAuth('http://localhost:8000/attendance/updateAttendance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +79,7 @@ const BranchManagerList = () => {
     console.log("Selected meeting name for meeting:", meetingName);
 
     try {
-      const meetingResponse = await fetch('http://localhost:8000/meetings/createNewMeeting', {
+      const meetingResponse = await fetchWithAuth('http://localhost:8000/meetings/createNewMeeting', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +95,7 @@ const BranchManagerList = () => {
       setMeetingId(meetingData.meeting_id);
 
       // שליחת קריאה לשרת לקבלת הילדים הקשורים לקבוצות שנבחרו
-      const childrenResponse = await fetch(`http://localhost:8000/children/getChildrenByGroups?group_ids=${selectedGroups}`);
+      const childrenResponse = await fetchWithAuth(`http://localhost:8000/children/getChildrenByGroups?group_ids=${selectedGroups}`);
 
       const childrenData = await childrenResponse.json();
       console.log("Fetched children:", childrenData);
@@ -99,6 +103,7 @@ const BranchManagerList = () => {
       // הצגת הילדים במסך
       setChildren(childrenData); // עדכון המשתנה שמאחסן את רשימת הילדים
       setShowInstructions(true); // הצגת ההוראות
+      setSelectedGroups([]);
        // סגירת הטופס לאחר אישור
 
     } catch (error) {
@@ -123,7 +128,7 @@ const BranchManagerList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome className="branch-notification-icon-style" size={24} color="#3f3939" />
+        <FaSignOutAlt className="branch-notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
       </div>
 
@@ -140,7 +145,7 @@ const BranchManagerList = () => {
 
       {showNotifications && (
         <div className="notifications-container">
-          <NotificationPage user_id={state?.user_id} />
+          <NotificationPage user_id={state?.user_id} setShowNotifications={setShowNotifications} />
         </div>
       )}
 
@@ -170,6 +175,9 @@ const BranchManagerList = () => {
             </button>
           ) : (
             <div className="group-form">
+                      <button className="close-group-form" onClick={() => setShowForm(false)}>
+                        <FaTimes size={18} />
+                      </button>
               <h2 className="form-title">Your Groups</h2>
               <input
                 type="text"

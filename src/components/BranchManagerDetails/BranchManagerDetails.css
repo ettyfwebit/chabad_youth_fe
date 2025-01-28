@@ -181,9 +181,11 @@
 ;
     height: 5.9vh;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 1vh;
     position: absolute;
     width: 5.8vh;
+    box-shadow: 0 4px 6px #705050;
+
 }
 
 
@@ -223,14 +225,14 @@
   background: none;
   border: none;
   border-radius: 50%;
-  bottom: 26vh;
+  bottom: 2vh;
   cursor: pointer;
   display: flex
 ;
   height: 6.9vh;
   justify-content: center;
-  position: fixed;
-  right: 32vw;
+  position: absolute;
+  right: 1vw;
   transition: background-color .3s ease, transform .3s ease;
   width: 6.8vh;
 }

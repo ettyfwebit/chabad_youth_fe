@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaCheck, FaPen, FaPlus, FaTimes, FaTrashAlt } from 'react-icons/fa';
 import './BranchDetails.css';
+import { fetchWithAuth } from '../../App';
 
 const BranchDetails = ({ toggleBranchesModal }) => {
     const [branches, setBranches] = useState([]);
@@ -37,7 +38,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
 
     const handleConfirmDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/branches/deleteBranch/${branchToDelete.branch_id}`, {
+            const response = await fetchWithAuth(`http://localhost:8000/branches/deleteBranch/${branchToDelete.branch_id}`, {
                 method: 'DELETE',
             });
 
@@ -55,7 +56,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
     useEffect(() => {
         const fetchBranches = async () => {
             try {
-                const response = await fetch('http://localhost:8000/branches/');
+                const response = await fetchWithAuth('http://localhost:8000/branches/');
                 const data = await response.json();
                 setBranches(data);
             } catch (error) {
@@ -69,7 +70,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
     useEffect(() => {
         const fetchGroups = async () => {
             try {
-                const response = await fetch('http://localhost:8000/groups/');
+                const response = await fetchWithAuth('http://localhost:8000/groups/');
                 const data = await response.json();
                 setGroups(data);
             } catch (error) {
@@ -83,7 +84,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
         if (selectedBranch) {
             const fetchGroupsForBranch = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8000/branches/${selectedBranch.branch_id}/groups`);
+                    const response = await fetchWithAuth(`http://localhost:8000/branches/${selectedBranch.branch_id}/groups`);
                     const data = await response.json();
                     setGroups(data);
                 } catch (error) {
@@ -117,7 +118,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
 
     const handleSaveBranch = async () => {
         try {
-            const response = await fetch('http://localhost:8000/branches/addNewBranch', {
+            const response = await fetchWithAuth('http://localhost:8000/branches/addNewBranch', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
 
     const handleSaveEditBranch = async () => {
         try {
-            const response = await fetch('http://localhost:8000/branches/updateBranch', {
+            const response = await fetchWithAuth('http://localhost:8000/branches/updateBranch', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -174,7 +175,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
     };
     const handleGroupDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/branches/groups/${groupToDelete.group_id}`, {
+            const response = await fetchWithAuth(`http://localhost:8000/branches/groups/${groupToDelete.group_id}`, {
                 method: 'DELETE',
             });
 
@@ -197,7 +198,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
 
     const handleSaveGroupEdit = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/branches/groups`, {
+            const response = await fetchWithAuth(`http://localhost:8000/branches/groups`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -217,7 +218,7 @@ const BranchDetails = ({ toggleBranchesModal }) => {
     };
     const handleSaveGroup = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/branches/${selectedBranch.branch_id}/groups`, {
+            const response = await fetchWithAuth(`http://localhost:8000/branches/${selectedBranch.branch_id}/groups`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

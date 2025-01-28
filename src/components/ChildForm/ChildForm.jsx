@@ -1,6 +1,7 @@
 import { FaTimes } from 'react-icons/fa';
 import './ChildForm.css';
 import React, { useState, useEffect } from 'react';
+import { fetchWithAuth } from '../../App';
 
 const ChildForm = ({ branches, classes, shirts, groups, onSubmit, onClose }) => {
     const [formData, setFormData] = useState({

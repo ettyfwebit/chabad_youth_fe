@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ChildDetails from '../ChildDetails/ChildDetail';
 import ChildForm from '../ChildForm/ChildForm'; // ייבוא הקומפוננטה
-import { FaCommentDots, FaPlus, FaHome, FaTree, FaUserTie, FaBuilding, FaTimes, FaMapMarkerAlt, FaPen, FaCheck, FaTrash, FaClipboardList, FaCalendarPlus, FaTrashAlt, FaUsers } from 'react-icons/fa';
+import { FaCommentDots, FaPlus, FaHome, FaTree, FaUserTie, FaBuilding, FaTimes, FaMapMarkerAlt, FaPen, FaCheck, FaTrash, FaClipboardList, FaCalendarPlus, FaTrashAlt, FaUsers, FaUserFriends, FaSignOutAlt } from 'react-icons/fa';
 import NotificationPage from '../Notification/Notification';
 import './SecretaryList.css';
 import ActivityAttendance from '../ActivityAttendance/ActivityAttendance';
@@ -11,6 +11,10 @@ import BranchDetails from '../BranchDetails/BranchDetails';
 import BranchManagerDetails from '../BranchManagerDetails/BranchManagerDetails';
 import ActivityDetails from '../ActivityDetails/ActivityDetails';
 import ChildrenList from '../ChildrenList/ChildrenList';
+import { fetchWithAuth } from '../../App';  // הנתיב בהתאם למיקום הקובץ
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // ייבוא ה-CSS של ה-toast
+
 
 const SecretaryList = () => {
   const location = useLocation();
@@ -31,6 +35,8 @@ const SecretaryList = () => {
   const [showTooltipHome, setShowTooltipHome] = useState(false); // טול-טיפ לכפתור הבית
   const [showTooltipBranch, setShowTooltipBranch] = useState(false); // טול-טיפ לכפתור הבית
   const [showTooltipNotification, setShowTooltipNotification] = useState(false); // טול-טיפ לכפתור הבית
+  const [showTooltipActivity, setShowTooltipActivity] = useState(false); // טול-טיפ לכפתור הבית
+  const [showTooltipChildrenList, setShowTooltipChildrenList] = useState(false); // טול-טיפ לכפתור הבית
   const [showBranchesModal, setShowBranchesModal] = useState(false); // מצב לתצוגת 
   const [selectedBranch, setSelectedBranch] = useState(null); // סניף שנבחר להצגה
   const [newBranch, setNewBranch] = useState({ branch_name: '', location: '' }); // סניף חדש
@@ -67,14 +73,14 @@ const SecretaryList = () => {
   const handleSaveNewActivity = async () => {
     try {
       // שליחה של נתוני הפעילות לשרת
-      const response = await fetch('http://localhost:8000/activities/', {
+      const response = await fetchWithAuth('http://localhost:8000/activities/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(activityDetails),
       });
-
+      
       if (response.ok) {
         const activity = await response.json();
         setActivityId(activity.activity_id)
@@ -132,7 +138,7 @@ const SecretaryList = () => {
       } else {
         // אם קבוצות הסניף לא נטענו, נטען אותן כעת
         try {
-          const response = await fetch(`http://localhost:8000/branches/${branchId}/groups`);
+          const response = await fetchWithAuth(`http://localhost:8000/branches/${branchId}/groups`);
           const data = await response.json();
   
           // עדכון הקבוצות בתוך הסניף
@@ -166,11 +172,11 @@ const SecretaryList = () => {
  
   const handleSaveActivity = async () => {
     console.log('Selected Groups:', selectedGroups);
-    const childrenResponse = await fetch(`http://localhost:8000/children/getChildrenByGroups?group_ids=${selectedGroups}`);
+    const childrenResponse = await fetchWithAuth(`http://localhost:8000/children/getChildrenByGroups?group_ids=${selectedGroups}`);
 
     const childrenData = await childrenResponse.json();
     console.log("Fetched children:", childrenData);
-    try {const response = await fetch(`http://localhost:8000/activities/${activityId}/groups`, {
+    try {const response = await fetchWithAuth(`http://localhost:8000/activities/${activityId}/groups`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -204,7 +210,7 @@ const SecretaryList = () => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await fetch('http://localhost:8000/branches/');
+        const response = await fetchWithAuth('http://localhost:8000/branches/');
         const data = await response.json();
         setBranches(data);
       } catch (error) {
@@ -218,7 +224,7 @@ const SecretaryList = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await fetch('http://localhost:8000/groups/');
+        const response = await fetchWithAuth('http://localhost:8000/groups/');
         const data = await response.json();
         setGroups(data);
       } catch (error) {
@@ -232,7 +238,7 @@ const SecretaryList = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:8000/classgrades/');
+        const response = await fetchWithAuth('http://localhost:8000/classgrades/');
         const data = await response.json();
         setClasses(data);
       } catch (error) {
@@ -246,7 +252,7 @@ const SecretaryList = () => {
   useEffect(() => {
     const fetchShirts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/shirts/');
+        const response = await fetchWithAuth('http://localhost:8000/shirts/');
         const data = await response.json();
         setShirts(data);
       } catch (error) {
@@ -259,7 +265,7 @@ const SecretaryList = () => {
 
 
   useEffect(() => {
-    fetch('http://localhost:8000/activities/')
+    fetchWithAuth('http://localhost:8000/activities/')
       .then(response => response.json())
       .then(data => setActivities(data)).then(console.log("activities",activities));
   }, []);
@@ -267,7 +273,7 @@ const SecretaryList = () => {
   useEffect(() => {
     const fetchBranchManagers = async () => {
       try {
-        const response = await fetch('http://localhost:8000/branch_managers/');
+        const response = await fetchWithAuth('http://localhost:8000/branch_managers/');
         const data = await response.json();
         setBranchManagers(data);
       } catch (error) {
@@ -307,15 +313,22 @@ const SecretaryList = () => {
   return (
     <div className="activities-list-wrapper">
  <div >
-      <button className='children-button' onClick={() => setShowChildrenList(!showChildrenList)}>
-        <FaUsers className="notification-icon-style" color="#3f3939" size={24}/>       </button>
-
+      <button className='children-button' onClick={() => setShowChildrenList(!showChildrenList)}
+        onMouseEnter={() => setShowTooltipChildrenList(true)}
+        onMouseLeave={() => setShowTooltipChildrenList(false)}>
+        <FaUserFriends className="notification-icon-style" color="#3f3939" size={24}/>       </button>
       {showChildrenList && navigate('/childrenList', { state: { user_id: state?.user_id } })}
+      {showTooltipChildrenList && <div className="children-tooltip">Children List</div>}
+
     </div>
       
-      <div className="activity-button" onClick={handleCreateActivity}>
+      <div className="activity-button" onClick={handleCreateActivity}
+      onMouseEnter={() => setShowTooltipActivity(true)}
+      onMouseLeave={() => setShowTooltipActivity(false)}>
         <FaCalendarPlus className="notification-icon-style" color="#3f3939" size={24} />
+        {showTooltipActivity && <div className="home-tooltip">Create Activity</div>}
       </div>
+    
       {showActivityForm && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -463,7 +476,7 @@ const SecretaryList = () => {
 
       {showNotifications && (
         <div className="notifications-container">
-          <SecretaryNotification user_id={state?.user_id} />
+          <SecretaryNotification user_id={state?.user_id} setShowNotifications={setShowNotifications} />
         </div>
       )}
 
@@ -473,7 +486,7 @@ const SecretaryList = () => {
         onMouseEnter={() => setShowTooltipHome(true)}
         onMouseLeave={() => setShowTooltipHome(false)}
       >
-        <FaHome className="notification-icon-style" size={24} color="#3f3939" />
+        <FaSignOutAlt className="notification-icon-style" size={24} color="#3f3939" />
         {showTooltipHome && <div className="home-tooltip">Log Out</div>}
       </div>
       {showAttendance ? (

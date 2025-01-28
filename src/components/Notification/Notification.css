@@ -411,6 +411,37 @@ input[type="checkbox"]:checked::after {
   font-size: 13px;
   margin-top: 5px;
 }
+.close-notification-button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  position: fixed;
+  right: 2.5vw;
+  top: 8vh;
+}
+.close-answer-notification-button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  position: fixed;
+  right: 34vw;
+  top: 8vh;
+}
+.close-reply-notification-button{
+  background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    top: 9vh;
+    right: 34vw;
+
+}
 @media only screen and (min-width: 481px) and (max-width: 768px) {
   .notification-header, .answer-notification-header, .new-notification-header {
     width: 70vw;

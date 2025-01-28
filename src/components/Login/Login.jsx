@@ -1,41 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // ייבוא ה-CSS של ה-toast
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [user_name, setUser_name] = useState("");
-
+  useEffect(() => {
+    const toastMessage = localStorage.getItem("showToast");
+    if (toastMessage) {
+      toast.error(toastMessage, {
+        autoClose: 3000,
+      });
+      localStorage.removeItem("showToast"); // מחיקת ההודעה לאחר ההצגה
+    }
+  }, []);
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // מניעת רענון דף
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
+      const response = await fetch("http://localhost:8000/auth/token", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({
-          user_name: user_name,
+        body: new URLSearchParams({
+          username: user_name,
           password: password,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed!");
-      }
-
-      const data = await response.json();
-      
-      if (data.role === "secretary") {
-        navigate('/secretaryList',{ state: { user_id: data.user_id } });
-      } else if (data.role === "branch_manager") {
-        navigate('/branchmanagerList', { state: { user_id: data.user_id } });
-      } else if (data.role === "parent") {
-        navigate('/parentList', { state: { user_id: data.user_id } });
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.access_token); // שמירת ה-Token
+        if (data.user.role === "secretary") {
+          navigate('/secretaryList', { state: { user_id: data.user.user_id } });
+        } else if (data.user.role === "branch_manager") {
+          navigate('/branchManagerList', { state: { user_id: data.user.user_id } });
+        } else if (data.user.role === "parent") {
+          navigate('/parentList', { state: { user_id: data.user.user_id } });
+        } else {
+          alert("Role not recognized.");
+        }
+      } else {
+        alert("Login failed. Please check your credentials.");
       }
     } catch (error) {
-      console.error("Error during login:", error.message);
+      console.error("Login error:", error);
     }
   };
 

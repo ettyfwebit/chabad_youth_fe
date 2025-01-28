@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiCheck } from 'react-icons/fi';
 import { RiEdit2Fill } from "react-icons/ri";
+import { fetchWithAuth } from '../../App';
 
 
 import "./ActivityDetails.css";
@@ -39,7 +40,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
             const branchesWithGroups = await Promise.all(
                 branches.map(async (branch) => {
                     try {
-                        const response = await fetch(`http://localhost:8000/branches/${branch.branch_id}/groups`);
+                        const response = await fetchWithAuth(`http://localhost:8000/branches/${branch.branch_id}/groups`);
                         const groups = await response.json();
                         return { ...branch, groups };  // הוספת הקבוצות לסניף המתאים
                     } catch (error) {
@@ -63,7 +64,10 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
         if (isSelected) {
             // אם הסניף כבר מסומן, נסיר אותו ואת הקבוצות שלו
             setSelectedBranches(selectedBranches.filter((id) => id !== branchId));
-
+            setActivity(prevActivity => ({
+                ...prevActivity,
+                branches: selectedBranches,  // כאן updatedBranches היא הרשימה החדשה
+              }));
             // הסרת הקבוצות של הסניף מהבחירות
             if (branch && branch.groups) {
                 const groupIdsToRemove = branch.groups.map((group) => group.group_id);
@@ -74,7 +78,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
         } else {
             // אם הסניף לא מסומן, נוסיף אותו ואת הקבוצות שלו
             setSelectedBranches([...selectedBranches, branchId]);
-
+           
             // טעינת הקבוצות אם לא קיימות עדיין
             if (branch && branch.groups) {
                 const groupIdsToAdd = branch.groups.map((group) => group.group_id);
@@ -82,10 +86,11 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
                     ...prevGroups,
                     ...groupIdsToAdd.filter((id) => !prevGroups.includes(id)),
                 ]);
+               
             } else {
                 // אם קבוצות הסניף לא נטענו, נטען אותן כעת
                 try {
-                    const response = await fetch(`http://localhost:8000/branches/${branchId}/groups`);
+                    const response = await fetchWithAuth(`http://localhost:8000/branches/${branchId}/groups`);
                     const data = await response.json();
 
                     // עדכון הקבוצות בתוך הסניף
@@ -130,7 +135,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
         setIsEditing(false);
 
         try {
-            const response = await fetch("http://localhost:8000/activities/updateActivity", {
+            const response = await fetchWithAuth("http://localhost:8000/activities/updateActivity", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -143,7 +148,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
             }
 
             const updatedActivity = await response.json();
-            fetch('http://localhost:8000/activities/')
+            fetchWithAuth('http://localhost:8000/activities/')
                 .then(response => response.json())
                 .then(data => setActivities(data));
 
@@ -173,7 +178,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
 
     const handleConfirmDeleteActivity = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/activities/deleteActivity/${activityToDelete.activity_id}`, {
+            const response = await fetchWithAuth(`http://localhost:8000/activities/deleteActivity/${activityToDelete.activity_id}`, {
                 method: 'DELETE',
             });
 
@@ -201,7 +206,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
         setIsEditing(false); // חזרה למצב תצוגה
         console.log(editedActivity)
         try {
-            const response = await fetch("http://localhost:8000/activities/updateActivity", {
+            const response = await fetchWithAuth("http://localhost:8000/activities/updateActivity", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -214,14 +219,22 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
             }
 
             const updatedActivity = await response.json();
-            fetch('http://localhost:8000/activities/')
+            fetchWithAuth('http://localhost:8000/activities/')
                 .then(response => response.json())
-                .then(data => setActivities(data)).then(console.log("activities", activities));
-            console.log("Activity updated successfully:", updatedActivity);
+                .then(data => {
+                    setActivities(data);
+                    return data; // מחזירים את הנתונים כדי להמשיך בשרשור
+                })
+                .then(updatedActivities => {
+                    const updatedActivity = updatedActivities.find(d => d.activity_id === editedActivity.activity_id);
+                    if (updatedActivity) {
+                        setActivity(updatedActivity);
+                        setEditedActivity(updatedActivity);
+                    }
+                })           
         } catch (error) {
             console.error("Error updating activity:", error);
         }
-        handleSaveSelectionGroupsClick();
     };
 
 
@@ -236,7 +249,7 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
         e.target.select(); // בחר את כל התוכן בשדה ברגע שיש פוקוס
     };
     const saveChanges= async ()=>{
-    try {const response = await fetch(`http://localhost:8000/activities/${activity.activity_id}/groups`, {
+    try {const response = await fetchWithAuth(`http://localhost:8000/activities/${activity.activity_id}/groups`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -250,7 +263,6 @@ const ActivityDetails = ({ activities, setActivities, activity, setActivity, onC
     }
   
       // הצגת הילדים במסך
-      setSelectedGroups([]); // איפוס הבחירה
       setShowExistingGroupSelectionModal(false)
     };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiCheck } from 'react-icons/fi';
 import { RiEdit2Fill } from "react-icons/ri";
+import { fetchWithAuth } from '../../App';
 
 
 import "./ChildDetail.css";
@@ -32,7 +33,7 @@ const ChildDetails = ({ children, setChildren, child, setChild, branches, classe
 
   const handleConfirmDeleteChild = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/children/deleteChild/${childToDelete.child_id}`, {
+      const response = await fetchWithAuth(`http://localhost:8000/children/deleteChild/${childToDelete.child_id}`, {
         method: 'DELETE',
       });
 
@@ -92,7 +93,7 @@ const ChildDetails = ({ children, setChildren, child, setChild, branches, classe
     setChild(editedChild)
     setIsEditing(false); // חזרה למצב תצוגה
     try {
-      const response = await fetch("http://localhost:8000/children/updateChild", {
+      const response = await fetchWithAuth("http://localhost:8000/children/updateChild", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

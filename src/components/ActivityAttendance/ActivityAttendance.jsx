@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FiSend } from 'react-icons/fi'; // איקון של שליחה מ-React Icons
-
+import { fetchWithAuth } from '../../App';
 import './ActivityAttendance.css';
-import { FaCheckCircle, FaCheckSquare, FaRegCircle, FaRegSquare } from 'react-icons/fa';
+import { FaCheckCircle, FaCheckSquare, FaRegCircle, FaRegSquare, FaTimes } from 'react-icons/fa';
 
 
 const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
@@ -66,7 +66,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
                 const parentIds = await updateParentIds(parentId);
                 const value = Object.values(parentIds)[0];
 
-                const response = await fetch("http://localhost:8000/notifications/sendNlotifications", {
+                const response = await fetchWithAuth("http://localhost:8000/notifications/sendNlotifications", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
             console.log("parentIdInt type:", typeof parentIdInt); // יראה אם זה אובייקט או לא
 
             // קריאה לשרת לקבלת מיפוי ה-parent_id ל-login_user_id
-            const response = await fetch("http://localhost:8000/notifications/login_ids", {
+            const response = await fetchWithAuth("http://localhost:8000/notifications/login_ids", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -157,7 +157,7 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
 
         }));
         try {
-            const response = await fetch('http://localhost:8000/attendance/activityAttendance', {
+            const response = await fetchWithAuth('http://localhost:8000/attendance/activityAttendance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -181,6 +181,9 @@ const ActivityAttendance = ({ children, activityId, onClose, userId }) => {
 
     return (
         <div className="activity-attendancde-list-wrapper">
+              <button className="close-attendance-list" onClick={() => onClose()}>
+                            <FaTimes size={18} />
+                        </button>
             <h2 className=" activity-attendance-table-title">Attendance List</h2>
             <div className="filter-wrapper">
 

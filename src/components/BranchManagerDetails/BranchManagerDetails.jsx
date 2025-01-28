@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaPlus, FaCheck, FaPen } from "react-icons/fa";
 import "./BranchManagerDetails.css";
+import { fetchWithAuth } from '../../App';
 
 const BranchManagerDetails = ({ onClose }) => {
   const [branchManagers, setBranchManagers] = useState([]);
@@ -12,7 +13,7 @@ const BranchManagerDetails = ({ onClose }) => {
 
   const fetchBranchManagers = async () => {
     try {
-      const response = await fetch("http://localhost:8000/branch_managers/");
+      const response = await fetchWithAuth("http://localhost:8000/branch_managers/");
       const data = await response.json();
       setBranchManagers(data);
     } catch (err) {
@@ -23,7 +24,7 @@ const BranchManagerDetails = ({ onClose }) => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await fetch("http://localhost:8000/branches/");
+        const response = await fetchWithAuth("http://localhost:8000/branches/");
         const data = await response.json();
         setBranches(data);
         fetchBranchManagers();
@@ -34,7 +35,7 @@ const BranchManagerDetails = ({ onClose }) => {
 
     const fetchBranchManagers = async () => {
       try {
-        const response = await fetch("http://localhost:8000/branch_managers/");
+        const response = await fetchWithAuth("http://localhost:8000/branch_managers/");
         const data = await response.json();
         setBranchManagers(data);
       } catch (err) {
@@ -57,8 +58,8 @@ const BranchManagerDetails = ({ onClose }) => {
   const handleSaveEdit = async () => {
     try {
       // שמירה בשרת
-      const response = await fetch(
-        `http://localhost:8000/branch_managers/${selectedManager.branch_manager.branch_manager_id}/`,
+      const response = await fetchWithAuth(
+        `http://localhost:8000/branch_managers/${selectedManager.branch_manager.branch_manager_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -94,7 +95,7 @@ const BranchManagerDetails = ({ onClose }) => {
 
   const handleAddManager = async () => {
     try {
-      const response = await fetch("http://localhost:8000/branch_managers/", {
+      const response = await fetchWithAuth("http://localhost:8000/branch_managers/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newManager),

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LoginPage from './components/Login/Login';
 import SecretaryList from './components/SecretaryList/SecretaryList';
 import BranchManagerList from './components/BranchManagerList/BranchManagerList';
@@ -8,52 +8,76 @@ import RegisterPage from './components/Register/Register';
 import NotificationPage from './components/Notification/Notification';
 import BranchManagerDetails from './components/BranchManagerDetails/BranchManagerDetails';
 import ChildrenList from './components/ChildrenList/ChildrenList';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // ייבוא ה-CSS של ה-toast
+// פונקציה כללית לביצוע בקשות API עם Token
+export const fetchWithAuth = async (url, options = {}) => {
+  const token = localStorage.getItem("token");
+  const headers = {
+    ...options.headers,
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  }
+  );
+  if (response.status === 403) {
+    localStorage.setItem("showToast", "You do not have permission to access this page.");
+    window.location.href = "/";
+  }
+  
+  
+
+
+  if (response.status === 401) {
+    alert("Session expired. Please log in again.");
+    window.location.href = "/"; // הפניה לעמוד ההתחברות
+  }
+
+  return response;
+};
+
+const ProtectedRoute = ({ element }) => {
+  const token = localStorage.getItem("token");
+  const location = useLocation();
+
+  // אם אין טוקן, מפנים לעמוד הראשי
+  if (!token) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  // מחזירים את הרכיב אם יש טוקן
+  return element;
+};
 
 function App() {
-  useEffect(() => {
-    const idleTime = 30* 60 * 1000; // חצי שעה
-
-    const redirectToHome = () => {
-        window.location.href = '/'; // מחזיר לדף הבית
-    };
-
-    const resetTimer = () => {
-        clearTimeout(timer);
-        timer = setTimeout(redirectToHome, idleTime);
-    };
-
-    // התחלת טיימר
-    let timer = setTimeout(redirectToHome, idleTime);
-
-    // איפוס הטיימר בעת פעילות המשתמש
-    document.addEventListener('mousemove', resetTimer);
-    document.addEventListener('keydown', resetTimer);
-
-    // ניקוי מאזינים בעת יציאת הקומפוננטה
-    return () => {
-        clearTimeout(timer);
-        document.removeEventListener('mousemove', resetTimer);
-        document.removeEventListener('keydown', resetTimer);
-    };
-}, []);
-
   return (
-    <div>
-      <Router>
-        <Routes>
-          {/* The login page will be the first page */}
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/secretaryList" element={<SecretaryList />} />
-          <Route path="/branchManagerList" element={<BranchManagerList />} />
-          <Route path="/parentlist" element={<ParentList />} />
-          <Route path="/notification" element={<NotificationPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/branch-managers" element={<BranchManagerDetails />} />
-          <Route path="/childrenList" element={<ChildrenList/>} />
-          
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+<ToastContainer 
+    position="top-right" 
+    autoClose={3000} 
+    hideProgressBar={false} 
+    newestOnTop={false} 
+    closeOnClick 
+    rtl={false} 
+    pauseOnFocusLoss 
+    draggable 
+    pauseOnHover 
+  />      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/secretaryList" element={<ProtectedRoute element={<SecretaryList />} />} />
+        <Route path="/branchManagerList" element={<ProtectedRoute element={<BranchManagerList />} />} />
+        <Route path="/parentlist" element={<ProtectedRoute element={<ParentList />} />} />
+        <Route path="/notification" element={<ProtectedRoute element={<NotificationPage />} />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/branch-managers" element={<ProtectedRoute element={<BranchManagerDetails />} />} />
+        <Route path="/childrenList" element={<ProtectedRoute element={<ChildrenList />} />} />
+        {/* נתיב עבור שגיאות 404 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
 

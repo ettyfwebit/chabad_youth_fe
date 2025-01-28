@@ -3,6 +3,7 @@ import './ManagerSideBar.css'; // קובץ ה-CSS לעיצוב ה-SideBar
 import ChildForm from '../ChildForm/ChildForm';
 import { VscHome } from "react-icons/vsc";
 import { useNavigate } from 'react-router-dom';
+import { fetchWithAuth } from '../../App';
 
 const ManagerSideBar = ({ user_id,branches, classes, shirts }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -22,7 +23,7 @@ const ManagerSideBar = ({ user_id,branches, classes, shirts }) => {
   };
 
     try {
-      const response = await fetch("http://localhost:8000/children/addNewChild", {
+      const response = await fetchWithAuth("http://localhost:8000/children/addNewChild", {
         method: 'POST', // השתמש ב-POST או PUT לפי הצורך
         headers: {
           'Content-Type': 'application/json',
